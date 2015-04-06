@@ -1,5 +1,6 @@
 package fr.imac.myrddin.physic;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -43,14 +44,13 @@ public class PhysicTileFactory {
 	 * @param type type of the tile
 	 */
 	public void create(int x, int y, String type) {
-		x *= MyrddinGame.GAME_TO_PHYSIC;
-		y *= MyrddinGame.GAME_TO_PHYSIC;
+		Vector2 pos = new Vector2(x * MyrddinGame.GAME_TO_PHYSIC, y * MyrddinGame.GAME_TO_PHYSIC);
 		switch (type) {
 		case "Solid":
-			createSolid(x, y);
+			createSolid(pos);
 			break;
 		case "Climb":
-			createClimb(x, y);
+			createClimb(pos);
 		default:
 			break;
 		}
@@ -61,8 +61,8 @@ public class PhysicTileFactory {
 	 * @param x in meters
 	 * @param y in meters
 	 */
-	private void createClimb(int x, int y) {
-		Body body = createRectangleTile(x, y, BodyType.StaticBody, true);
+	private void createClimb(Vector2 pos) {
+		Body body = PhysicUtil.createRectangle(pos, this.tileWidth, this.tileHeight, BodyType.StaticBody, 10, 0, true, this.world);
 	    body.setUserData(new PhysicTile(CollidableType.Climb));
 	}
 
@@ -71,33 +71,10 @@ public class PhysicTileFactory {
 	 * @param x in meters
 	 * @param y in meters
 	 */
-	private void createSolid(int x, int y) {
-	    Body body = createRectangleTile(x, y, BodyType.StaticBody, false);
+	private void createSolid(Vector2 pos) {
+		Body body = PhysicUtil.createRectangle(pos, this.tileWidth, this.tileHeight, BodyType.StaticBody, 10, 0, false, this.world);
 	    body.setUserData(new PhysicTile(CollidableType.Solid));
-	}
-	
-	/**
-	 * 
-	 * @param x in meters
-	 * @param y in meters
-	 */
-	private Body createRectangleTile(int x, int y, BodyType bodyType, boolean isSensor) {
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.set(x, y);		
-		bodyDef.type = bodyType;
-		Body body = world.createBody(bodyDef);
-		
-	    PolygonShape shape = new PolygonShape();
-	    shape.setAsBox(this.tileWidth, this.tileHeight);
-	    
-	    FixtureDef fixtureDef = new FixtureDef();
-	    fixtureDef.shape = shape;
-	    fixtureDef.isSensor = isSensor;
-	    body.createFixture(fixtureDef);
-	    
-	    shape.dispose();
-	    return body;	    
-	}	
+	}		
 	
 	// GETTERS - SETTERS
 
