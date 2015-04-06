@@ -16,10 +16,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.physic.PhysicTileFactory;
 
 /*
@@ -38,11 +40,14 @@ public class GameScreen extends Stage implements Screen {
 	public GameScreen(int level) {
 		super(new FitViewport(1280, 720));
 		
+		// Generate graphics of the map
 		TmxMapLoader mapLoader = new TmxMapLoader();
 		tiledMap = mapLoader.load("lvl/"+level+".tmx");
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, getBatch());
 		mapRenderer.setView((OrthographicCamera) getCamera());
 		
+		// Generate physic of the map
+		physicWorld = new World(new Vector2(0, -9.1f * MyrddinGame.GAME_TO_PHYSIC),  true);
 		createPhysicWorld(tiledMap);
 	}
 	
@@ -58,8 +63,11 @@ public class GameScreen extends Stage implements Screen {
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
 					Cell cell = tileLayer.getCell(x, y);
-					MapProperties properties = cell.getTile().getProperties();
-					physicTileFactory.create(x, y, properties.get("Type", "none", String.class));
+					if ( cell != null)
+					{
+						MapProperties properties = cell.getTile().getProperties();
+						physicTileFactory.create(x, y, properties.get("Type", "none", String.class));						
+					}
 				}
 			}
 		}
