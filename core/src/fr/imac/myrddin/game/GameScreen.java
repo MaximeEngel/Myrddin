@@ -16,7 +16,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -32,6 +34,7 @@ public class GameScreen extends Stage implements Screen {
 	private World physicWorld;
 	private TiledMap tiledMap;
 	private OrthogonalTiledMapRenderer mapRenderer;
+	private Myrddin myrddin;
 	
 	/**
 	 * 
@@ -47,8 +50,11 @@ public class GameScreen extends Stage implements Screen {
 		mapRenderer.setView((OrthographicCamera) getCamera());
 		
 		// Generate physic of the map
-		physicWorld = new World(new Vector2(0, -9.1f * MyrddinGame.GAME_TO_PHYSIC),  true);
+		physicWorld = new World(new Vector2(0, -9.1f),  true);
 		createPhysicWorld(tiledMap);
+		
+		myrddin = new Myrddin(new Vector2(500f, 850f), physicWorld);
+		this.addActor(myrddin);
 	}
 	
 	
@@ -56,9 +62,12 @@ public class GameScreen extends Stage implements Screen {
 		if (tiledMap != null)
 		{
 			TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
-			PhysicTileFactory physicTileFactory = new PhysicTileFactory(tileLayer.getTileWidth(), tileLayer.getTileHeight(), this.physicWorld);
 			int width = tileLayer.getWidth();
 			int height = tileLayer.getHeight();
+			float tileWidth = tileLayer.getTileWidth();
+			float tileHeight = tileLayer.getTileWidth();
+			PhysicTileFactory physicTileFactory = new PhysicTileFactory(tileWidth, tileHeight, this.physicWorld);
+			
 			
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
@@ -66,7 +75,7 @@ public class GameScreen extends Stage implements Screen {
 					if ( cell != null)
 					{
 						MapProperties properties = cell.getTile().getProperties();
-						physicTileFactory.create(x, y, properties.get("Type", "none", String.class));						
+						physicTileFactory.create(x * tileHeight, y * tileWidth, properties.get("Type", "none", String.class));						
 					}
 				}
 			}
@@ -81,6 +90,13 @@ public class GameScreen extends Stage implements Screen {
 	public void draw() {
 		mapRenderer.render();
 		super.draw();
+		
+		getBatch().begin();
+		Box2DDebugRenderer debug = new Box2DDebugRenderer();
+		Matrix4 matrixDebug = new Matrix4(getCamera().combined);
+		matrixDebug.scale(MyrddinGame.PHYSIC_TO_GAME, MyrddinGame.PHYSIC_TO_GAME, 1);
+		debug.render(physicWorld, matrixDebug);
+		getBatch().end();
 	}
 
 
@@ -88,6 +104,7 @@ public class GameScreen extends Stage implements Screen {
 	@Override
 	public void act(float delta) {
 		// TODO Auto-generated method stub
+		physicWorld.step(Gdx.graphics.getDeltaTime(), 6, 2);
 		super.act(delta);
 	}
 
@@ -103,6 +120,7 @@ public class GameScreen extends Stage implements Screen {
 		Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		this.act(delta);
 		this.draw();
+		System.out.println(delta);
 	}
 
 	@Override

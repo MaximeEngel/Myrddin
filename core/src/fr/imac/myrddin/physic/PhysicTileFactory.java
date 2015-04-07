@@ -43,7 +43,7 @@ public class PhysicTileFactory {
 	 * @param y y position in pixel of the tile
 	 * @param type type of the tile
 	 */
-	public void create(int x, int y, String type) {
+	public void create(float x, float y, String type) {
 		Vector2 pos = new Vector2(x * MyrddinGame.GAME_TO_PHYSIC, y * MyrddinGame.GAME_TO_PHYSIC);
 		switch (type) {
 		case "Solid":
@@ -62,7 +62,7 @@ public class PhysicTileFactory {
 	 * @param y in meters
 	 */
 	private void createClimb(Vector2 pos) {
-		Body body = PhysicUtil.createRectangle(pos, this.tileWidth, this.tileHeight, BodyType.StaticBody, 10, 0, true, this.world);
+		Body body = PhysicUtil.createRectSensor(pos, this.tileWidth, this.tileHeight, this.world);
 	    body.setUserData(new PhysicTile(CollidableType.Climb));
 	}
 
@@ -72,7 +72,7 @@ public class PhysicTileFactory {
 	 * @param y in meters
 	 */
 	private void createSolid(Vector2 pos) {
-		Body body = PhysicUtil.createRectangle(pos, this.tileWidth, this.tileHeight, BodyType.StaticBody, 10, 0, false, this.world);
+		Body body = PhysicUtil.createRect(pos, this.tileWidth, this.tileHeight, this.world);
 	    body.setUserData(new PhysicTile(CollidableType.Solid));
 	}		
 	
