@@ -12,7 +12,7 @@ import fr.imac.myrddin.MyrddinGame;
 
 public abstract class PhysicActor extends Actor implements Collidable  {
 	
-	private Body body;
+	public Body body;
 	/**
 	 * offset and size of the collision box in pixel
 	 */
@@ -39,6 +39,26 @@ public abstract class PhysicActor extends Actor implements Collidable  {
 		this.collisionBounds = collisionBox;
 		this.body = PhysicUtil.createRect(collisionBoxPos.add(bounds.x, bounds.y).scl(MyrddinGame.GAME_TO_PHYSIC), collisionBox.getWidth() * MyrddinGame.GAME_TO_PHYSIC, collisionBox.getHeight() * MyrddinGame.GAME_TO_PHYSIC, bodyType, fixtureDef, preventRotation, world);
 		
+	}
+	
+	public void applyImpulse(Vector2 force) {
+		this.body.applyLinearImpulse(force, body.getWorldCenter(), true);
+	}
+	
+	public void applyForce(Vector2 force) {
+		this.body.applyForceToCenter(force, true);
+	}
+	
+	public float getMass() {
+		return body.getMass();
+	}
+	
+	public Vector2 getLinearVelocity() {
+		return body.getLinearVelocity();
+	}
+	
+	public void setLinearVelocity(Vector2 v) {
+		body.setLinearVelocity(v);
 	}
 	
 	/**

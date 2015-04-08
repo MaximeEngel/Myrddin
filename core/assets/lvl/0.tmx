@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="23" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="23" tilewidth="32" tileheight="32" nextobjectid="19">
  <tileset firstgid="1" source="tmw_desert_spacing.tsx"/>
  <layer name="Tile Layer 1" width="120" height="23">
   <data encoding="csv">
@@ -28,4 +28,15 @@
 33,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,35,0,0,0,33,34,34,34,34,34,34,34,34,34,34,35,0,0,0,0,0,0,0,0,0,33,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup color="#a40911" name="CollisionTile">
+  <object id="2" type="Solid" x="224" y="384" width="352" height="352"/>
+  <object id="3" type="Solid" x="0" y="544" width="224" height="192"/>
+  <object id="4" type="Solid" x="672" y="576" width="384" height="160"/>
+  <object id="8" type="Solid" x="800" y="224" width="544" height="128"/>
+  <object id="10" type="Solid" x="1152" y="352" width="192" height="32"/>
+  <object id="13" type="Solid" x="1472" y="96" width="96" height="96"/>
+  <object id="14" type="Solid" x="1344" y="672" width="544" height="64"/>
+  <object id="15" type="Solid" x="1664" y="96" width="256" height="96"/>
+  <object id="18" type="Climb" x="1568" y="96" width="96" height="576"/>
+ </objectgroup>
 </map>

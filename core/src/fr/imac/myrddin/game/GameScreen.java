@@ -1,17 +1,18 @@
 package fr.imac.myrddin.game;
 
 
-import java.util.Iterator;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -24,7 +25,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import fr.imac.myrddin.MyrddinGame;
+import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.PhysicTileFactory;
+import fr.imac.myrddin.physic.PhysicUtil;
 
 /*
  * Handle the mechanism of a level.
@@ -55,29 +58,35 @@ public class GameScreen extends Stage implements Screen {
 		
 		myrddin = new Myrddin(new Vector2(500f, 850f), physicWorld);
 		this.addActor(myrddin);
+		
+		Gdx.input.setInputProcessor(this);
 	}
 	
 	
 	private void createPhysicWorld(TiledMap tiledMap) {		
 		if (tiledMap != null)
 		{
-			TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
-			int width = tileLayer.getWidth();
-			int height = tileLayer.getHeight();
-			float tileWidth = tileLayer.getTileWidth();
-			float tileHeight = tileLayer.getTileWidth();
-			PhysicTileFactory physicTileFactory = new PhysicTileFactory(tileWidth, tileHeight, this.physicWorld);
-			
-			
-			for (int x = 0; x < width; x++) {
-				for (int y = 0; y < height; y++) {
-					Cell cell = tileLayer.getCell(x, y);
-					if ( cell != null)
-					{
-						MapProperties properties = cell.getTile().getProperties();
-						physicTileFactory.create(x * tileHeight, y * tileWidth, properties.get("Type", "none", String.class));						
-					}
-				}
+//			TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
+//			int width = tileLayer.getWidth();
+//			int height = tileLayer.getHeight();
+//			float tileWidth = tileLayer.getTileWidth();
+//			float tileHeight = tileLayer.getTileWidth();
+			PhysicTileFactory physicTileFactory = new PhysicTileFactory(this.physicWorld);
+//			
+//			
+//			for (int x = 0; x < width; x++) {
+//				for (int y = 0; y < height; y++) {
+//					Cell cell = tileLayer.getCell(x, y);
+//					if ( cell != null)
+//					{
+//						MapProperties properties = cell.getTile().getProperties();
+//						physicTileFactory.create(x * tileHeight, y * tileWidth, properties.get("Type", "none", String.class));						
+//					}
+//				}
+//			}
+			MapObjects objects = tiledMap.getLayers().get("CollisionTile").getObjects();
+			for (MapObject mapObject : objects) {
+				physicTileFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "none", String.class));
 			}
 		}
 	}
@@ -104,7 +113,7 @@ public class GameScreen extends Stage implements Screen {
 	@Override
 	public void act(float delta) {
 		// TODO Auto-generated method stub
-		physicWorld.step(Gdx.graphics.getDeltaTime(), 6, 2);
+		physicWorld.step(Gdx.graphics.getDeltaTime(), 8, 3);
 		super.act(delta);
 	}
 
@@ -120,7 +129,6 @@ public class GameScreen extends Stage implements Screen {
 		Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		this.act(delta);
 		this.draw();
-		System.out.println(delta);
 	}
 
 	@Override
@@ -142,5 +150,25 @@ public class GameScreen extends Stage implements Screen {
 	public void hide() {
 
 	}
+	
+	// Input processor
+
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}	
 
 }
