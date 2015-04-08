@@ -19,6 +19,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -115,8 +116,18 @@ public class GameScreen extends Stage implements Screen {
 		// TODO Auto-generated method stub
 		physicWorld.step(Gdx.graphics.getDeltaTime(), 8, 3);
 		super.act(delta);
+		updateCamera();
 	}
 
+
+
+	private void updateCamera() {
+		OrthographicCamera camera = (OrthographicCamera) getCamera();
+		Vector3 position = camera.position;
+		position.set(myrddin.getX(), position.y, position.z);
+//		camera.update();
+		mapRenderer.setView((OrthographicCamera) getCamera());		
+	}
 
 
 	@Override

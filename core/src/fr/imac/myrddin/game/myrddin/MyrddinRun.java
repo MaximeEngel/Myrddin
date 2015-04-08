@@ -29,6 +29,9 @@ public class MyrddinRun extends MyrddinState {
 			myrddin.setMyrddinState(new MyrddinIddle(myrddin));
 		}
 		
+		if(myrddin.getLinearVelocity().y < 0)
+			myrddin.setMyrddinState(new MyrddinFall(myrddin));
+		
 		if(Gdx.input.isKeyPressed(Input.Keys.Z))
 			myrddin.setMyrddinState(new MyrddinJump(myrddin));
 	}
