@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class MyrddinState {
 	
+	public static final float MAX_VEL = 5;
+	
 	protected Myrddin myrddin;
 	protected Animation animation;
 	protected float stateTime;
@@ -21,8 +23,17 @@ public abstract class MyrddinState {
 		this.goRight = true;
 	}
 	
+	/**
+	 * Update time for animation and limit velocity
+	 * @param delta
+	 */
 	public void act(float delta) {
 		stateTime += delta;
+		
+		Vector2 v = myrddin.getLinearVelocity();
+		if(Math.abs(v.x) > MAX_VEL)
+			myrddin.setLinearVelocity(new Vector2(Math.signum(v.x) * MAX_VEL, v.y));
+			
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
@@ -40,9 +51,9 @@ public abstract class MyrddinState {
 	
 	protected void moveInTheAir() {
 		if(Gdx.input.isKeyPressed(Input.Keys.D))
-			myrddin.applyForce(new Vector2(myrddin.getMass() * 4, 0));
+			myrddin.applyForce(new Vector2(myrddin.getMass() * 3, 0));
 		else if(Gdx.input.isKeyPressed(Input.Keys.Q))
-			myrddin.applyForce(new Vector2(-myrddin.getMass() * 4, 0));
+			myrddin.applyForce(new Vector2(-myrddin.getMass() * 3, 0));
 		else 
 			myrddin.setLinearVelocity(new Vector2(0, myrddin.getLinearVelocity().y));
 	}

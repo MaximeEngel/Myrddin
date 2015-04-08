@@ -13,7 +13,7 @@ public class MyrddinRun extends MyrddinState {
 		super(myrddin, null);
 		this.direction = direction;
 		
-		myrddin.applyImpulse(new Vector2(direction * myrddin.getMass() * 3, 0f));
+		myrddin.applyImpulse(new Vector2(direction * myrddin.getMass() * 4, 0f));
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class MyrddinRun extends MyrddinState {
 		int goodKey = direction > 0 ? Input.Keys.D : Input.Keys.Q ;
 		
 		if(Gdx.input.isKeyPressed(goodKey)) {
-			myrddin.applyForce(new Vector2(direction * myrddin.getMass() * 4, 0));
+			myrddin.applyForce(new Vector2(direction * myrddin.getMass() * 2, 0));
 		} else {
 			myrddin.setLinearVelocity(new Vector2(0, myrddin.getLinearVelocity().y));
 			myrddin.setMyrddinState(new MyrddinIddle(myrddin));
