@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class MyrddinState {
@@ -21,6 +22,8 @@ public abstract class MyrddinState {
 		this.animation = animation;
 		this.stateTime = 0;
 		this.goRight = true;
+		
+		setNewRectBox();
 	}
 	
 	/**
@@ -48,6 +51,13 @@ public abstract class MyrddinState {
 	 * @return the position in pixel of where the magical power can start
 	 */
 	public abstract Vector2 getFirePos();
+	
+	/**
+	 * Default new rect box
+	 */
+	public void setNewRectBox() {
+		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 48, 96), new Rectangle(5, 5, 38, 86));
+	}
 	
 	protected void moveInTheAir() {
 		if(Gdx.input.isKeyPressed(Input.Keys.D))

@@ -22,7 +22,10 @@ public class MyrddinIddle extends MyrddinState {
 		else if(Gdx.input.isKeyPressed(Input.Keys.Q))
 			myrddin.setMyrddinState(new MyrddinRun(myrddin, -1f));
 		else if(Gdx.input.isKeyPressed(Input.Keys.D))
-			myrddin.setMyrddinState(new MyrddinRun(myrddin, 1f));
+			myrddin.setMyrddinState(new MyrddinRun(myrddin, 1f));		
+
+		if(Gdx.input.isKeyPressed(Input.Keys.S))
+			myrddin.setMyrddinState(new MyrddinDuck(myrddin));
 	}
 
 

@@ -57,7 +57,7 @@ public class GameScreen extends Stage implements Screen {
 		physicWorld = new World(new Vector2(0, -9.1f),  true);
 		createPhysicWorld(tiledMap);
 		
-		myrddin = new Myrddin(new Vector2(500f, 850f), physicWorld);
+		myrddin = new Myrddin(new Vector2(510f, 850f), physicWorld);
 		this.addActor(myrddin);
 		
 		Gdx.input.setInputProcessor(this);
@@ -104,7 +104,7 @@ public class GameScreen extends Stage implements Screen {
 		getBatch().begin();
 		Box2DDebugRenderer debug = new Box2DDebugRenderer();
 		Matrix4 matrixDebug = new Matrix4(getCamera().combined);
-		matrixDebug.scale(MyrddinGame.PHYSIC_TO_GAME, MyrddinGame.PHYSIC_TO_GAME, 1);
+		matrixDebug.scale(MyrddinGame.PHYSIC_TO_GAME * 3, MyrddinGame.PHYSIC_TO_GAME * 3, 1);
 		debug.render(physicWorld, matrixDebug);
 		getBatch().end();
 	}

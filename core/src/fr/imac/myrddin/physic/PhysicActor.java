@@ -4,7 +4,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -39,6 +41,32 @@ public abstract class PhysicActor extends Actor implements Collidable  {
 		this.collisionBounds = collisionBox;
 		this.body = PhysicUtil.createRect(collisionBoxPos.add(bounds.x, bounds.y).scl(MyrddinGame.GAME_TO_PHYSIC), collisionBox.getWidth() * MyrddinGame.GAME_TO_PHYSIC, collisionBox.getHeight() * MyrddinGame.GAME_TO_PHYSIC, bodyType, fixtureDef, preventRotation, world);
 		
+	}
+	
+	/**
+	 * 
+	 * @param bounds set the bounds of the actor in pixel
+	 * @param collisionBox offset and size of the collision box in pixel
+	 */
+	public void setNewRectBox(Rectangle bounds, Rectangle collisionBox) {		
+
+		System.out.println(this.body.getPosition());
+		this.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
+		Vector2 collisionBoxPos = new Vector2(collisionBox.x, collisionBox.y);
+		this.collisionBounds = collisionBox;		
+
+		Fixture fixture = this.body.getFixtureList().get(0);
+		FixtureDef fixtureDef = PhysicUtil.createFixtureDef(fixture);
+		
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(collisionBox.getWidth(), collisionBox.getHeight());
+		fixtureDef.shape = shape ;
+		shape.setAsBox(collisionBox.width * MyrddinGame.GAME_TO_PHYSIC / 2f, collisionBox.height  * MyrddinGame.GAME_TO_PHYSIC / 2f);
+		
+		this.body.destroyFixture(fixture);
+		this.body.createFixture(fixtureDef);
+		System.out.println(this.body.getPosition());
+		this.body.setTransform(collisionBoxPos.add(bounds.getX() + collisionBox.width / 2f, bounds.getY() + collisionBox.height / 2f).scl(MyrddinGame.GAME_TO_PHYSIC), body.getAngle());
 	}
 	
 	public void applyImpulse(Vector2 force) {
