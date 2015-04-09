@@ -114,7 +114,7 @@ public class GameScreen extends Stage implements Screen {
 	@Override
 	public void act(float delta) {
 		// TODO Auto-generated method stub
-		physicWorld.step(Gdx.graphics.getDeltaTime(), 8, 3);
+		physicWorld.step(Gdx.graphics.getDeltaTime(), 6, 2);
 		super.act(delta);
 		updateCamera();
 	}

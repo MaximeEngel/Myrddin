@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class MyrddinState {
 	
-	public static final float MAX_VEL = 5;
+	public static final float MAX_VEL = 3;
 	
 	protected Myrddin myrddin;
 	protected Animation animation;
@@ -51,9 +51,9 @@ public abstract class MyrddinState {
 	
 	protected void moveInTheAir() {
 		if(Gdx.input.isKeyPressed(Input.Keys.D))
-			myrddin.applyForce(new Vector2(myrddin.getMass() * 3, 0));
+			myrddin.applyImpulse(new Vector2(myrddin.getMass() * 2, 0));
 		else if(Gdx.input.isKeyPressed(Input.Keys.Q))
-			myrddin.applyForce(new Vector2(-myrddin.getMass() * 3, 0));
+			myrddin.applyImpulse(new Vector2(-myrddin.getMass() * 2, 0));
 		else 
 			myrddin.setLinearVelocity(new Vector2(0, myrddin.getLinearVelocity().y));
 	}
