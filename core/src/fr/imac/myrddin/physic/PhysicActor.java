@@ -15,10 +15,17 @@ import fr.imac.myrddin.MyrddinGame;
 public abstract class PhysicActor extends Actor implements Collidable  {
 	
 	protected Body body;
+	
 	/**
 	 * offset and size of the collision box in pixel
 	 */
 	private Rectangle collisionBounds;
+	
+	private FixtureDef newFixture;
+	protected Fixture fixtureToDestroy;
+	private Vector2 newPos;
+	private float newAngle;
+	private boolean changing;
 
 	/**
 	 * @param bounds set the bounds of the actor in pixel
@@ -42,6 +49,11 @@ public abstract class PhysicActor extends Actor implements Collidable  {
 		this.body = PhysicUtil.createRect(collisionBoxPos.add(bounds.x, bounds.y).scl(MyrddinGame.GAME_TO_PHYSIC), collisionBox.getWidth() * MyrddinGame.GAME_TO_PHYSIC, collisionBox.getHeight() * MyrddinGame.GAME_TO_PHYSIC, bodyType, fixtureDef, preventRotation, world);
 		
 		this.body.setUserData(this);
+		
+		this.fixtureToDestroy = null;
+		this.newFixture = null;
+		this.changing = false;
+		this.newPos = null;
 	}
 	
 	/**
@@ -52,6 +64,8 @@ public abstract class PhysicActor extends Actor implements Collidable  {
 		Vector2 position = body.getPosition();
 		this.setPosition(position.x * MyrddinGame.PHYSIC_TO_GAME  - collisionBounds.getWidth() / 2f - collisionBounds.x, position.y * MyrddinGame.PHYSIC_TO_GAME - collisionBounds.getHeight() / 2f - collisionBounds.y);
 		this.setRotation(body.getAngle());
+		
+		switchFixture();
 	}
 	
 	public void setUserData(Collidable uData) {
@@ -63,9 +77,7 @@ public abstract class PhysicActor extends Actor implements Collidable  {
 	 * @param bounds set the bounds of the actor in pixel
 	 * @param collisionBox offset and size of the collision box in pixel
 	 */
-	public void setNewRectBox(Rectangle bounds, Rectangle collisionBox) {		
-
-		System.out.println(this.body.getPosition());
+	public void setNewRectBox(Rectangle bounds, Rectangle collisionBox) {
 		this.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
 		Vector2 collisionBoxPos = new Vector2(collisionBox.x, collisionBox.y);
 		this.collisionBounds = collisionBox;		
@@ -78,10 +90,29 @@ public abstract class PhysicActor extends Actor implements Collidable  {
 		fixtureDef.shape = shape ;
 		shape.setAsBox(collisionBox.width * MyrddinGame.GAME_TO_PHYSIC / 2f, collisionBox.height  * MyrddinGame.GAME_TO_PHYSIC / 2f);
 		
-		this.body.destroyFixture(fixture);
-		this.body.createFixture(fixtureDef);
-		System.out.println(this.body.getPosition());
-		this.body.setTransform(collisionBoxPos.add(bounds.getX() + collisionBox.width / 2f, bounds.getY() + collisionBox.height / 2f).scl(MyrddinGame.GAME_TO_PHYSIC), body.getAngle());
+		fixtureToDestroy = fixture;
+		newFixture = fixtureDef;
+		newPos = new Vector2(collisionBoxPos.add(bounds.getX() + collisionBox.width / 2f, bounds.getY() + collisionBox.height / 2f).scl(MyrddinGame.GAME_TO_PHYSIC));
+		newAngle = body.getAngle();
+		changing = true;
+	}
+	
+	public void switchFixture() {
+		if (fixtureToDestroy != null) {
+			this.body.destroyFixture(fixtureToDestroy);
+			this.body.createFixture(newFixture);
+
+			this.body.setTransform(newPos, newAngle);
+			newPos = null;
+			newAngle = 0;
+			newFixture = null;
+			fixtureToDestroy = null;
+			changing = false;
+		}
+	}
+	
+	public boolean isChanging() {
+		return changing;
 	}
 	
 	public void applyImpulse(Vector2 force) {

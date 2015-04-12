@@ -76,24 +76,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	private void createPhysicWorld(TiledMap tiledMap) {		
 		if (tiledMap != null)
 		{
-//			TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
-//			int width = tileLayer.getWidth();
-//			int height = tileLayer.getHeight();
-//			float tileWidth = tileLayer.getTileWidth();
-//			float tileHeight = tileLayer.getTileWidth();
 			PhysicTileFactory physicTileFactory = new PhysicTileFactory(this.physicWorld);
-//			
-//			
-//			for (int x = 0; x < width; x++) {
-//				for (int y = 0; y < height; y++) {
-//					Cell cell = tileLayer.getCell(x, y);
-//					if ( cell != null)
-//					{
-//						MapProperties properties = cell.getTile().getProperties();
-//						physicTileFactory.create(x * tileHeight, y * tileWidth, properties.get("Type", "none", String.class));						
-//					}
-//				}
-//			}
 			MapObjects objects = tiledMap.getLayers().get("CollisionTile").getObjects();
 			for (MapObject mapObject : objects) {
 				physicTileFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "none", String.class));

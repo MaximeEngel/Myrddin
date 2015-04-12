@@ -1,6 +1,8 @@
 package fr.imac.myrddin.game.myrddin;
 
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -99,7 +101,10 @@ public class Myrddin extends Character {
 		return myrddinState;
 	}
 
-
+	public void climb() {
+		if (!(myrddinState instanceof MyrddinClimb))
+			this.setMyrddinState(new MyrddinClimb(this));
+	}
 
 	public void setMyrddinState(MyrddinState myrddinState) {
 		if (myrddinState == null)

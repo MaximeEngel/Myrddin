@@ -1,15 +1,18 @@
 package fr.imac.myrddin.physic;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 public class PhysicTile implements Collidable {
 
-	private CollidableType type;	
+	private CollidableType type;
+	protected Body body;
 	
-	public PhysicTile(CollidableType type) {
+	public PhysicTile(CollidableType type, Body body) {
 		this.type = type;
+		this.body = body;
 	}
 
 

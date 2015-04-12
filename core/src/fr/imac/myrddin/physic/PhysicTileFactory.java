@@ -57,7 +57,7 @@ public class PhysicTileFactory {
 	 */
 	private void createClimb(Shape shape) {
 		Body body = PhysicUtil.createBody(shape, BodyType.StaticBody, false, PhysicUtil.createFixtureDef(0, 0, true), this.world);
-	    body.setUserData(new PhysicTile(CollidableType.Climb));
+	    body.setUserData(new ClimbTile(body));
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class PhysicTileFactory {
 	 */
 	private void createSolid(Shape shape) {
 		Body body = PhysicUtil.createBody(shape, BodyType.StaticBody, false, PhysicUtil.createFixtureDef(0, 0, false), this.world);
-	    body.setUserData(new PhysicTile(CollidableType.Solid));
+	    body.setUserData(new PhysicTile(CollidableType.Solid, body));
 	}		
 	
 	// GETTERS - SETTERS
