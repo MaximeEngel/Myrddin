@@ -17,23 +17,31 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import fr.imac.myrddin.MyrddinGame;
+import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.myrddin.Myrddin;
+import fr.imac.myrddin.physic.Collidable;
+import fr.imac.myrddin.physic.Collidable.CollidableType;
 import fr.imac.myrddin.physic.PhysicTileFactory;
 import fr.imac.myrddin.physic.PhysicUtil;
 
 /*
  * Handle the mechanism of a level.
  */
-public class GameScreen extends Stage implements Screen {
+public class GameScreen extends Stage implements Screen, ContactListener {
 	
 	private World physicWorld;
 	private TiledMap tiledMap;
@@ -55,6 +63,7 @@ public class GameScreen extends Stage implements Screen {
 		
 		// Generate physic of the map
 		physicWorld = new World(new Vector2(0, -9.1f),  true);
+		physicWorld.setContactListener(this);
 		createPhysicWorld(tiledMap);
 		
 		myrddin = new Myrddin(new Vector2(510f, 850f), physicWorld);
@@ -104,7 +113,7 @@ public class GameScreen extends Stage implements Screen {
 		getBatch().begin();
 		Box2DDebugRenderer debug = new Box2DDebugRenderer();
 		Matrix4 matrixDebug = new Matrix4(getCamera().combined);
-		matrixDebug.scale(MyrddinGame.PHYSIC_TO_GAME * 3, MyrddinGame.PHYSIC_TO_GAME * 3, 1);
+		matrixDebug.scale(MyrddinGame.PHYSIC_TO_GAME, MyrddinGame.PHYSIC_TO_GAME, 1);
 		debug.render(physicWorld, matrixDebug);
 		getBatch().end();
 	}
@@ -180,6 +189,48 @@ public class GameScreen extends Stage implements Screen {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		return false;
-	}	
+	}
+
+
+	// CONTACT LISTENER
+
+	@Override
+	public void beginContact(Contact contact) {
+		Collidable collidable = (Collidable) contact.getFixtureA().getBody().getUserData();
+		Collidable other = (Collidable) contact.getFixtureA().getBody().getUserData();
+		collidable.beginContact(contact, other);
+		other.beginContact(contact, collidable);
+		
+	}
+
+
+	@Override
+	public void endContact(Contact contact) {
+		Collidable collidable = (Collidable) contact.getFixtureA().getBody().getUserData();
+		Collidable other = (Collidable) contact.getFixtureA().getBody().getUserData();
+		collidable.endContact(contact, other);
+		other.endContact(contact, collidable);
+	}
+
+
+	@Override
+	public void preSolve(Contact contact, Manifold oldManifold) {
+		Collidable collidable = (Collidable) contact.getFixtureA().getBody().getUserData();
+		Collidable other = (Collidable) contact.getFixtureA().getBody().getUserData();
+		collidable.preSolve(contact, other);
+		other.preSolve(contact, collidable);		
+	}
+
+
+	@Override
+	public void postSolve(Contact contact, ContactImpulse impulse) {
+		Collidable collidable = (Collidable) contact.getFixtureA().getBody().getUserData();
+		Collidable other = (Collidable) contact.getFixtureA().getBody().getUserData();
+		collidable.postSolve(contact, other);
+		other.postSolve(contact, collidable);
+	}
+
+	
+	
 
 }

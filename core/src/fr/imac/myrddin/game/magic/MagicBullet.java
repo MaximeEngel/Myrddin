@@ -1,0 +1,97 @@
+package fr.imac.myrddin.game.magic;
+
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.World;
+
+import fr.imac.myrddin.game.myrddin.Myrddin;
+import fr.imac.myrddin.physic.Collidable;
+import fr.imac.myrddin.physic.PhysicActor;
+import fr.imac.myrddin.physic.PhysicUtil;
+
+public class MagicBullet extends PhysicActor {
+	
+	/**
+	 * Maximum time to live in second
+	 */
+	public static final float LIFE = 2;
+	
+	private MagicState magicState;
+	private float timeSinceBirth;
+	private PhysicActor owner;
+	
+
+	
+	/**
+	 * 
+	 * @param initialPos
+	 * @param directionShoot will be normalized in the constructor
+	 * @param world
+	 */
+	public MagicBullet(Vector2 initialPos, Vector2 directionShoot, MagicState magicState, PhysicActor owner, World world) {
+		super(new Rectangle(initialPos.x, initialPos.y, 40f, 10f), new Rectangle(4, 2, 32, 6), BodyType.DynamicBody, PhysicUtil.createFixtureDef(1f, 0f, false), true, world);
+		this.applyImpulse(directionShoot.nor().scl(this.getMass() * 30));
+		this.body.setTransform(this.body.getPosition(), directionShoot.angleRad());
+		this.magicState = magicState;
+		this.timeSinceBirth = 0;
+		this.owner = owner;
+	}
+	
+	
+
+	@Override
+	public void act(float delta) {
+		this.timeSinceBirth += delta;
+		
+		if(timeSinceBirth > LIFE)
+			dispose();
+	}
+	
+	public void dispose() {
+		this.remove();
+		this.body.getWorld().destroyBody(this.body);
+	}
+
+
+
+	@Override
+	public CollidableType getCollidableType() {
+		return CollidableType.MagicBullet;
+	}
+
+
+	@Override
+	public void beginContact(Contact contact, Collidable other) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void endContact(Contact contact, Collidable other) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void postSolve(Contact contact, Collidable other) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void preSolve(Contact contact, Collidable other) {
+		System.out.println(this.owner.equals(other)+ " "+ this.owner.getCollidableType()+" "+other.getCollidableType());
+		if (this.owner.equals(other))
+			contact.setEnabled(false);		
+	}
+}

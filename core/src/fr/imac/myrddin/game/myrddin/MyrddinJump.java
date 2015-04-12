@@ -32,11 +32,4 @@ public class MyrddinJump extends MyrddinState {
 		
 	}
 
-
-
-	@Override
-	public Vector2 getFirePos() {
-		return null;
-	}
-
 }

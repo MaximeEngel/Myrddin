@@ -24,12 +24,4 @@ public class MyrddinFall extends MyrddinState {
 		moveInTheAir();
 	}
 
-
-
-	@Override
-	public Vector2 getFirePos() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

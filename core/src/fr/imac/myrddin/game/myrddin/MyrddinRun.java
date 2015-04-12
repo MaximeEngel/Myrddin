@@ -41,13 +41,7 @@ public class MyrddinRun extends MyrddinState {
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
 			myrddin.setMyrddinState(new MyrddinDuck(myrddin));
-			myrddin.setLinearVelocity(new Vector2(0f, 0f));
 		}
-	}
-	
-	@Override
-	public Vector2 getFirePos() {
-		return null;
 	}
 
 }

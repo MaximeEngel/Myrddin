@@ -48,9 +48,11 @@ public abstract class MyrddinState {
 	
 	/**
 	 * 
-	 * @return the position in pixel of where the magical power can start
+	 * @return the origin position in pixel of the fire. Null is return if myrddin can't fire this time.
 	 */
-	public abstract Vector2 getFirePos();
+	public Vector2 getFirePos() {
+		return new Vector2(myrddin.getX(), myrddin.getY()).add(30, 70);
+	}
 	
 	/**
 	 * Default new rect box

@@ -28,11 +28,4 @@ public class MyrddinIddle extends MyrddinState {
 			myrddin.setMyrddinState(new MyrddinDuck(myrddin));
 	}
 
-
-
-	@Override
-	public Vector2 getFirePos() {
-		return null;
-	}
-
 }
