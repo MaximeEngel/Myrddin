@@ -44,6 +44,16 @@ public abstract class PhysicActor extends Actor implements Collidable  {
 		this.body.setUserData(this);
 	}
 	
+	/**
+	 * Update the position and angle of the actor to correspond to physic world.
+	 */
+	@Override
+	public void act(float delta) {
+		Vector2 position = body.getPosition();
+		this.setPosition(position.x * MyrddinGame.PHYSIC_TO_GAME  - collisionBounds.getWidth() / 2f - collisionBounds.x, position.y * MyrddinGame.PHYSIC_TO_GAME - collisionBounds.getHeight() / 2f - collisionBounds.y);
+		this.setRotation(body.getAngle());
+	}
+	
 	public void setUserData(Collidable uData) {
 		this.body.setUserData(uData);
 	}
@@ -92,16 +102,6 @@ public abstract class PhysicActor extends Actor implements Collidable  {
 	
 	public void setLinearVelocity(Vector2 v) {
 		body.setLinearVelocity(v);
-	}
-	
-	/**
-	 * Update the position and angle of the actor to correspond to physic world.
-	 */
-	@Override
-	public void act(float delta) {
-		Vector2 position = body.getPosition();
-		this.setPosition(position.x * MyrddinGame.PHYSIC_TO_GAME  - collisionBounds.getWidth() / 2f - collisionBounds.x, position.y * MyrddinGame.PHYSIC_TO_GAME - collisionBounds.getHeight() / 2f - collisionBounds.y);
-		this.setRotation(body.getAngle());
 	}	
 	
 }

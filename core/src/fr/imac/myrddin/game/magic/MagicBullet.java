@@ -25,6 +25,7 @@ public class MagicBullet extends PhysicActor {
 	
 	private MagicState magicState;
 	private float timeSinceBirth;
+	private boolean hasContacted;
 	private PhysicActor owner;
 	
 
@@ -36,12 +37,15 @@ public class MagicBullet extends PhysicActor {
 	 * @param world
 	 */
 	public MagicBullet(Vector2 initialPos, Vector2 directionShoot, MagicState magicState, PhysicActor owner, World world) {
-		super(new Rectangle(initialPos.x, initialPos.y, 40f, 10f), new Rectangle(4, 2, 32, 6), BodyType.DynamicBody, PhysicUtil.createFixtureDef(1f, 0f, false), true, world);
-		this.applyImpulse(directionShoot.nor().scl(this.getMass() * 30));
-		this.body.setTransform(this.body.getPosition(), directionShoot.angleRad());
+		super(new Rectangle(initialPos.x, initialPos.y, 40f, 10f), new Rectangle(4, 2, 32, 6), BodyType.DynamicBody, PhysicUtil.createFixtureDef(100f, 0f, false), false, world);
+		
 		this.magicState = magicState;
 		this.timeSinceBirth = 0;
 		this.owner = owner;
+		this.hasContacted = false;
+		
+		this.applyImpulse(directionShoot.nor().scl(this.getMass() * 30));
+		this.body.setTransform(this.body.getPosition(), directionShoot.angleRad());		
 	}
 	
 	
@@ -50,7 +54,7 @@ public class MagicBullet extends PhysicActor {
 	public void act(float delta) {
 		this.timeSinceBirth += delta;
 		
-		if(timeSinceBirth > LIFE)
+		if(timeSinceBirth > LIFE || hasContacted)
 			dispose();
 	}
 	
@@ -59,7 +63,7 @@ public class MagicBullet extends PhysicActor {
 		this.body.getWorld().destroyBody(this.body);
 	}
 
-
+	// COLLISION
 
 	@Override
 	public CollidableType getCollidableType() {
@@ -69,7 +73,6 @@ public class MagicBullet extends PhysicActor {
 
 	@Override
 	public void beginContact(Contact contact, Collidable other) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -83,15 +86,14 @@ public class MagicBullet extends PhysicActor {
 
 	@Override
 	public void postSolve(Contact contact, Collidable other) {
-		// TODO Auto-generated method stub
-		
+		hasContacted = true;		
 	}
 
 
 	@Override
 	public void preSolve(Contact contact, Collidable other) {
-		System.out.println(this.owner.equals(other)+ " "+ this.owner.getCollidableType()+" "+other.getCollidableType());
-		if (this.owner.equals(other))
-			contact.setEnabled(false);		
+		if (this.owner.equals(other)) {
+			contact.setEnabled(false);
+		}	
 	}
 }

@@ -197,7 +197,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	@Override
 	public void beginContact(Contact contact) {
 		Collidable collidable = (Collidable) contact.getFixtureA().getBody().getUserData();
-		Collidable other = (Collidable) contact.getFixtureA().getBody().getUserData();
+		Collidable other = (Collidable) contact.getFixtureB().getBody().getUserData();
 		collidable.beginContact(contact, other);
 		other.beginContact(contact, collidable);
 		
@@ -207,7 +207,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	@Override
 	public void endContact(Contact contact) {
 		Collidable collidable = (Collidable) contact.getFixtureA().getBody().getUserData();
-		Collidable other = (Collidable) contact.getFixtureA().getBody().getUserData();
+		Collidable other = (Collidable) contact.getFixtureB().getBody().getUserData();
 		collidable.endContact(contact, other);
 		other.endContact(contact, collidable);
 	}
@@ -216,7 +216,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
 		Collidable collidable = (Collidable) contact.getFixtureA().getBody().getUserData();
-		Collidable other = (Collidable) contact.getFixtureA().getBody().getUserData();
+		Collidable other = (Collidable) contact.getFixtureB().getBody().getUserData();
 		collidable.preSolve(contact, other);
 		other.preSolve(contact, collidable);		
 	}
@@ -225,7 +225,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
 		Collidable collidable = (Collidable) contact.getFixtureA().getBody().getUserData();
-		Collidable other = (Collidable) contact.getFixtureA().getBody().getUserData();
+		Collidable other = (Collidable) contact.getFixtureB().getBody().getUserData();
 		collidable.postSolve(contact, other);
 		other.postSolve(contact, collidable);
 	}

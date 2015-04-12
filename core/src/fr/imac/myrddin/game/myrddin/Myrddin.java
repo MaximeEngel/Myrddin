@@ -25,14 +25,20 @@ import fr.imac.myrddin.physic.PhysicUtil;
 
 public class Myrddin extends Character {
 	
-	
+	/**
+	 * time in seconds
+	 */
 	public static final float INITIAL_TIME_WITHOUT_FIRE = 0.3f;
 	
 	private float timeWithoutFire = INITIAL_TIME_WITHOUT_FIRE;
 	private float lastFire = INITIAL_TIME_WITHOUT_FIRE;
+	
 	private Texture texture = new Texture(Gdx.files.internal("set/tmw_desert_spacing.png"));
+	
 	private MyrddinState myrddinState ;
 	private MagicState magicState;
+	
+	// CONSTRUCTOR
 
 	public Myrddin(Vector2 pos, World world) {
 		super(new Rectangle(pos.x, pos.y, 48, 96),	new Rectangle(5, 5, 38, 86), BodyType.DynamicBody, 
@@ -40,6 +46,27 @@ public class Myrddin extends Character {
 		
 		myrddinState = new MyrddinIddle(this);
 	}
+	
+	// ACTOR
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		myrddinState.act(delta);
+		
+		// Fire
+		this.lastFire += delta;
+		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+			fire(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+	}
+
+
+
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+	}
+
 	
 	// FIRE
 	
@@ -64,32 +91,7 @@ public class Myrddin extends Character {
 	public boolean canFire() {
 		return 	myrddinState.getFirePos() != null
 				&& lastFire >= timeWithoutFire;
-	}
-	
-	
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		myrddinState.act(delta);
-		
-		// Fire
-		this.lastFire += delta;
-		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT))
-			fire(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-	}
-
-
-
-	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
-	}
-
-
-	@Override
-	public CollidableType getCollidableType() {
-		return CollidableType.Myrddin;
-	}
+	}	
 
 	// GETTERS - SETTERS
 
@@ -105,7 +107,14 @@ public class Myrddin extends Character {
 		
 		this.myrddinState = myrddinState;
 	}
+	
+	// COLLISION
 
+	@Override
+	public CollidableType getCollidableType() {
+		return CollidableType.Myrddin;
+	}
+	
 	@Override
 	public void beginContact(Contact contact, Collidable other) {
 		// TODO Auto-generated method stub
