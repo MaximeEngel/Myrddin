@@ -61,6 +61,9 @@ public abstract class MyrddinState {
 		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 48, 96), new Rectangle(5, 5, 38, 86));
 	}
 	
+	/**
+	 * Must be call to move the character in the air, cancel the gravity if needed
+	 */
 	protected void moveInTheAir() {
 		if(Gdx.input.isKeyPressed(Input.Keys.D))
 			myrddin.applyImpulse(new Vector2(myrddin.getMass() * 2, 0));

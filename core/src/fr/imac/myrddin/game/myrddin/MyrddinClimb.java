@@ -9,15 +9,13 @@ public class MyrddinClimb extends MyrddinState {
 
 	public MyrddinClimb(Myrddin myrddin) {
 		super(myrddin, null);
-		System.out.println("CLimb");
 	}
 
 	@Override
 	public void act(float delta) {
 		super.act(delta);		
 		
-		myrddin.setLinearVelocity(new Vector2(myrddin.getLinearVelocity().x, -1f));	
-		
+		myrddin.setLinearVelocity(new Vector2(myrddin.getLinearVelocity().x, -1f));			
 		moveOnTheClimb();
 		moveInTheAir();	
 	}
@@ -27,7 +25,6 @@ public class MyrddinClimb extends MyrddinState {
 			myrddin.applyImpulse(new Vector2(0, myrddin.getMass() * 5));
 		else if(Gdx.input.isKeyPressed(Input.Keys.S))
 			myrddin.applyImpulse(new Vector2(0, myrddin.getMass() * -7));
-		
 	}	
 
 }

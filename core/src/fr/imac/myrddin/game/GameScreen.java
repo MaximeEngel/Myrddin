@@ -46,6 +46,8 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	private World physicWorld;
 	private TiledMap tiledMap;
 	private OrthogonalTiledMapRenderer mapRenderer;
+	private float mapWidth;
+	
 	private Myrddin myrddin;
 	
 	/**
@@ -60,6 +62,8 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		tiledMap = mapLoader.load("lvl/"+level+".tmx");
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, getBatch());
 		mapRenderer.setView((OrthographicCamera) getCamera());
+		mapWidth = mapWidth();
+		System.out.println(mapWidth);
 		
 		// Generate physic of the map
 		physicWorld = new World(new Vector2(0, -9.1f),  true);
@@ -82,6 +86,14 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 				physicTileFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "none", String.class));
 			}
 		}
+	}
+	
+	private float mapWidth() {
+		MapProperties mapProperties = tiledMap.getProperties();		
+		int nbHorizontalTiles = mapProperties.get("width", 0, Integer.class);
+		int tileWidth = mapProperties.get("tilewidth", 0, Integer.class);
+		
+		return tileWidth * nbHorizontalTiles;
 	}
 	
 	
@@ -116,8 +128,16 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	private void updateCamera() {
 		OrthographicCamera camera = (OrthographicCamera) getCamera();
 		Vector3 position = camera.position;
-		position.set(myrddin.getX(), position.y, position.z);
-//		camera.update();
+		
+		position.x = myrddin.getX();
+		float minX = MyrddinGame.WIDTH / 2;
+		float maxX = mapWidth - minX;
+		if(position.x < minX )
+			position.x = minX;
+		else if(position.x > maxX)
+			position.x = maxX;
+		
+		position.set(position.x, position.y, position.z);
 		mapRenderer.setView((OrthographicCamera) getCamera());		
 	}
 
