@@ -36,8 +36,8 @@ public class MagicBullet extends PhysicActor {
 	 * @param directionShoot will be normalized in the constructor
 	 * @param world
 	 */
-	public MagicBullet(Vector2 initialPos, Vector2 directionShoot, MagicState magicState, PhysicActor owner, World world) {
-		super(new Rectangle(initialPos.x, initialPos.y, 40f, 10f), new Rectangle(4, 2, 32, 6), BodyType.DynamicBody, PhysicUtil.createFixtureDef(100f, 0f, false), false, world);
+	public MagicBullet(Vector2 initialPos, Vector2 directionShoot, MagicState magicState, PhysicActor owner) {
+		super(new Rectangle(initialPos.x, initialPos.y, 40f, 10f), new Rectangle(4, 2, 32, 6), BodyType.DynamicBody, PhysicUtil.createFixtureDef(100f, 0f, false), false);
 		
 		this.magicState = magicState;
 		this.timeSinceBirth = 0;

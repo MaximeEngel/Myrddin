@@ -1,5 +1,10 @@
 package fr.imac.myrddin.physic;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -11,8 +16,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.imac.myrddin.MyrddinGame;
+import fr.imac.myrddin.game.GameScreen;
 
-public abstract class PhysicActor extends Actor implements Collidable  {
+public abstract class PhysicActor extends Actor implements Collidable, Externalizable  {
 	
 	protected Body body;
 	
@@ -35,18 +41,31 @@ public abstract class PhysicActor extends Actor implements Collidable  {
 	 * @param preventRotation
 	 * @param world
 	 */
-	public PhysicActor(Rectangle bounds, Rectangle collisionBox, BodyType bodyType, FixtureDef fixtureDef, boolean preventRotation, World world) {
+	public PhysicActor(Rectangle bounds, Rectangle collisionBox, BodyType bodyType, FixtureDef fixtureDef, boolean preventRotation) {
 		super();		
 		if (collisionBox == null)
 			throw new IllegalArgumentException("collisionBox must not be null");
 		if (bounds == null)
 			throw new IllegalArgumentException("bounds must not be null");
 		
-		this.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
-		
-		Vector2 collisionBoxPos = new Vector2(collisionBox.x, collisionBox.y);
+		this.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);		
 		this.collisionBounds = collisionBox;
-		this.body = PhysicUtil.createRect(collisionBoxPos.add(bounds.x, bounds.y).scl(MyrddinGame.GAME_TO_PHYSIC), collisionBox.getWidth() * MyrddinGame.GAME_TO_PHYSIC, collisionBox.getHeight() * MyrddinGame.GAME_TO_PHYSIC, bodyType, fixtureDef, preventRotation, world);
+		init(bodyType, fixtureDef, preventRotation);
+	}
+	
+	public PhysicActor() {
+		
+	}
+	
+	/**
+	 * Bounds and collision bounds must be always setted.
+	 * @param bodyType
+	 * @param fixtureDef
+	 * @param preventRotation
+	 */
+	private void init(BodyType bodyType, FixtureDef fixtureDef, boolean preventRotation) {
+		Vector2 collisionBoxPos = new Vector2(collisionBounds.x, collisionBounds.y);
+		this.body = PhysicUtil.createRect(collisionBoxPos.add(getX(), getY()).scl(MyrddinGame.GAME_TO_PHYSIC), collisionBounds.getWidth() * MyrddinGame.GAME_TO_PHYSIC, collisionBounds.getHeight() * MyrddinGame.GAME_TO_PHYSIC, bodyType, fixtureDef, preventRotation, GameScreen.physicWorld);
 		
 		this.body.setUserData(this);
 		
@@ -133,6 +152,45 @@ public abstract class PhysicActor extends Actor implements Collidable  {
 	
 	public void setLinearVelocity(Vector2 v) {
 		body.setLinearVelocity(v);
+	}
+	
+	// EXTERNALIZABLE
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		// ACTOR
+		out.writeFloat(getX());
+		out.writeFloat(getY());
+		out.writeFloat(getWidth());
+		out.writeFloat(getHeight());
+		out.writeFloat(getRotation());
+		
+		// PHYSIC
+		out.writeObject(collisionBounds);
+		// fixture
+		Fixture fixture = body.getFixtureList().get(0);
+		out.writeFloat(fixture.getDensity());
+		out.writeFloat(fixture.getRestitution());
+		out.writeFloat(fixture.getFriction());
+		out.writeBoolean(fixture.isSensor());
+		//other physic
+		out.writeObject(body.getType().toString());
+		out.writeBoolean(body.isFixedRotation());
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		// ACTOR
+		this.setBounds(in.readFloat(), in.readFloat(), in.readFloat(), in.readFloat());
+		this.setRotation(in.readFloat());
+		
+		// PHYSIC
+		this.collisionBounds = (Rectangle) in.readObject();
+		FixtureDef fixtureDef = PhysicUtil.createFixtureDef(in.readFloat(), in.readFloat(), in.readFloat(), in.readBoolean());
+		init(BodyType.valueOf(String.valueOf(in.readObject())), fixtureDef, in.readBoolean());
 	}	
+	
+	
 	
 }

@@ -1,6 +1,12 @@
 package fr.imac.myrddin.game;
 
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -43,7 +49,7 @@ import fr.imac.myrddin.physic.PhysicUtil;
  */
 public class GameScreen extends Stage implements Screen, ContactListener {
 	
-	private World physicWorld;
+	public static World physicWorld;
 	private TiledMap tiledMap;
 	private OrthogonalTiledMapRenderer mapRenderer;
 	private float mapWidth;
@@ -70,10 +76,11 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		physicWorld.setContactListener(this);
 		createPhysicWorld(tiledMap);
 		
-		myrddin = new Myrddin(new Vector2(510f, 850f), physicWorld);
+		myrddin = new Myrddin(new Vector2(510f, 850f));
 		this.addActor(myrddin);
 		
 		Gdx.input.setInputProcessor(this);
+		instantSave();
 	}
 	
 	
@@ -120,6 +127,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		// TODO Auto-generated method stub
 		physicWorld.step(Gdx.graphics.getDeltaTime(), 6, 2);
 		super.act(delta);
+		if(myrddin.isOutOfTheBox())
+			instantLoad();
+		
 		updateCamera();
 	}
 
@@ -234,6 +244,39 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	}
 
 	
+	// SAVE
 	
+	public void instantSave() {
+	    try {
+			FileOutputStream fos = new FileOutputStream("testfile");
+		    ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(myrddin);
+		    oos.flush();
+		    oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void instantLoad() {
+		try {
+			FileInputStream fis = new FileInputStream("testfile");
+		    ObjectInputStream ois = new ObjectInputStream(fis);
+		    try {
+		    	myrddin.remove();
+				myrddin = (Myrddin)ois.readObject();
+		    	addActor(myrddin);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    ois.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+	    
+	}
 
 }

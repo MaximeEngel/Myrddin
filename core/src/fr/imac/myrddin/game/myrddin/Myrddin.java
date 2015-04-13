@@ -1,6 +1,10 @@
 package fr.imac.myrddin.game.myrddin;
 
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import com.badlogic.gdx.Gdx;
@@ -42,11 +46,16 @@ public class Myrddin extends Character {
 	
 	// CONSTRUCTOR
 
-	public Myrddin(Vector2 pos, World world) {
+	public Myrddin(Vector2 pos) {
 		super(new Rectangle(pos.x, pos.y, 48, 96),	new Rectangle(5, 5, 38, 86), BodyType.DynamicBody, 
-				PhysicUtil.createFixtureDef(100f, 0f, false), true, world, 3);
+				PhysicUtil.createFixtureDef(100f, 0f, false), true, 3);
 		
 		myrddinState = new MyrddinIddle(this);
+		magicState = MagicState.POWER_1;
+	}
+	
+	public Myrddin() {
+		
 	}
 	
 	// ACTOR
@@ -68,6 +77,10 @@ public class Myrddin extends Character {
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
 	}
+	
+	public boolean isOutOfTheBox() {
+		return getY() + getHeight() + 10 < 0;
+	}
 
 	
 	// FIRE
@@ -85,7 +98,7 @@ public class Myrddin extends Character {
 		targetPos.y = tmp.y;
 		
 		Vector2 directionFire = targetPos.sub(originFire);
-		MagicBullet magicBullet = new MagicBullet(originFire, directionFire, magicState, this, this.body.getWorld());
+		MagicBullet magicBullet = new MagicBullet(originFire, directionFire, magicState, this);
 		stage.addActor(magicBullet);
 		this.lastFire = 0f;
 	}
@@ -144,6 +157,24 @@ public class Myrddin extends Character {
 		
 	}
 	
+	// EXTERNALIZABLE
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		super.writeExternal(out);
+		
+		out.writeObject( magicState.toString());
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		super.readExternal(in);
+		
+		magicState = MagicState.valueOf(String.valueOf(in.readObject()));
+		myrddinState = new MyrddinIddle(this);
+	}
 	
+		
 
 }
