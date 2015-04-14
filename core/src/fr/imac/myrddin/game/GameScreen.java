@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -92,7 +93,17 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			for (MapObject mapObject : objects) {
 				physicTileFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "none", String.class));
 			}
+			
+			// Create limit world
+			RectangleMapObject leftBorder = new RectangleMapObject(-10, 0, 10, MyrddinGame.HEIGHT);
+			physicTileFactory.create(leftBorder, "Solid");
+			RectangleMapObject rightBorder = new RectangleMapObject(mapWidth, 0, 10, MyrddinGame.HEIGHT);
+			physicTileFactory.create(rightBorder, "Solid");
 		}
+	}
+	
+	private void createLimitWorld() {
+		
 	}
 	
 	private float mapWidth() {
@@ -248,7 +259,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	
 	public void instantSave() {
 	    try {
-			FileOutputStream fos = new FileOutputStream("testfile");
+			FileOutputStream fos = new FileOutputStream("instantSave.ms");
 		    ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(myrddin);
 		    oos.flush();
@@ -261,7 +272,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	
 	public void instantLoad() {
 		try {
-			FileInputStream fis = new FileInputStream("testfile");
+			FileInputStream fis = new FileInputStream("instantSave.ms");
 		    ObjectInputStream ois = new ObjectInputStream(fis);
 		    try {
 		    	myrddin.remove();

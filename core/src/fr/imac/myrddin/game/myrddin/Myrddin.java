@@ -163,7 +163,7 @@ public class Myrddin extends Character {
 	public void writeExternal(ObjectOutput out) throws IOException {
 		super.writeExternal(out);
 		
-		out.writeObject( magicState.toString());
+		out.writeObject(magicState.toString());
 	}
 
 	@Override

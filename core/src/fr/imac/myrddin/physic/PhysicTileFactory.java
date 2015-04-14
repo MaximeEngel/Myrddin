@@ -52,8 +52,7 @@ public class PhysicTileFactory {
 
 	/**
 	 * 
-	 * @param x in meters
-	 * @param y in meters
+	 * @param shape width dimension in metter
 	 */
 	private void createClimb(Shape shape) {
 		Body body = PhysicUtil.createBody(shape, BodyType.StaticBody, false, PhysicUtil.createFixtureDef(0, 0, true), this.world);
@@ -62,10 +61,9 @@ public class PhysicTileFactory {
 
 	/**
 	 * 
-	 * @param x in meters
-	 * @param y in meters
+	 * @param shape width dimension in metter
 	 */
-	private void createSolid(Shape shape) {
+	public void createSolid(Shape shape) {
 		Body body = PhysicUtil.createBody(shape, BodyType.StaticBody, false, PhysicUtil.createFixtureDef(0, 0, false), this.world);
 	    body.setUserData(new PhysicTile(CollidableType.Solid, body));
 	}		
