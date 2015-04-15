@@ -141,6 +141,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		if(myrddin.isOutOfTheBox())
 			instantLoad();
 		
+		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.S) )
+			instantSave();
+		
 		updateCamera();
 	}
 
@@ -264,9 +267,19 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		    ObjectOutputStream oos = new ObjectOutputStream(fos);
 		    Array<Actor> actors = getActors();
 		    
+		    // nb actors to save
+		    int nbSavable = 0;
 		    for (int i = 0; i < actors.size; i++) {
 				PhysicActor actor = (PhysicActor) actors.get(i);
-				actor.writeExternal(oos);				
+				if (actor.isSavable())
+					nbSavable++;		
+			}
+		    oos.writeInt(nbSavable);
+		    
+		    for (int i = 0; i < actors.size; i++) {
+				PhysicActor actor = (PhysicActor) actors.get(i);
+				if (actor.isSavable())
+					oos.writeObject(actor);			
 			}
 			
 		    oos.flush();
@@ -281,14 +294,23 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		try {
 			FileInputStream fis = new FileInputStream(new File("save/instantSave.ms"));
 		    ObjectInputStream ois = new ObjectInputStream(fis);
-		    try {
-		    	myrddin.remove();
-				myrddin = (Myrddin)ois.readObject();
-		    	addActor(myrddin);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		    
+		    int nbActorsToLoad = ois.readInt();
+		    
+		    clear();
+		    for(int i = 0; i < nbActorsToLoad ; ++i)
+		    {
+		    	 try {
+					PhysicActor physicActor = (PhysicActor)ois.readObject();
+					if (physicActor.getCollidableType() == CollidableType.Myrddin)
+						myrddin = (Myrddin) physicActor;
+			    	addActor(myrddin);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		   
 		    ois.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

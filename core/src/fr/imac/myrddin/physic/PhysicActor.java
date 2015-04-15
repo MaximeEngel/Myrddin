@@ -189,6 +189,10 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 		this.collisionBounds = (Rectangle) in.readObject();
 		FixtureDef fixtureDef = PhysicUtil.createFixtureDef(in.readFloat(), in.readFloat(), in.readFloat(), in.readBoolean());
 		init(BodyType.valueOf(String.valueOf(in.readObject())), fixtureDef, in.readBoolean());
+	}
+
+	public boolean isSavable() {
+		return false;
 	}	
 	
 	

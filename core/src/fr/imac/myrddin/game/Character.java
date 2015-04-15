@@ -26,6 +26,10 @@ public abstract class Character extends PhysicActor {
 		this.maxLife = 3;
 		this.life = this.maxLife;
 	}
+	
+	public boolean isSavable() {
+		return true;
+	}
 
 	public void healedBy(int point) {
 		this.life = Math.min(maxLife, life + point);

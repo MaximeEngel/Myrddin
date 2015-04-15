@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 
 public class MyrddinClimb extends MyrddinState {
-
+	
 	public MyrddinClimb(Myrddin myrddin) {
 		super(myrddin, null);
 	}
