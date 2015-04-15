@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 
+import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
+
 public class MyrddinClimb extends MyrddinState {
 	
 	public MyrddinClimb(Myrddin myrddin) {
@@ -26,5 +28,10 @@ public class MyrddinClimb extends MyrddinState {
 		else if(Gdx.input.isKeyPressed(Input.Keys.S))
 			myrddin.applyImpulse(new Vector2(0, myrddin.getMass() * -7));
 	}	
+
+	@Override
+	public StateType getStateType() {
+		return StateType.Climb;
+	}
 
 }

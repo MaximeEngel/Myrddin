@@ -37,6 +37,22 @@ public abstract class Character extends PhysicActor {
 	
 	public void hurtedBy(int point) {
 		this.life -= point;
+		
+		if (life < 0)
+			life = 0;
+		
+	}
+	
+	public boolean isKilled() {
+		return life == 0;
+	}
+
+	public int getLife() {
+		return life;
+	}
+	
+	public int getMaxLife() {
+		return maxLife;
 	}
 
 	@Override

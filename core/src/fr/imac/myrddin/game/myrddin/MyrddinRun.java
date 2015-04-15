@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 
+import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
+
 public class MyrddinRun extends MyrddinState {
 	
 	private float direction;
@@ -42,6 +44,11 @@ public class MyrddinRun extends MyrddinState {
 		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
 			myrddin.setMyrddinState(new MyrddinDuck(myrddin));
 		}
+	}
+	
+	@Override
+	public StateType getStateType() {
+		return StateType.Run;
 	}
 
 }

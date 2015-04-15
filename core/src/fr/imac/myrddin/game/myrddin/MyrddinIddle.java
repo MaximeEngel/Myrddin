@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 
+import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
+
 public class MyrddinIddle extends MyrddinState {
 
 	public MyrddinIddle(Myrddin myrddin) {
@@ -28,4 +30,9 @@ public class MyrddinIddle extends MyrddinState {
 			myrddin.setMyrddinState(new MyrddinDuck(myrddin));
 	}
 
+
+	@Override
+	public StateType getStateType() {
+		return StateType.Iddle;
+	}
 }

@@ -41,6 +41,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import fr.imac.myrddin.MyrddinGame;
+import fr.imac.myrddin.game.ennemy.EnnemyFactory;
 import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
@@ -84,6 +85,8 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		myrddin = new Myrddin(new Vector2(510f, 850f));
 		this.addActor(myrddin);
 		
+		createEnnemy(tiledMap);
+		
 		Gdx.input.setInputProcessor(this);
 		instantSave();
 	}
@@ -103,6 +106,19 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			physicTileFactory.create(leftBorder, "Solid");
 			RectangleMapObject rightBorder = new RectangleMapObject(mapWidth, 0, 10, MyrddinGame.HEIGHT);
 			physicTileFactory.create(rightBorder, "Solid");
+		}
+	}
+	
+	private void createEnnemy(TiledMap tiledMap) {
+		if (tiledMap != null)
+		{
+			EnnemyFactory ennemyFactory = new EnnemyFactory();
+			MapObjects objects = tiledMap.getLayers().get("Ennemies").getObjects();
+			
+			for (MapObject mapObject : objects) {
+				PhysicActor ennemy = ennemyFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "none", String.class));
+				addActor(ennemy);
+			}			
 		}
 	}
 	
@@ -297,7 +313,16 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		    
 		    int nbActorsToLoad = ois.readInt();
 		    
+		    // Clean physic world and stage
+		    Array<Actor> actors = getActors();
+		    for (int i = 0; i < actors.size; i++) {
+				PhysicActor actor = (PhysicActor) actors.get(i);
+				if (actor.isSavable())
+					actor.dispose();	
+			}
 		    clear();
+		    
+		    
 		    for(int i = 0; i < nbActorsToLoad ; ++i)
 		    {
 		    	 try {

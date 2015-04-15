@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 
+import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
+
 public class MyrddinJump extends MyrddinState {
 
 	public MyrddinJump(Myrddin myrddin) {
@@ -30,6 +32,11 @@ public class MyrddinJump extends MyrddinState {
 		
 		moveInTheAir();
 		
+	}
+
+	@Override
+	public StateType getStateType() {
+		return StateType.Jump;
 	}
 
 }

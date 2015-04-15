@@ -12,11 +12,18 @@ public class MyrddinGame extends Game {
 	public static final float PHYSIC_TO_GAME = 50f;
 	
 	
-	private AssetManager assetManager;
+	public static AssetManager assetManager;
 	
 	@Override
 	public void create () {
+		assetManager = new AssetManager();
+		initialLoadAsset();
+		
+		
 		this.setScreen(new GameScreen(0));
 	}
 
+	private void initialLoadAsset() {
+		
+	}
 }

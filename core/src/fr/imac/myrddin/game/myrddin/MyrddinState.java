@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class MyrddinState {
 	
 	public static final float MAX_VEL = 3;
+	public enum StateType {
+		Iddle, Bump, Climb, Run, Duck, Fall, Jump;
+	}
 	
 	protected Myrddin myrddin;
 	protected Animation animation;
@@ -72,5 +75,7 @@ public abstract class MyrddinState {
 		else 
 			myrddin.setLinearVelocity(new Vector2(0, myrddin.getLinearVelocity().y));
 	}
+	
+	public abstract StateType getStateType();
 	
 }

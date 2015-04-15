@@ -4,7 +4,6 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.imac.myrddin.MyrddinGame;
@@ -32,7 +30,7 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 	private Vector2 newPos;
 	private float newAngle;
 	private boolean changing;
-
+	
 	/**
 	 * @param bounds set the bounds of the actor in pixel
 	 * @param collisionBox offset and size of the collision box in pixel
@@ -85,6 +83,7 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 		this.setRotation(body.getAngle());
 		
 		switchFixture();
+		
 	}
 	
 	public void setUserData(Collidable uData) {
@@ -128,6 +127,10 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 			fixtureToDestroy = null;
 			changing = false;
 		}
+	}
+	
+	public void dispose() {
+		this.body.getWorld().destroyBody(this.body);
 	}
 	
 	public boolean isChanging() {
@@ -194,6 +197,8 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 	public boolean isSavable() {
 		return false;
 	}	
+	
+	
 	
 	
 	

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="23" tilewidth="32" tileheight="32" nextobjectid="23">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="23" tilewidth="32" tileheight="32" nextobjectid="30">
  <tileset firstgid="1" source="tmw_desert_spacing.tsx"/>
  <layer name="Tiles" width="120" height="23">
   <data encoding="csv">
@@ -40,5 +40,11 @@
   <object id="18" type="Climb" x="1568" y="96" width="96" height="576"/>
   <object id="21" type="Solid" x="832" y="448" width="64" height="64"/>
   <object id="22" type="Climb" x="1664" y="192" width="96" height="480"/>
+ </objectgroup>
+ <objectgroup name="Ennemies">
+  <object id="25" type="StaticEnnemy" x="1728" y="64" width="32" height="32"/>
+  <object id="26" type="StaticEnnemy" x="2048" y="640" width="32" height="32"/>
+  <object id="28" type="StaticEnnemy" x="2656" y="640" width="32" height="32"/>
+  <object id="29" type="StaticEnnemy" x="2880" y="640" width="32" height="32"/>
  </objectgroup>
 </map>

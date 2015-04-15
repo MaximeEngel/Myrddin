@@ -24,6 +24,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import fr.imac.myrddin.game.Character;
+import fr.imac.myrddin.game.GameScreen;
 import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.physic.Collidable;
@@ -58,6 +59,21 @@ public class Myrddin extends Character {
 		
 	}
 	
+	public void bump(Vector2 impulse) {
+		this.setMyrddinState(new MyrddinBump(this, impulse));
+	}
+	
+	// CHARACTER
+
+	
+	public void kill() {
+		
+		GameScreen gameScreen = (GameScreen) getStage();
+		gameScreen.instantLoad();
+	}
+	
+	
+	
 	// ACTOR
 	
 	@Override
@@ -69,9 +85,11 @@ public class Myrddin extends Character {
 		this.lastFire += delta;
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 			fire(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+		
+		// KILL
+		if(isKilled())
+			kill();
 	}
-
-
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
@@ -123,7 +141,8 @@ public class Myrddin extends Character {
 		if (myrddinState == null)
 			throw new IllegalArgumentException("myrddinState must not be null");
 		
-		this.myrddinState = myrddinState;
+		if(this.myrddinState.getStateType() != myrddinState.getStateType())
+			this.myrddinState = myrddinState;
 	}
 	
 	// COLLISION
@@ -174,7 +193,5 @@ public class Myrddin extends Character {
 		magicState = MagicState.valueOf(String.valueOf(in.readObject()));
 		myrddinState = new MyrddinIddle(this);
 	}
-	
-		
 
 }

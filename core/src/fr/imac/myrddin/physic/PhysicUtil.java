@@ -105,4 +105,11 @@ public class PhysicUtil {
 		fixtureDef.friction = fixture.getFriction();
 		return fixtureDef;
 	}
+	
+	public static Vector2 positionFromRectMapObject(RectangleMapObject rectangleObject) {
+		Vector2 position = new Vector2();		
+		rectangleObject.getRectangle().getPosition(position);
+		
+		return position;
+	}
 }
