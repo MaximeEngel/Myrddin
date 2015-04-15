@@ -1,6 +1,7 @@
 package fr.imac.myrddin.game;
 
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,7 +35,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import fr.imac.myrddin.MyrddinGame;
@@ -42,6 +45,7 @@ import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.Collidable.CollidableType;
+import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicTileFactory;
 import fr.imac.myrddin.physic.PhysicUtil;
 
@@ -100,10 +104,6 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			RectangleMapObject rightBorder = new RectangleMapObject(mapWidth, 0, 10, MyrddinGame.HEIGHT);
 			physicTileFactory.create(rightBorder, "Solid");
 		}
-	}
-	
-	private void createLimitWorld() {
-		
 	}
 	
 	private float mapWidth() {
@@ -259,9 +259,16 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	
 	public void instantSave() {
 	    try {
-			FileOutputStream fos = new FileOutputStream("instantSave.ms");
+	    	
+			FileOutputStream fos = new FileOutputStream(new File("save/instantSave.ms"));
 		    ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(myrddin);
+		    Array<Actor> actors = getActors();
+		    
+		    for (int i = 0; i < actors.size; i++) {
+				PhysicActor actor = (PhysicActor) actors.get(i);
+				actor.writeExternal(oos);				
+			}
+			
 		    oos.flush();
 		    oos.close();
 		} catch (IOException e) {
@@ -272,7 +279,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	
 	public void instantLoad() {
 		try {
-			FileInputStream fis = new FileInputStream("instantSave.ms");
+			FileInputStream fis = new FileInputStream(new File("save/instantSave.ms"));
 		    ObjectInputStream ois = new ObjectInputStream(fis);
 		    try {
 		    	myrddin.remove();
