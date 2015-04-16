@@ -38,4 +38,8 @@ public class MyrddinGame extends Game {
 	public void startGame(int lvl) {
 		this.setScreen(new GameScreen(lvl));
 	}
+	
+	public void startLastSave() {
+		
+	}
 }
