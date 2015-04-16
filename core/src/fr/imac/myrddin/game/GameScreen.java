@@ -75,7 +75,6 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, getBatch());
 		mapRenderer.setView((OrthographicCamera) getCamera());
 		mapWidth = mapWidth();
-		System.out.println(mapWidth);
 		
 		// Generate physic of the map
 		physicWorld = new World(new Vector2(0, -9.1f),  true);
@@ -112,7 +111,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	private void createEnnemy(TiledMap tiledMap) {
 		if (tiledMap != null)
 		{
-			EnnemyFactory ennemyFactory = new EnnemyFactory();
+			EnnemyFactory ennemyFactory = new EnnemyFactory(this);
 			MapObjects objects = tiledMap.getLayers().get("Ennemies").getObjects();
 			
 			for (MapObject mapObject : objects) {
@@ -342,6 +341,12 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			e.printStackTrace();
 		}  
 	    
+	}
+	
+	// GETTERS - SETTERS	
+
+	public Myrddin getMyrddin() {
+		return myrddin;
 	}
 
 }

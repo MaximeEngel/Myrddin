@@ -4,6 +4,9 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -155,6 +158,19 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 	
 	public void setLinearVelocity(Vector2 v) {
 		body.setLinearVelocity(v);
+	}
+	
+	// UTILS METHODES ON ACTOR
+	
+	public boolean isVisible() {
+		Camera camera = getStage().getCamera();
+		float halfScreenWidth = MyrddinGame.WIDTH * 0.5f;
+		float halfWidth = 0.5f * getWidth();
+		
+		if ( getX() - halfWidth >= camera.position.x - halfScreenWidth && getX() + halfWidth <= camera.position.x + halfScreenWidth )
+			return true;
+		
+		return false;
 	}
 	
 	// EXTERNALIZABLE

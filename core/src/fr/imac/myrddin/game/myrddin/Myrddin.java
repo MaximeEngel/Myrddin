@@ -25,25 +25,25 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import fr.imac.myrddin.game.Character;
 import fr.imac.myrddin.game.GameScreen;
+import fr.imac.myrddin.game.MagicWeapon;
+import fr.imac.myrddin.game.MagicWeaponOwner;
 import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.PhysicUtil;
 
-public class Myrddin extends Character {
+public class Myrddin extends Character implements MagicWeaponOwner {
 	
 	/**
 	 * time in seconds
 	 */
 	public static final float INITIAL_TIME_WITHOUT_FIRE = 0.3f;
 	
-	private float timeWithoutFire = INITIAL_TIME_WITHOUT_FIRE;
-	private float lastFire = INITIAL_TIME_WITHOUT_FIRE;
-	
 	private Texture texture = new Texture(Gdx.files.internal("set/tmw_desert_spacing.png"));
 	
 	private MyrddinState myrddinState ;
 	private MagicState magicState;
+	private MagicWeapon<Myrddin> magicWeapon;
 	
 	// CONSTRUCTOR
 
@@ -53,6 +53,7 @@ public class Myrddin extends Character {
 		
 		myrddinState = new MyrddinIddle(this);
 		magicState = MagicState.POWER_1;
+		magicWeapon = new MagicWeapon<Myrddin>(INITIAL_TIME_WITHOUT_FIRE, this);
 	}
 	
 	public Myrddin() {
@@ -61,6 +62,18 @@ public class Myrddin extends Character {
 	
 	public void bump(Vector2 impulse) {
 		this.setMyrddinState(new MyrddinBump(this, impulse));
+	}
+	
+	// WEAPON OWNER
+
+	@Override
+	public Vector2 getFirePos() {
+		return myrddinState.getFirePos();
+	}
+
+	@Override
+	public MagicState getMagicState() {
+		return magicState;
 	}
 	
 	// CHARACTER
@@ -82,7 +95,7 @@ public class Myrddin extends Character {
 		myrddinState.act(delta);
 		
 		// Fire
-		this.lastFire += delta;
+		magicWeapon.act(delta);
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 			fire(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 		
@@ -103,10 +116,13 @@ public class Myrddin extends Character {
 	
 	// FIRE
 	
+	/**
+	 * 
+	 * @param targetPos mouse position in pixel
+	 */
 	public void fire(Vector2 targetPos) {
-		Vector2 originFire = myrddinState.getFirePos();
 		
-		if(!canFire() || targetPos == null)
+		if(targetPos == null)
 			return;
 		
 		Stage stage = this.getStage();
@@ -115,16 +131,9 @@ public class Myrddin extends Character {
 		targetPos.x = tmp.x;
 		targetPos.y = tmp.y;
 		
-		Vector2 directionFire = targetPos.sub(originFire);
-		MagicBullet magicBullet = new MagicBullet(originFire, directionFire, magicState, this);
-		stage.addActor(magicBullet);
-		this.lastFire = 0f;
+		magicWeapon.fire(targetPos);
 	}
-	
-	public boolean canFire() {
-		return 	myrddinState.getFirePos() != null
-				&& lastFire >= timeWithoutFire;
-	}	
+		
 
 	// GETTERS - SETTERS
 
