@@ -24,10 +24,12 @@ public class MagicWeapon<T extends PhysicActor & MagicWeaponOwner> {
 	}
 	
 	public void fire(Vector2 targetPos) {
+		System.out.println(lastFire + " "+ timeWithoutFire);
 		if(!canFire() || targetPos == null)
 			return;		
 		
-		Vector2 originFire = owner.getFirePos();
+		System.out.println("FIRE");
+		Vector2 originFire = owner.getWeaponPos();
 		if (originFire == null)
 			return;
 		

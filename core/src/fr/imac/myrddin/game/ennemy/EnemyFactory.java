@@ -6,11 +6,11 @@ import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicUtil;
 
-public class EnnemyFactory {	
+public class EnemyFactory {	
 	
 	GameScreen gameScreen;	
 	
-	public EnnemyFactory(GameScreen gameScreen) {
+	public EnemyFactory(GameScreen gameScreen) {
 		super();
 		this.gameScreen = gameScreen;
 	}
@@ -31,11 +31,11 @@ public class EnnemyFactory {
 
 	private PhysicActor createTowerEnnemy(RectangleMapObject mapObject) {
 		MagicState magicState = MagicState.valueOf(mapObject.getProperties().get("magicState", String.valueOf(MagicState.POWER_1), String.class));
-		return new TowerEnnemy(PhysicUtil.positionFromRectMapObject(mapObject), magicState, gameScreen);
+		return new TowerEnemy(PhysicUtil.positionFromRectMapObject(mapObject), magicState, gameScreen);
 	}
 
 	public PhysicActor createStaticEnnemy(RectangleMapObject mapObject) {
-		return new StaticEnnemy(PhysicUtil.positionFromRectMapObject(mapObject));
+		return new StaticEnemy(PhysicUtil.positionFromRectMapObject(mapObject));
 	}
 	
 }

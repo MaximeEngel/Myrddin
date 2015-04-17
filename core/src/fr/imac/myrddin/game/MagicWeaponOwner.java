@@ -6,7 +6,7 @@ import fr.imac.myrddin.game.magic.MagicState;
 
 public interface MagicWeaponOwner {
 	
-	public Vector2 getFirePos();
+	public Vector2 getWeaponPos();
 	
 	public MagicState getMagicState();
 } 

@@ -3,9 +3,10 @@ package fr.imac.myrddin.game.ennemy;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 
 import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.Character;
@@ -15,55 +16,47 @@ import fr.imac.myrddin.game.MagicWeaponOwner;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
-import fr.imac.myrddin.physic.PhysicUtil;
+import fr.imac.myrddin.physic.PhysicActor;
 
-public class TowerEnnemy extends Character implements MagicWeaponOwner{
+public abstract class EnnemyShooter extends Character implements Enemy, MagicWeaponOwner {
 	
-	private static final float MAXIMUM_SCOPE = MyrddinGame.WIDTH * 0.5f;
+	private static final float MAX_LAST_TIME_SEEN = 2f;
 	private MagicState magicState;
 	private GameScreen gameScreen;
 	
 	// offset in function of the bottom left of the fire's origin.
-	private MagicWeapon<TowerEnnemy> magicWeapon;
-	private Vector2 firePos;
+	private MagicWeapon<EnnemyShooter> magicWeapon;
 	
 	private float lastTimeSeen;
-	
+
 	/**
-	 * Only use it for externalization.
+	 * In stage pixel unit
 	 */
-	public TowerEnnemy() {
-		super();
-		
-		defaultInit();
-	}
-	
-	public TowerEnnemy(Vector2 pos, MagicState magicState, GameScreen gameScreen) {
-		super(new Rectangle(pos.x, pos.y, 50, 50), new Rectangle(5, 0, 40, 50), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true, 3);
-		
-		defaultInit();
+	private float maximumScope = MyrddinGame.WIDTH * 0.5f;
+
+	public EnnemyShooter(Rectangle bounds, Rectangle collisionBox,
+			BodyType bodyType, FixtureDef fixtureDef, boolean preventRotation,
+			int initialLife, MagicState magicState, GameScreen gameScreen) {
+		super(bounds, collisionBox, bodyType, fixtureDef, preventRotation,
+				initialLife);
 		this.magicState = magicState;
 		this.gameScreen = gameScreen;
+		
+		defaultInit();
 	}
 	
-	
+	public EnnemyShooter() {
+		defaultInit();
+	}
 	
 	private void defaultInit() {
-		this.firePos = new Vector2(10 + getX(), 10 + getY());		
-		this.magicWeapon = new MagicWeapon<TowerEnnemy>(0.3f, this);
+		this.magicWeapon = new MagicWeapon<EnnemyShooter>(0.3f, this);
+		this.lastTimeSeen = MAX_LAST_TIME_SEEN;
 	}
-
+	
+	// ENNEMY SHOOTER
 	
 	
-	
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		
-		if(canShootMyrddin())
-			shootOnMyrddin();
-		this.lastTimeSeen += delta;
-	}
 	
 	public void shootOnMyrddin() {
 		Myrddin myrddin = gameScreen.getMyrddin();
@@ -72,6 +65,17 @@ public class TowerEnnemy extends Character implements MagicWeaponOwner{
 		targetPos.add(MathUtils.random(-20, 20), MathUtils.random(-20, 20));
 		
 		magicWeapon.fire(targetPos);
+	}
+
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		
+		System.out.println(canShoot()+"  "+canShootMyrddin());
+		magicWeapon.act(delta);
+		if(canShootMyrddin())
+			shootOnMyrddin();
+		this.lastTimeSeen += delta;
 	}
 
 	/**
@@ -84,19 +88,26 @@ public class TowerEnnemy extends Character implements MagicWeaponOwner{
 		
 		// Test if myrddin is in scope
 		Myrddin myrddin = gameScreen.getMyrddin();
-		Vector2 myrddinPos = new Vector2(myrddin.getX(), myrddin.getY());
+		Vector2 myrddinPos = new Vector2(myrddin.getCenterX(), myrddin.getCenterY());
 		Vector2 myrddinPos2 = new Vector2(myrddinPos);
-		if (myrddinPos2.sub(getFirePos()).len2() > MAXIMUM_SCOPE * MAXIMUM_SCOPE) 
+		Vector2 firePos = getWeaponPos();
+		float len2 = myrddinPos2.sub(firePos).len2();
+		if ( len2 > maximumScope * maximumScope) 
 			return false;		
 		
+		
+		Vector2 physicFirePos = new Vector2(firePos).scl(MyrddinGame.GAME_TO_PHYSIC);
+		myrddinPos.scl(MyrddinGame.GAME_TO_PHYSIC);
 		final boolean[] noObstruction = new boolean[] {true};
-		gameScreen.physicWorld.rayCast(new RayCastCallback() {
+		GameScreen.physicWorld.rayCast(new RayCastCallback() {
 			
 			@Override
 			public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 				Collidable collidable = (Collidable) fixture.getBody().getUserData();
-				
+
+				System.out.println(collidable.getCollidableType() +"  "+collidable.getClass());
 				if(collidableObstruct(collidable)) {
+					System.out.println(fraction);
 					noObstruction[0] = false;
 					// Stop ray one obstruction is sufficient to obstruct the shoot
 					return 0;
@@ -106,15 +117,15 @@ public class TowerEnnemy extends Character implements MagicWeaponOwner{
 				return 1;
 			}
 			
-		}, getFirePos(), myrddinPos);
-		
+		}, physicFirePos, myrddinPos);
+		System.out.println(noObstruction[0]);
 		return noObstruction[0];
 	}
 	
 	public boolean collidableObstruct(Collidable collidable) {
 		CollidableType type = collidable.getCollidableType();
 		return 	type == CollidableType.Solid
-				|| type == CollidableType.Ennemy;
+				|| (type == CollidableType.Ennemy && ((Enemy) collidable).obstructBulletOf(this));
 	}
 	
 	/**
@@ -122,7 +133,7 @@ public class TowerEnnemy extends Character implements MagicWeaponOwner{
 	 * @return if the tower is visible on the screen or has been visible few time ago
 	 */
 	public boolean canShoot() {
-		if (lastTimeSeen < 2f)
+		if (lastTimeSeen < MAX_LAST_TIME_SEEN)
 			return true;
 		
 		if (isVisible()) {
@@ -133,16 +144,17 @@ public class TowerEnnemy extends Character implements MagicWeaponOwner{
 		return false;		
 	}
 	
-	// MAGIC WEAPON OWNER
-
+	// WEAPON OWNER
+	
 	@Override
-	public Vector2 getFirePos() {
-		return firePos;
+	public Vector2 getWeaponPos() {
+		return new Vector2(25 + getX(), 55 + getY());
 	}
 
 	@Override
 	public MagicState getMagicState() {
-		return magicState;
+		// TODO Auto-generated method stub
+		return null;
 	}	
-	
+
 }

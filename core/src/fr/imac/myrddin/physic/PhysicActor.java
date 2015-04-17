@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.GameScreen;
+import fr.imac.myrddin.physic.Collidable.CollidableType;
 
 public abstract class PhysicActor extends Actor implements Collidable, Externalizable  {
 	
@@ -132,8 +134,12 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 		}
 	}
 	
+	/**
+	 * Destroy body and remove the actor of the parent
+	 */
 	public void dispose() {
 		this.body.getWorld().destroyBody(this.body);
+		remove();
 	}
 	
 	public boolean isChanging() {
@@ -173,7 +179,47 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 		return false;
 	}
 	
+	
+	
 	// EXTERNALIZABLE
+
+	@Override
+	public CollidableType getCollidableType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void beginContact(Contact contact, Collidable other) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void endContact(Contact contact, Collidable other) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void preSolve(Contact contact, Collidable other) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void postSolve(Contact contact, Collidable other) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public float getCenterX() {
+		return getX() + getWidth() * 0.5f;
+	}
+
+	public float getCenterY() {
+		return getY() + getHeight() * 0.5f;
+	}
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {

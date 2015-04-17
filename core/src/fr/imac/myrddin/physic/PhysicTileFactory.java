@@ -64,7 +64,7 @@ public class PhysicTileFactory {
 	 * @param shape width dimension in metter
 	 */
 	public void createSolid(Shape shape) {
-		Body body = PhysicUtil.createBody(shape, BodyType.StaticBody, false, PhysicUtil.createFixtureDef(0, 0, false), this.world);
+		Body body = PhysicUtil.createBody(shape, BodyType.StaticBody, false, PhysicUtil.createFixtureDef(100.f, 0, 0.1f, false), this.world);
 	    body.setUserData(new PhysicTile(CollidableType.Solid, body));
 	}		
 	

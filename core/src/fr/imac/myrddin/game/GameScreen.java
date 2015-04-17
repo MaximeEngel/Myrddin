@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -41,7 +42,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import fr.imac.myrddin.MyrddinGame;
-import fr.imac.myrddin.game.ennemy.EnnemyFactory;
+import fr.imac.myrddin.game.ennemy.EnemyFactory;
 import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
@@ -111,7 +112,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	private void createEnnemy(TiledMap tiledMap) {
 		if (tiledMap != null)
 		{
-			EnnemyFactory ennemyFactory = new EnnemyFactory(this);
+			EnemyFactory ennemyFactory = new EnemyFactory(this);
 			MapObjects objects = tiledMap.getLayers().get("Ennemies").getObjects();
 			
 			for (MapObject mapObject : objects) {
@@ -282,18 +283,20 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		    ObjectOutputStream oos = new ObjectOutputStream(fos);
 		    Array<Actor> actors = getActors();
 		    
-		    // nb actors to save
-		    int nbSavable = 0;
+		    // Select the actors to save
+		    LinkedList<PhysicActor> actorsToSave = new LinkedList<PhysicActor>();
 		    for (int i = 0; i < actors.size; i++) {
-				PhysicActor actor = (PhysicActor) actors.get(i);
-				if (actor.isSavable())
-					nbSavable++;		
+		    	Actor actor =  actors.get(i);
+		    	if(actor instanceof PhysicActor) {
+					PhysicActor physicActor = (PhysicActor) actor;
+					if (physicActor.isSavable())
+						actorsToSave.add(physicActor);		    		
+		    	}		
 			}
-		    oos.writeInt(nbSavable);
 		    
-		    for (int i = 0; i < actors.size; i++) {
-				PhysicActor actor = (PhysicActor) actors.get(i);
-				if (actor.isSavable())
+		    // Save the needed actors
+		    oos.writeInt(actorsToSave.size());		    
+		    for (PhysicActor actor : actorsToSave) {
 					oos.writeObject(actor);			
 			}
 			
@@ -312,14 +315,16 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		    
 		    int nbActorsToLoad = ois.readInt();
 		    
-		    // Clean physic world and stage
+		    // Clean actors
 		    Array<Actor> actors = getActors();
 		    for (int i = 0; i < actors.size; i++) {
-				PhysicActor actor = (PhysicActor) actors.get(i);
-				if (actor.isSavable())
-					actor.dispose();	
+		    	Actor actor =  actors.get(i);
+		    	if(actor instanceof PhysicActor) {
+					PhysicActor physicActor = (PhysicActor) actor;
+					if (physicActor.isSavable())
+						physicActor.dispose();	    		
+		    	}		
 			}
-		    clear();
 		    
 		    
 		    for(int i = 0; i < nbActorsToLoad ; ++i)
@@ -328,7 +333,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 					PhysicActor physicActor = (PhysicActor)ois.readObject();
 					if (physicActor.getCollidableType() == CollidableType.Myrddin)
 						myrddin = (Myrddin) physicActor;
-			    	addActor(myrddin);
+			    	addActor(physicActor);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

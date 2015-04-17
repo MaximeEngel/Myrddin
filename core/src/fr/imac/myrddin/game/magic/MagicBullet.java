@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 
+import fr.imac.myrddin.game.ennemy.Enemy;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.PhysicActor;
@@ -37,7 +38,7 @@ public class MagicBullet extends PhysicActor {
 	 * @param world
 	 */
 	public MagicBullet(Vector2 initialPos, Vector2 directionShoot, MagicState magicState, PhysicActor owner) {
-		super(new Rectangle(initialPos.x, initialPos.y, 40f, 10f), new Rectangle(4, 2, 32, 6), BodyType.DynamicBody, PhysicUtil.createFixtureDef(100f, 0f, false), false);
+		super(new Rectangle(initialPos.x, initialPos.y, 40f, 10f), new Rectangle(4, 2, 32, 6), BodyType.DynamicBody, PhysicUtil.createFixtureDef(10f, 0f, false), false);
 		
 		this.magicState = magicState;
 		this.timeSinceBirth = 0;
@@ -85,7 +86,7 @@ public class MagicBullet extends PhysicActor {
 
 
 	@Override
-	public void postSolve(Contact contact, Collidable other) {
+	public void postSolve(Contact contact, Collidable other) {		
 		hasContacted = true;		
 	}
 
@@ -95,5 +96,11 @@ public class MagicBullet extends PhysicActor {
 		if (this.owner.equals(other)) {
 			contact.setEnabled(false);
 		}	
+		else if (other.getCollidableType() == CollidableType.Ennemy) {
+			Enemy enemy = (Enemy) other;
+			if (!enemy.obstructBulletOf(this.owner)) {
+				contact.setEnabled(false);
+			}
+		}
 	}
 }

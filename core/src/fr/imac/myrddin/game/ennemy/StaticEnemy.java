@@ -1,18 +1,23 @@
 package fr.imac.myrddin.game.ennemy;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
+
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicUtil;
 
-public class StaticEnnemy extends PhysicActor implements Ennemy {	
+public class StaticEnemy extends PhysicActor implements Enemy {	
 	
 
-	public StaticEnnemy(Vector2 pos) {
+	public StaticEnemy(Vector2 pos) {
 		super(new Rectangle(pos.x, pos.y, 50, 50), new Rectangle(5, 0, 40, 50), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true);
 	}
 
@@ -56,5 +61,26 @@ public class StaticEnnemy extends PhysicActor implements Ennemy {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public boolean obstructBulletOf(PhysicActor owner) {
+		return owner.getCollidableType() != CollidableType.Ennemy;
+	}
+	
+//	// EXTERNALISATION
+//
+//	@Override
+//	public void writeExternal(ObjectOutput out) throws IOException {
+//		super.writeExternal(out);
+//	}
+//
+//	@Override
+//	public void readExternal(ObjectInput in) throws IOException,
+//			ClassNotFoundException {
+//		// TODO Auto-generated method stub
+//		super.readExternal(in);
+//	}
+	
+	
 
 }

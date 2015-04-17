@@ -49,7 +49,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 
 	public Myrddin(Vector2 pos) {
 		super(new Rectangle(pos.x, pos.y, 48, 96),	new Rectangle(5, 5, 38, 86), BodyType.DynamicBody, 
-				PhysicUtil.createFixtureDef(100f, 0f, false), true, 3);
+				PhysicUtil.createFixtureDef(100f, 0f, 0.1f, false), true, 3);
 		
 		myrddinState = new MyrddinIddle(this);
 		magicState = MagicState.POWER_1;
@@ -67,7 +67,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	// WEAPON OWNER
 
 	@Override
-	public Vector2 getFirePos() {
+	public Vector2 getWeaponPos() {
 		return myrddinState.getFirePos();
 	}
 
