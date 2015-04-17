@@ -1,8 +1,12 @@
 package fr.imac.myrddin.menu;
 
 
+import java.io.File;
+
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.badlogic.gdx.utils.Array;
 
 import fr.imac.myrddin.MyrddinGame;
 
@@ -48,16 +53,107 @@ public class MenuScreen extends Stage implements Screen {
 	
 	//MENU SCREEN METHODS
 	private void initMainMenu() {
-		TextButton textButton = new TextButton("Jouer", this.mainTextButtonStyle);
-		textButton.addListener(new ChangeListener() {
+		//clear screen
+		table.reset();
+				
+		//do debug
+		table.setDebug(true);
+				
+		//add resume button
+		TextButton textButtonResume = new TextButton("Reprendre la partie", this.mainTextButtonStyle);
+		textButtonResume.addListener(new ChangeListener() {
 			
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				myrddinGame.startGame(0);
+				myrddinGame.startLastSave();
 				
 			}
 		});
-		table.add(textButton);
+		table.add(textButtonResume);
+		
+		table.row();
+		
+		//add new game button
+		TextButton textButtonNew = new TextButton("Nouvelle partie", this.mainTextButtonStyle);
+		textButtonNew.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				initNewGameMenu();
+				
+			}
+		});
+		table.add(textButtonNew);
+		
+		table.row();
+		
+		//add quit button
+		TextButton textButtonQuit = new TextButton("Quitter", this.mainTextButtonStyle);
+		textButtonQuit.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				Gdx.app.exit();	
+			}
+		});
+		table.add(textButtonQuit);
+	}
+	
+	//screen to choose a level
+	private void initNewGameMenu() {
+		//clear screen
+		table.reset();
+		
+		//do debug
+		table.setDebug(true);
+		
+		//count number of files
+		int count = getHandles();
+		
+		//create text buttons depending on the number of levels
+		for(int nbLevel = 0; nbLevel < count; nbLevel++) {
+			String stringNbLevel = Integer.toString(nbLevel);
+			TextButton textButton = new TextButton(stringNbLevel, this.mainTextButtonStyle);
+			
+			final int nbLevelTmp = nbLevel;
+			textButton.addListener(new ChangeListener() {
+				
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					myrddinGame.startGame(nbLevelTmp);
+						
+				}
+			});
+			table.add(textButton);
+		}
+		
+		//add return button
+		TextButton textButtonReturn = new TextButton("Retour au menu", this.mainTextButtonStyle);
+		textButtonReturn.addListener(new ChangeListener() {
+							
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				initMainMenu();
+							
+			}
+		});
+		table.add(textButtonReturn);
+	}
+	
+	//count number of files in a repertory
+	public int getHandles() {
+		FileHandle dirHandle;
+		if (Gdx.app.getType() == ApplicationType.Android)
+			dirHandle = Gdx.files.internal("lvl");
+		else
+			dirHandle = Gdx.files.internal("./bin/lvl");
+		
+		int count = 0;
+	    FileHandle[] newHandles = dirHandle.list();
+	    for (FileHandle f : newHandles)
+	        if(f.name().endsWith(".tmx")) count++;
+
+	    return count;
 	}
 	
 	//
