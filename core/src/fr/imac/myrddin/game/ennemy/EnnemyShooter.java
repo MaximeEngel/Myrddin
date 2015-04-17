@@ -71,7 +71,6 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	public void act(float delta) {
 		super.act(delta);
 		
-		System.out.println(canShoot()+"  "+canShootMyrddin());
 		magicWeapon.act(delta);
 		if(canShootMyrddin())
 			shootOnMyrddin();
@@ -105,9 +104,7 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 			public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 				Collidable collidable = (Collidable) fixture.getBody().getUserData();
 
-				System.out.println(collidable.getCollidableType() +"  "+collidable.getClass());
 				if(collidableObstruct(collidable)) {
-					System.out.println(fraction);
 					noObstruction[0] = false;
 					// Stop ray one obstruction is sufficient to obstruct the shoot
 					return 0;
@@ -118,7 +115,6 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 			}
 			
 		}, physicFirePos, myrddinPos);
-		System.out.println(noObstruction[0]);
 		return noObstruction[0];
 	}
 	
