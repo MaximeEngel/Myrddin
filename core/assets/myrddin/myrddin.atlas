@@ -4,51 +4,44 @@ filter: Linear,Linear
 repeat: none
 climb
   rotate: false
-  xy: 2, 1180
+  xy: 2, 1082
   size: 30, 96
   orig: 30, 96
   offset: 0, 0
   index: 1
 climb
   rotate: false
-  xy: 2, 982
+  xy: 2, 884
   size: 32, 98
   orig: 32, 98
   offset: 0, 0
   index: 2
 climb
   rotate: false
-  xy: 2, 1278
+  xy: 2, 1180
   size: 30, 96
   orig: 30, 96
   offset: 0, 0
   index: 3
 duck
   rotate: false
-  xy: 2, 100
-  size: 52, 96
-  orig: 52, 96
-  offset: 0, 0
-  index: 1
-duck
-  rotate: false
   xy: 2, 2
   size: 60, 96
   orig: 60, 96
   offset: 0, 0
-  index: 2
+  index: -1
 iddle
   rotate: false
-  xy: 2, 1082
+  xy: 2, 984
   size: 32, 96
   orig: 32, 96
   offset: 0, 0
   index: -1
 run
   rotate: false
-  xy: 2, 296
-  size: 48, 96
-  orig: 48, 96
+  xy: 2, 100
+  size: 51, 96
+  orig: 51, 96
   offset: 0, 0
   index: 1
 run
@@ -60,43 +53,43 @@ run
   index: 2
 run
   rotate: false
-  xy: 2, 590
-  size: 40, 96
-  orig: 40, 96
+  xy: 2, 296
+  size: 51, 96
+  orig: 51, 96
   offset: 0, 0
   index: 3
 run
   rotate: false
-  xy: 2, 786
-  size: 36, 96
-  orig: 36, 96
+  xy: 2, 394
+  size: 51, 96
+  orig: 51, 96
   offset: 0, 0
   index: 4
 run
   rotate: false
-  xy: 2, 394
-  size: 48, 96
-  orig: 48, 96
+  xy: 2, 492
+  size: 51, 96
+  orig: 51, 96
   offset: 0, 0
   index: 5
 run
   rotate: false
-  xy: 2, 492
-  size: 48, 96
-  orig: 48, 96
+  xy: 2, 590
+  size: 51, 96
+  orig: 51, 96
   offset: 0, 0
   index: 6
 run
   rotate: false
   xy: 2, 688
-  size: 40, 96
-  orig: 40, 96
+  size: 51, 96
+  orig: 51, 96
   offset: 0, 0
   index: 7
 run
   rotate: false
-  xy: 2, 884
-  size: 36, 96
-  orig: 36, 96
+  xy: 2, 786
+  size: 51, 96
+  orig: 51, 96
   offset: 0, 0
   index: 8

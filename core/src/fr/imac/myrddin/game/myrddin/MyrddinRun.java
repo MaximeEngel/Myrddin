@@ -17,7 +17,7 @@ public class MyrddinRun extends MyrddinState {
 	private float lastY;
 
 	public MyrddinRun(Myrddin myrddin, float direction) {
-		super(myrddin, new Animation(0.15f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("run"), PlayMode.LOOP));
+		super(myrddin, new Animation(0.1f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("run"), PlayMode.LOOP));
 		this.direction = direction;
 		
 		this.lastY = myrddin.getY();
