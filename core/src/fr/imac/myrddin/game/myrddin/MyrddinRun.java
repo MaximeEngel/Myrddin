@@ -3,8 +3,12 @@ package fr.imac.myrddin.game.myrddin;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
 
 public class MyrddinRun extends MyrddinState {
@@ -13,7 +17,7 @@ public class MyrddinRun extends MyrddinState {
 	private float lastY;
 
 	public MyrddinRun(Myrddin myrddin, float direction) {
-		super(myrddin, null);
+		super(myrddin, new Animation(0.1f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("walk"), PlayMode.LOOP));
 		this.direction = direction;
 		
 		this.lastY = myrddin.getY();
@@ -49,6 +53,10 @@ public class MyrddinRun extends MyrddinState {
 	@Override
 	public StateType getStateType() {
 		return StateType.Run;
+	}
+	
+	public void setNewRectBox() {
+		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 32, 96), new Rectangle(5, 5, 22, 86));
 	}
 
 }

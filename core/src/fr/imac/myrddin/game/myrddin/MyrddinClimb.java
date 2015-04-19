@@ -3,14 +3,19 @@ package fr.imac.myrddin.game.myrddin;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
+import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
+import fr.imac.myrddin.physic.ClimbTile;
 
 public class MyrddinClimb extends MyrddinState {
 	
 	public MyrddinClimb(Myrddin myrddin) {
-		super(myrddin, null);
+		super(myrddin, new Animation(0.2f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("climb"), PlayMode.LOOP));
 	}
 
 	@Override
@@ -21,7 +26,6 @@ public class MyrddinClimb extends MyrddinState {
 		moveOnTheClimb();
 		moveInTheAir();	
 	}
-
 	private void moveOnTheClimb() {
 		if(Gdx.input.isKeyPressed(Input.Keys.Z))
 			myrddin.applyImpulse(new Vector2(0, myrddin.getMass() * 5));
