@@ -17,7 +17,7 @@ public class MyrddinRun extends MyrddinState {
 	private float lastY;
 
 	public MyrddinRun(Myrddin myrddin, float direction) {
-		super(myrddin, new Animation(0.1f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("walk"), PlayMode.LOOP));
+		super(myrddin, new Animation(0.1f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("run"), PlayMode.LOOP));
 		this.direction = direction;
 		
 		this.lastY = myrddin.getY();
@@ -56,7 +56,7 @@ public class MyrddinRun extends MyrddinState {
 	}
 	
 	public void setNewRectBox() {
-		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 32, 96), new Rectangle(5, 5, 22, 86));
+		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 48, 96), new Rectangle(5, 5, 22, 86));
 	}
 
 }
