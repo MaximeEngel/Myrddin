@@ -220,6 +220,10 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 	public float getCenterY() {
 		return getY() + getHeight() * 0.5f;
 	}
+	
+	public Body getBody() {
+		return body;
+	}
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {

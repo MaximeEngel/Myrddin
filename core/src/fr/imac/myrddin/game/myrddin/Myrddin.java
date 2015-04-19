@@ -45,6 +45,9 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	private MagicState magicState;
 	private MagicWeapon<Myrddin> magicWeapon;
 	
+	private Shield shield;
+	
+	
 	// CONSTRUCTOR
 
 	public Myrddin(Vector2 pos) {
@@ -54,6 +57,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		myrddinState = new MyrddinIddle(this);
 		magicState = MagicState.POWER_1;
 		magicWeapon = new MagicWeapon<Myrddin>(INITIAL_TIME_WITHOUT_FIRE, this);
+		shield = new Shield(this);
 	}
 	
 	public Myrddin() {
@@ -99,6 +103,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 			fire(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 		
+		shield.act(delta);
 		// KILL
 		if(isKilled())
 			kill();
