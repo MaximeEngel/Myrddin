@@ -32,6 +32,10 @@ public class MyrddinGame extends Game {
 		assetManager.load("ui/ui.atlas", TextureAtlas.class);
 		assetManager.load("ui/dosis_39.fnt", BitmapFont.class);
 		
+		//HUD
+		assetManager.load("ui/hud.atlas", TextureAtlas.class);
+		assetManager.load("ui/test.fnt", BitmapFont.class);
+		
 		assetManager.finishLoading(); //block until all assets loaded
 	}
 	
