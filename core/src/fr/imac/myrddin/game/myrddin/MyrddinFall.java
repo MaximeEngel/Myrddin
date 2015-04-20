@@ -23,11 +23,11 @@ public class MyrddinFall extends MyrddinState {
 	public void act(float delta) {
 		super.act(delta);
 		
+		moveInTheAir();
+		
 		Vector2 velocity = myrddin.getLinearVelocity();		
 		if (velocity.y == 0)
 			myrddin.setMyrddinState(new MyrddinIddle(myrddin));
-		
-		moveInTheAir();
 	}
 
 	@Override
