@@ -14,7 +14,7 @@ import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
 public class MyrddinFall extends MyrddinState {
 
 	public MyrddinFall(Myrddin myrddin) {
-		super(myrddin, new Animation(0.1f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("fall"), PlayMode.NORMAL));
+		super(myrddin, new Animation(0.15f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("fall"), PlayMode.NORMAL));
 	}
 
 	
@@ -32,7 +32,7 @@ public class MyrddinFall extends MyrddinState {
 
 	@Override
 	public void setNewRectBox() {
-		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 54, 96), new Rectangle(5, 5, 40, 90));
+		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 70, 105), new Rectangle(5, 5, 40, 90));
 	}
 
 	@Override
