@@ -4,21 +4,21 @@ filter: Linear,Linear
 repeat: none
 climb
   rotate: false
-  xy: 2, 1082
+  xy: 2, 1296
   size: 30, 96
   orig: 30, 96
   offset: 0, 0
   index: 1
 climb
   rotate: false
-  xy: 2, 884
+  xy: 2, 1098
   size: 32, 98
   orig: 32, 98
   offset: 0, 0
   index: 2
 climb
   rotate: false
-  xy: 2, 1180
+  xy: 2, 1394
   size: 30, 96
   orig: 30, 96
   offset: 0, 0
@@ -32,11 +32,25 @@ duck
   index: -1
 iddle
   rotate: false
-  xy: 2, 984
+  xy: 2, 1198
   size: 32, 96
   orig: 32, 96
   offset: 0, 0
   index: -1
+jump
+  rotate: false
+  xy: 2, 884
+  size: 47, 105
+  orig: 47, 105
+  offset: 0, 0
+  index: 1
+jump
+  rotate: false
+  xy: 2, 991
+  size: 47, 105
+  orig: 47, 105
+  offset: 0, 0
+  index: 2
 run
   rotate: false
   xy: 2, 100
