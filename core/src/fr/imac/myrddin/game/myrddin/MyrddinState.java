@@ -41,8 +41,9 @@ public abstract class MyrddinState {
 		
 		Vector2 v = myrddin.getLinearVelocity();
 		if(Math.abs(v.x) > MAX_VEL)
-			myrddin.setLinearVelocity(new Vector2(Math.signum(v.x) * MAX_VEL, v.y));
-			
+			myrddin.setLinearVelocity(new Vector2(Math.signum(v.x) * MAX_VEL, v.y));		
+		
+		orientTexture();
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
@@ -50,8 +51,8 @@ public abstract class MyrddinState {
 			batch.draw(	animation.getKeyFrame(stateTime), 
 						myrddin.getX(),
 						myrddin.getY(), 
-						myrddin.getOriginX(),
-						myrddin.getOriginY(), 
+						myrddin.getWidth() * 0.5f, 
+						myrddin.getHeight() * 0.5f, 
 						myrddin.getWidth(), 
 						myrddin.getHeight(), 
 						myrddin.getScaleX(), 
@@ -89,5 +90,12 @@ public abstract class MyrddinState {
 	}
 	
 	public abstract StateType getStateType();
+	
+	// Called each frame to flip the texture to orient the look of myrddin in the good direction
+	public void orientTexture() {
+		int sens = Integer.signum((int)myrddin.getLinearVelocity().x);
+		if (sens != 0)
+			myrddin.setScale(sens, 1f);
+	}
 	
 }
