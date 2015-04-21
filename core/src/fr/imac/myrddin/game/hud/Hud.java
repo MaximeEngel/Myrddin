@@ -21,6 +21,8 @@ public class Hud extends Group {
 		
 		// add life HUD
 		addActor(new LifeHud(myrddin));
+		
+		addActor(new ScoreHud(myrddin));
 	}
 
 	@Override
