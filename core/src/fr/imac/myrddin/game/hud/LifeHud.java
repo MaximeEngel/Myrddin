@@ -28,18 +28,22 @@ public class LifeHud extends Actor {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(
-				atlasRegion,
-				getParent().getWidth() - atlasRegion.getRegionWidth() -10,
-				getParent().getHeight() - atlasRegion.getRegionHeight()
-		);
-		bitmapfont.setColor(1f, 0f, 0f, 1f);
-		bitmapfont.draw(
-				batch,
-				String.valueOf(MathUtils.random()),
-				getParent().getWidth() - 100,
-				getParent().getHeight() - 20
-		);
+		for (int i = 0; i < myrddin.getLife(); i++) {
+			batch.draw(
+					atlasRegion,
+					getParent().getWidth() - atlasRegion.getRegionWidth() - 10 - 30*i,
+					getParent().getHeight() - atlasRegion.getRegionHeight() - 5
+			);
+			
+		}
+		
+		//bitmapfont.setColor(1f, 0f, 0f, 1f);
+		//bitmapfont.draw(
+		//			batch,
+		//			String.valueOf(MathUtils.random()),
+		//			getParent().getWidth() - 100,
+		//			getParent().getHeight() - 20
+		//	);
 	}
 	
 	
