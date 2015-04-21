@@ -84,6 +84,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		
 		myrddin = new Myrddin(new Vector2(510f, 850f));
 		this.addActor(myrddin);
+		this.addActor(myrddin.getShield());
 		
 		createEnnemy(tiledMap);
 		
