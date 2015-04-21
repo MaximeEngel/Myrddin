@@ -45,15 +45,21 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	private MagicState magicState;
 	private MagicWeapon<Myrddin> magicWeapon;
 	
+	private Shield shield;
+	
+	
 	// CONSTRUCTOR
 
 	public Myrddin(Vector2 pos) {
 		super(new Rectangle(pos.x, pos.y, 48, 96),	new Rectangle(5, 5, 38, 86), BodyType.DynamicBody, 
-				PhysicUtil.createFixtureDef(100f, 0f, 0.1f, false), true, 3);
+				PhysicUtil.createFixtureDef(100f, 0f, 0.03f, false), true, 3);
 		
 		myrddinState = new MyrddinIddle(this);
 		magicState = MagicState.POWER_1;
 		magicWeapon = new MagicWeapon<Myrddin>(INITIAL_TIME_WITHOUT_FIRE, this);
+		
+		shield = new Shield(this);
+		
 	}
 	
 	public Myrddin() {
@@ -104,6 +110,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT))
 			fire(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 		
+		shield.act(delta);
 		// KILL
 		if(isKilled())
 			kill();
@@ -111,7 +118,8 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+//		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+		myrddinState.draw(batch, parentAlpha);
 	}
 	
 	public boolean isOutOfTheBox() {
@@ -157,6 +165,10 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		
 		if(this.myrddinState.getStateType() != myrddinState.getStateType())
 			this.myrddinState = myrddinState;
+	}
+	
+	public Shield getShield() {
+		return this.shield;
 	}
 	
 	// COLLISION
