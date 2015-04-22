@@ -25,8 +25,8 @@ public class ScoreHud extends Actor {
 		bitmapfont.setScale(0.5f);
 		bitmapfont.draw(
 				batch,
-				"score : " + String.valueOf(myrddin.getScore()),
-				getParent().getWidth() - 150,
+				String.valueOf(myrddin.getScore()),
+				getParent().getWidth() - 70,
 				getParent().getHeight() - 30
 		);
 	}
