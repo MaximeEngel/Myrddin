@@ -4,112 +4,126 @@ filter: Linear,Linear
 repeat: none
 climb
   rotate: false
-  xy: 2, 1394
+  xy: 2, 2
   size: 30, 96
   orig: 30, 96
   offset: 0, 0
   index: 1
 climb
   rotate: false
-  xy: 2, 1196
+  xy: 34, 2
   size: 32, 98
   orig: 32, 98
   offset: 0, 0
   index: 2
 climb
   rotate: false
-  xy: 2, 1492
+  xy: 68, 2
   size: 30, 96
   orig: 30, 96
   offset: 0, 0
   index: 3
 duck
   rotate: false
-  xy: 2, 2
+  xy: 100, 2
   size: 60, 96
   orig: 60, 96
   offset: 0, 0
-  index: -1
+  index: 1
+duck
+  rotate: false
+  xy: 162, 2
+  size: 60, 96
+  orig: 60, 96
+  offset: 0, 0
+  index: 2
 fall
   rotate: false
-  xy: 2, 100
-  size: 54, 96
-  orig: 54, 96
+  xy: 224, 2
+  size: 70, 105
+  orig: 70, 105
   offset: 0, 0
-  index: -1
+  index: 1
+fall
+  rotate: false
+  xy: 296, 2
+  size: 70, 105
+  orig: 70, 105
+  offset: 0, 0
+  index: 2
 iddle
   rotate: false
-  xy: 2, 1296
+  xy: 368, 2
   size: 32, 96
   orig: 32, 96
   offset: 0, 0
   index: -1
 jump
   rotate: false
-  xy: 2, 982
+  xy: 402, 2
   size: 47, 105
   orig: 47, 105
   offset: 0, 0
   index: 1
 jump
   rotate: false
-  xy: 2, 1089
+  xy: 451, 2
   size: 47, 105
   orig: 47, 105
   offset: 0, 0
   index: 2
 run
   rotate: false
-  xy: 2, 198
+  xy: 500, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 1
 run
   rotate: false
-  xy: 2, 296
+  xy: 553, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 2
 run
   rotate: false
-  xy: 2, 394
+  xy: 606, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 3
 run
   rotate: false
-  xy: 2, 492
+  xy: 659, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 4
 run
   rotate: false
-  xy: 2, 590
+  xy: 712, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 5
 run
   rotate: false
-  xy: 2, 688
+  xy: 765, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 6
 run
   rotate: false
-  xy: 2, 786
+  xy: 818, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 7
 run
   rotate: false
-  xy: 2, 884
+  xy: 871, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
