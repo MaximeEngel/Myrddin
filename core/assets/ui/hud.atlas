@@ -23,9 +23,16 @@ magicIce
   orig: 20, 20
   offset: 2, 0
   index: -1
-shield.9
+shield
   rotate: false
   xy: 57, 2
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+shieldMax
+  rotate: false
+  xy: 79, 2
   size: 20, 20
   orig: 20, 20
   offset: 0, 0

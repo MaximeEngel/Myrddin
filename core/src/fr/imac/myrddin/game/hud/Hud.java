@@ -23,6 +23,7 @@ public class Hud extends Group {
 		addActor(new LifeHud(myrddin));
 		addActor(new ScoreHud(myrddin));
 		addActor(new MagicStateHud(myrddin));
+		addActor(new ShieldHud(myrddin.getShield()));
 	}
 
 	@Override
