@@ -33,13 +33,15 @@ public class ShieldHud extends Actor {
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		patch1.draw(
-				batch,
-				getParent().getWidth() - atlasRegion1.getRegionWidth() - 90,
-				getParent().getHeight() - atlasRegion1.getRegionHeight() - 55,
-				shield.getEnergy(),
-				20f
-		);
+		if (shield.getEnergy() > 15) {
+			patch1.draw(
+					batch,
+					getParent().getWidth() - atlasRegion1.getRegionWidth() - 90,
+					getParent().getHeight() - atlasRegion1.getRegionHeight() - 55,
+					shield.getEnergy(),
+					20f
+			);
+		}
 		
 		patch2.draw(
 				batch,
