@@ -45,6 +45,7 @@ public class Shield extends PhysicActor {
 			);		
 		this.body.setGravityScale(0);
 		this.myrddin = myrddin;
+		this.energy = MAX_ENERGY;
 		
 		this.linkShieldToMyrddin();
 		this.enableShield(false);
