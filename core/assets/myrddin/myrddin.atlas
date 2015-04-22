@@ -4,78 +4,113 @@ filter: Linear,Linear
 repeat: none
 climb
   rotate: false
-  xy: 2, 509
+  xy: 2, 1394
   size: 30, 96
   orig: 30, 96
   offset: 0, 0
   index: 1
 climb
+  rotate: false
+  xy: 2, 1196
+  size: 32, 98
+  orig: 32, 98
+  offset: 0, 0
+  index: 2
+climb
+  rotate: false
+  xy: 2, 1492
+  size: 30, 96
+  orig: 30, 96
+  offset: 0, 0
+  index: 3
+duck
   rotate: false
   xy: 2, 2
-  size: 32, 96
-  orig: 32, 98
-  offset: 0, 1
-  index: 2
-climb
-  rotate: false
-  xy: 2, 607
-  size: 30, 96
-  orig: 30, 96
+  size: 60, 96
+  orig: 60, 96
   offset: 0, 0
-  index: 3
-duck
-  rotate: false
-  xy: 2, 296
-  size: 32, 60
-  orig: 33, 60
-  offset: 1, 0
-  index: 1
-duck
-  rotate: false
-  xy: 2, 358
-  size: 32, 51
-  orig: 33, 52
-  offset: 1, 1
-  index: 2
-iddle
-  rotate: false
-  xy: 2, 803
-  size: 26, 96
-  orig: 32, 96
-  offset: 3, 0
   index: -1
-walk
+fall
   rotate: false
   xy: 2, 100
+  size: 54, 96
+  orig: 54, 96
+  offset: 0, 0
+  index: -1
+iddle
+  rotate: false
+  xy: 2, 1296
   size: 32, 96
-  orig: 32, 97
+  orig: 32, 96
+  offset: 0, 0
+  index: -1
+jump
+  rotate: false
+  xy: 2, 982
+  size: 47, 105
+  orig: 47, 105
   offset: 0, 0
   index: 1
-walk
+jump
   rotate: false
-  xy: 2, 411
-  size: 31, 96
-  orig: 31, 97
-  offset: 0, 1
+  xy: 2, 1089
+  size: 47, 105
+  orig: 47, 105
+  offset: 0, 0
   index: 2
-walk
-  rotate: false
-  xy: 2, 901
-  size: 26, 96
-  orig: 26, 96
-  offset: 0, 0
-  index: 3
-walk
-  rotate: false
-  xy: 2, 705
-  size: 28, 96
-  orig: 28, 96
-  offset: 0, 0
-  index: 4
-walk
+run
   rotate: false
   xy: 2, 198
-  size: 32, 96
-  orig: 32, 98
-  offset: 0, 1
+  size: 51, 96
+  orig: 51, 96
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 2, 296
+  size: 51, 96
+  orig: 51, 96
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 2, 394
+  size: 51, 96
+  orig: 51, 96
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 2, 492
+  size: 51, 96
+  orig: 51, 96
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 2, 590
+  size: 51, 96
+  orig: 51, 96
+  offset: 0, 0
   index: 5
+run
+  rotate: false
+  xy: 2, 688
+  size: 51, 96
+  orig: 51, 96
+  offset: 0, 0
+  index: 6
+run
+  rotate: false
+  xy: 2, 786
+  size: 51, 96
+  orig: 51, 96
+  offset: 0, 0
+  index: 7
+run
+  rotate: false
+  xy: 2, 884
+  size: 51, 96
+  orig: 51, 96
+  offset: 0, 0
+  index: 8
