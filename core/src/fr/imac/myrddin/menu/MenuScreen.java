@@ -1,8 +1,12 @@
 package fr.imac.myrddin.menu;
 
 
+import java.io.File;
+
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,8 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.badlogic.gdx.utils.Array;
 
 import fr.imac.myrddin.MyrddinGame;
 
@@ -24,11 +30,13 @@ public class MenuScreen extends Stage implements Screen {
 	private ShapeRenderer shapeRenderer;
 	private MyrddinGame myrddinGame;
 	private TextButton.TextButtonStyle mainTextButtonStyle;
+	private TextureAtlas atlasMenu;
 	
 	//CONSTRUCTOR
 	public MenuScreen(MyrddinGame myrddinGame) {
 		super();
 		this.myrddinGame = myrddinGame;
+		atlasMenu = (TextureAtlas) MyrddinGame.assetManager.get("ui/ui.atlas", TextureAtlas.class);
 		mainTextButtonStyle = initMainTextButton();
 		
 		table = new Table();
@@ -48,28 +56,135 @@ public class MenuScreen extends Stage implements Screen {
 	
 	//MENU SCREEN METHODS
 	private void initMainMenu() {
-		TextButton textButton = new TextButton("Jouer", this.mainTextButtonStyle);
-		textButton.addListener(new ChangeListener() {
+		//clear screen
+		table.reset();
+				
+		//do debug
+		//table.setDebug(true);
+		
+		//background Menu
+		AtlasRegion backgroundMenu = atlasMenu.findRegion("menu");
+		table.background(new TextureRegionDrawable(backgroundMenu));
+		
+		// padding top
+		table.padTop(220);
+				
+		//add resume button
+		TextButton textButtonResume = new TextButton("Reprendre la partie", this.mainTextButtonStyle);
+		textButtonResume.addListener(new ChangeListener() {
 			
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				myrddinGame.startGame(0);
+				myrddinGame.startLastSave();
 				
 			}
 		});
-		table.add(textButton);
+		table.add(textButtonResume).fillY().align(100);
+		
+		table.row();
+		
+		//add new game button
+		TextButton textButtonNew = new TextButton("Nouvelle partie", this.mainTextButtonStyle);
+		textButtonNew.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				initNewGameMenu();
+				
+			}
+		});
+		table.add(textButtonNew);
+		
+		table.row();
+		
+		//add quit button
+		TextButton textButtonQuit = new TextButton("Quitter", this.mainTextButtonStyle);
+		textButtonQuit.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				Gdx.app.exit();	
+			}
+		});
+		table.add(textButtonQuit);
+	}
+	
+	//screen to choose a level
+	private void initNewGameMenu() {
+		//clear screen
+		table.reset();
+		
+		//do debug
+		//table.setDebug(true);
+		
+		//background image
+		AtlasRegion backgroundMenuLevel = atlasMenu.findRegion("menu2");
+		table.background(new TextureRegionDrawable(backgroundMenuLevel));
+		
+		//count number of files
+		int count = getHandles();
+		int temp = -1;
+		
+		//create text buttons depending on the number of levels
+		for(int nbLevel = 0; nbLevel < count; nbLevel++) {
+			String stringNbLevel = Integer.toString(nbLevel);
+			TextButton textButton = new TextButton(stringNbLevel, this.mainTextButtonStyle);
+			
+			// in case there is a file missing
+			do {
+				temp++;
+			}
+			while(!((Gdx.files.internal("lvl/"+temp+".tmx")).exists()));
+			
+			final int nbLevelTmp = temp;	
+			textButton.addListener(new ChangeListener() {
+				
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					myrddinGame.startGame(nbLevelTmp);
+						
+				}
+			});
+			table.add(textButton);
+			table.row();
+		}
+		
+		//add return button
+		TextButton textButtonReturn = new TextButton("Retour au menu", this.mainTextButtonStyle);
+		textButtonReturn.addListener(new ChangeListener() {
+							
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				initMainMenu();
+							
+			}
+		});
+		table.add(textButtonReturn);
+	}
+	
+	//count number of files in a repertory
+	public int getHandles() {
+		FileHandle dirHandle =  Gdx.files.internal("lvl");
+		if (!dirHandle.isDirectory())
+			dirHandle = Gdx.files.internal("./bin/lvl");
+		
+		int count = 0;
+	    FileHandle[] newHandles = dirHandle.list();
+	    for (FileHandle f : newHandles)
+	        if(f.name().endsWith(".tmx")) count++;
+
+	    return count;
 	}
 	
 	//
 	private TextButton.TextButtonStyle initMainTextButton() {
 		//get TextureAtlas
-		TextureAtlas textureAtlas = (TextureAtlas) MyrddinGame.assetManager.get("ui/ui.atlas", TextureAtlas.class);
-		AtlasRegion upRegion = textureAtlas.findRegion("buttonUp");
-		AtlasRegion downRegion = textureAtlas.findRegion("buttonDown");
-		AtlasRegion checkedRegion = textureAtlas.findRegion("buttonChecked");
+		AtlasRegion upRegion = atlasMenu.findRegion("buttonUp");
+		AtlasRegion downRegion = atlasMenu.findRegion("buttonDown");
+		AtlasRegion checkedRegion = atlasMenu.findRegion("buttonChecked");
 		
 		//get Font
-		BitmapFont bitmapFont = (BitmapFont) MyrddinGame.assetManager.get("ui/dosis_39.fnt", BitmapFont.class);
+		BitmapFont bitmapFont = (BitmapFont) MyrddinGame.assetManager.get("ui/theonlyexception_25.fnt", BitmapFont.class);
 		
 		return new TextButton.TextButtonStyle(new TextureRegionDrawable(upRegion), new TextureRegionDrawable(downRegion),new TextureRegionDrawable(checkedRegion), bitmapFont);
 	}

@@ -27,6 +27,7 @@ public class MyrddinClimb extends MyrddinState {
 		moveOnTheClimb();
 		moveInTheAir();	
 	}
+
 	private void moveOnTheClimb() {
 		if(Gdx.input.isKeyPressed(Input.Keys.Z))
 			myrddin.applyImpulse(new Vector2(0, myrddin.getMass() * 5));
