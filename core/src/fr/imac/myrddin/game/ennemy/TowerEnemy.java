@@ -1,5 +1,8 @@
 package fr.imac.myrddin.game.ennemy;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -21,16 +24,24 @@ import fr.imac.myrddin.physic.PhysicUtil;
 
 public class TowerEnemy extends EnnemyShooter {
 	
+	AtlasRegion atlasRegion;
+	
 	/**
 	 * Only use it for externalization.
 	 */
 	public TowerEnemy() {
 		super();
+		init();
 	}
 	
 	public TowerEnemy(Vector2 pos, MagicState magicState, GameScreen gameScreen) {
-		super(new Rectangle(pos.x, pos.y, 50, 50), new Rectangle(5, 0, 40, 50), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true, 3, magicState, gameScreen);
-
+		super(new Rectangle(pos.x, pos.y, 64, 47), new Rectangle(5, 5, 54, 37), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true, 3, magicState, gameScreen);
+		init();
+	}
+	
+	public void init() {
+		TextureAtlas atlas = (TextureAtlas) MyrddinGame.assetManager.get("enemy/enemy.atlas", TextureAtlas.class);
+		atlasRegion = atlas.findRegion("ennemi");
 	}
 	
 	
@@ -39,6 +50,13 @@ public class TowerEnemy extends EnnemyShooter {
 	public void act(float delta) {
 		// TODO Auto-generated method stub
 		super.act(delta);
+	}
+	
+	
+
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		batch.draw(atlasRegion, getX(), getY());
 	}
 
 	@Override

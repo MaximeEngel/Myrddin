@@ -4,21 +4,32 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
 
+import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicUtil;
 
 public class StaticEnemy extends PhysicActor implements Enemy {	
-	
+
+	AtlasRegion atlasRegion;
 
 	public StaticEnemy(Vector2 pos) {
-		super(new Rectangle(pos.x, pos.y, 50, 50), new Rectangle(5, 0, 40, 50), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true);
+		super(new Rectangle(pos.x, pos.y, 64, 47), new Rectangle(6, 0, 50, 32), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true);
+		init();
+	}
+	
+	public void init() {
+		TextureAtlas atlas = (TextureAtlas) MyrddinGame.assetManager.get("enemy/enemy.atlas", TextureAtlas.class);
+		atlasRegion = atlas.findRegion("ennemi");
 	}
 
 	@Override
@@ -42,6 +53,11 @@ public class StaticEnemy extends PhysicActor implements Enemy {
 			myrddin.hurtedBy(getMeleeDamage());
 		}
 
+	}
+	
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		batch.draw(atlasRegion, getX(), getY());
 	}
 
 	@Override
