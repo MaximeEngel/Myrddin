@@ -78,6 +78,11 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		this.setMyrddinState(new MyrddinBump(this, impulse));
 	}
 	
+	// SCORE
+	public int getScore() {
+		return MathUtils.random(5000);
+	}
+	
 	// WEAPON OWNER
 
 	@Override

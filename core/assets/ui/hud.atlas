@@ -1,0 +1,39 @@
+hud.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+life
+  rotate: false
+  xy: 2, 2
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+magicFire
+  rotate: false
+  xy: 24, 2
+  size: 12, 20
+  orig: 20, 20
+  offset: 4, 0
+  index: -1
+magicIce
+  rotate: false
+  xy: 38, 2
+  size: 17, 18
+  orig: 20, 20
+  offset: 2, 0
+  index: -1
+shield
+  rotate: false
+  xy: 57, 2
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+shieldMax
+  rotate: false
+  xy: 79, 2
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1

@@ -43,6 +43,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.ennemy.EnemyFactory;
+import fr.imac.myrddin.game.hud.Hud;
 import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
@@ -62,6 +63,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	private float mapWidth;
 	
 	private Myrddin myrddin;
+	private Hud hud;
 	
 	/**
 	 * 
@@ -87,6 +89,11 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		this.addActor(myrddin.getShield());
 		
 		createEnnemy(tiledMap);
+		
+		// Connect HUD to gameScreen
+		hud =  new Hud(myrddin);
+		addActor(hud);
+		
 		
 		Gdx.input.setInputProcessor(this);
 		instantSave();
@@ -162,6 +169,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			instantSave();
 		
 		updateCamera();
+		
+		//move HUD to stay fixed
+		hud.setPosition(getCamera().position.x - 0.5f * MyrddinGame.WIDTH, 0);
 	}
 
 
