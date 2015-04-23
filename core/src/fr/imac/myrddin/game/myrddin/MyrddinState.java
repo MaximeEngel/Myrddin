@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
+import fr.imac.myrddin.MyrddinGame;
 
 public abstract class MyrddinState {
 	
@@ -44,8 +47,17 @@ public abstract class MyrddinState {
 	
 	public void draw(Batch batch, float parentAlpha) {
 		if (animation != null) {
-			batch.draw(	animation.getKeyFrame(stateTime), myrddin.getX(), myrddin.getY(), myrddin.getX() + myrddin.getWidth() / 2f,
-						myrddin.getY() + myrddin.getHeight() / 2f, myrddin.getWidth(), myrddin.getHeight(), myrddin.getScaleX(), myrddin.getScaleY(), myrddin.getRotation());
+			batch.draw(	animation.getKeyFrame(stateTime), 
+						myrddin.getX(),
+						myrddin.getY(), 
+						myrddin.getOriginX(),
+						myrddin.getOriginY(), 
+						myrddin.getWidth(), 
+						myrddin.getHeight(), 
+						myrddin.getScaleX(), 
+						myrddin.getScaleY(), 
+						myrddin.getRotation()
+					);
 		}
 	}
 	
@@ -61,7 +73,7 @@ public abstract class MyrddinState {
 	 * Default new rect box
 	 */
 	public void setNewRectBox() {
-		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 48, 96), new Rectangle(5, 5, 38, 86));
+		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 32, 96), new Rectangle(5, 5, 22, 86));
 	}
 	
 	/**

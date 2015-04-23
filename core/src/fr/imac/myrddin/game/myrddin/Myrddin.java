@@ -106,7 +106,8 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+//		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+		myrddinState.draw(batch, parentAlpha);
 	}
 	
 	public boolean isOutOfTheBox() {
