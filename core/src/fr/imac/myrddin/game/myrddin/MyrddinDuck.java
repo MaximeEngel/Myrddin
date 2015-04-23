@@ -13,7 +13,7 @@ import fr.imac.myrddin.MyrddinGame;
 public class MyrddinDuck extends MyrddinState {
 
 	public MyrddinDuck(Myrddin myrddin) {
-		super(myrddin, new Animation(0.3f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("duck"), PlayMode.NORMAL));
+		super(myrddin, new Animation(0.2f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("duck"), PlayMode.NORMAL));
 		myrddin.setLinearVelocity(new Vector2(0f, 0f));
 	}
 	
@@ -29,7 +29,11 @@ public class MyrddinDuck extends MyrddinState {
 
 	@Override
 	public void setNewRectBox() {
-		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 60, 96), new Rectangle(5, 5, 22, 45));
+		// if look right)
+		if(myrddin.getScaleX() >= 1)
+			myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 60, 96), new Rectangle(18, 5, 30, 70));
+		else
+			myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 60, 96), new Rectangle(12, 5, 30, 70));
 	}
 
 	@Override

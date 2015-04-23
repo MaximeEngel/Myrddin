@@ -170,7 +170,15 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		OrthographicCamera camera = (OrthographicCamera) getCamera();
 		Vector3 position = camera.position;
 		
-		position.x = myrddin.getX();
+		float ecartX = position.x - myrddin.getX();
+			position.x = myrddin.getX();
+			// Smooth 
+			float maxEcart = 1;
+			if(Math.abs(ecartX) >= maxEcart) {
+				position.x += Integer.signum((int)ecartX) * maxEcart;
+			}			
+		
+		
 		float minX = MyrddinGame.WIDTH / 2;
 		float maxX = mapWidth - minX;
 		if(position.x < minX )

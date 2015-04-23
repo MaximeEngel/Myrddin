@@ -32,7 +32,11 @@ public class MyrddinFall extends MyrddinState {
 
 	@Override
 	public void setNewRectBox() {
-		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 70, 105), new Rectangle(5, 5, 40, 90));
+		// if look right)
+		if(myrddin.getScaleX() >= 1)
+			myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 70, 105), new Rectangle(5, 5, 32, 80));
+		else
+			myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 70, 105), new Rectangle(30, 5, 32, 80));
 	}
 
 	@Override

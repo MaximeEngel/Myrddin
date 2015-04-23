@@ -19,21 +19,21 @@ public class ClimbTile extends PhysicTile {
 	@Override
 	public void beginContact(Contact contact, Collidable other) {
 		super.beginContact(contact, other);
-		
 		if (other.getCollidableType() == CollidableType.Myrddin) {
 			Myrddin myrddin = (Myrddin) other;
-			myrddin.climb();
+			if(!myrddin.isChanging())
+				myrddin.climb(this.body);
 		}
 	}
 
 	@Override
 	public void endContact(Contact contact, Collidable other) {
 		super.endContact(contact, other);
-		
 		if (other.getCollidableType() == CollidableType.Myrddin) {
 			Myrddin myrddin = (Myrddin) other;
 			if(!myrddin.isChanging())
-				myrddin.setMyrddinState(new MyrddinRun(myrddin, Integer.signum((int)myrddin.getLinearVelocity().x)));
+				myrddin.unclimb(this.body);
+			
 		}
 	}
 	

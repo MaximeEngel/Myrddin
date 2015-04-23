@@ -56,7 +56,7 @@ public class MyrddinRun extends MyrddinState {
 	}
 	
 	public void setNewRectBox() {
-		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 48, 96), new Rectangle(5, 5, 22, 86));
+		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 48, 96), new Rectangle(12, 5, 24, 90));
 	}
 
 }

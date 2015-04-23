@@ -62,8 +62,6 @@ public class Shield extends PhysicActor {
 			}
 			else
 				modifyEnergy(delta * 10);
-			
-			System.out.println(energy);
 		
 	}
 	

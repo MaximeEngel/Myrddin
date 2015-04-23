@@ -41,7 +41,11 @@ public class MyrddinJump extends MyrddinState {
 	
 	@Override
 	public void setNewRectBox() {
-		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 47, 105), new Rectangle(5, 5, 40, 90));
+		// if look right)
+		if(myrddin.getScaleX() >= 1)
+			myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 47, 105), new Rectangle(8, 5, 25, 99));
+		else
+			myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 47, 105), new Rectangle(16, 5, 25, 99));
 	}
 
 	@Override

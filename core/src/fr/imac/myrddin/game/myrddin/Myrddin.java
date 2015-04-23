@@ -4,6 +4,9 @@ package fr.imac.myrddin.game.myrddin;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
@@ -16,6 +19,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -47,6 +51,8 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	
 	private Shield shield;
 	
+	private Set<Body> climbs;
+	
 	
 	// CONSTRUCTOR
 
@@ -59,6 +65,8 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		magicWeapon = new MagicWeapon<Myrddin>(INITIAL_TIME_WITHOUT_FIRE, this);
 		
 		shield = new Shield(this);
+		
+		climbs = new HashSet<Body>();
 		
 	}
 	
@@ -116,7 +124,13 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 //		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
 		myrddinState.draw(batch, parentAlpha);
 	}
-	
+
+	@Override
+	public void setScaleX(float scaleX) {
+		// TODO Auto-generated method stub
+		super.setScaleX(scaleX);
+	}
+
 	public boolean isOutOfTheBox() {
 		return getY() + getHeight() + 10 < 0;
 	}
@@ -149,9 +163,15 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		return myrddinState;
 	}
 
-	public void climb() {
-		if (!(myrddinState instanceof MyrddinClimb))
+	public void climb(Body climbOnThisBody) {		
+		if(climbs.add(climbOnThisBody) && climbs.size() == 1)
 			this.setMyrddinState(new MyrddinClimb(this));
+	}
+
+	public void unclimb(Body unclimbOfThisBody) {		
+		if(climbs.remove(unclimbOfThisBody) && climbs.size() == 0)
+			this.setMyrddinState(new MyrddinRun(this, Integer.signum((int)this.getLinearVelocity().x)));
+		
 	}
 
 	public void setMyrddinState(MyrddinState myrddinState) {

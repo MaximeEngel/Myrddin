@@ -74,7 +74,7 @@ public abstract class MyrddinState {
 	 * Default new rect box
 	 */
 	public void setNewRectBox() {
-		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 32, 96), new Rectangle(5, 5, 22, 86));
+		myrddin.setNewRectBox(new Rectangle(myrddin.getX(), myrddin.getY(), 32, 96), new Rectangle(5, 5, 22, 90));
 	}
 	
 	/**
@@ -94,8 +94,14 @@ public abstract class MyrddinState {
 	// Called each frame to flip the texture to orient the look of myrddin in the good direction
 	public void orientTexture() {
 		int sens = Integer.signum((int)myrddin.getLinearVelocity().x);
-		if (sens != 0)
-			myrddin.setScale(sens, 1f);
+		
+		if (sens == 0)
+			return;
+		
+		float oldSens = myrddin.getScaleX();		
+		myrddin.setScale(sens, 1f);
+		if(sens != oldSens)
+			setNewRectBox();
 	}
 	
 }
