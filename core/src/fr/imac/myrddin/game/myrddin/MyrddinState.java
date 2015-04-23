@@ -67,7 +67,11 @@ public abstract class MyrddinState {
 	 * @return the origin position in pixel of the fire. Null is return if myrddin can't fire this time.
 	 */
 	public Vector2 getFirePos() {
-		return new Vector2(myrddin.getX(), myrddin.getY()).add(30, 70);
+		// Look right
+		if(myrddin.getScaleX() >= 0)
+			return new Vector2(myrddin.getCenterX(), myrddin.getCenterY()).add(15, -2);
+		else
+			return new Vector2(myrddin.getCenterX(), myrddin.getCenterY()).add(-20, -2);
 	}
 	
 	/**

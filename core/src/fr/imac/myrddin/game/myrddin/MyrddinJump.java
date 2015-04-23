@@ -52,5 +52,14 @@ public class MyrddinJump extends MyrddinState {
 	public StateType getStateType() {
 		return StateType.Jump;
 	}
+	
+	@Override
+	public Vector2 getFirePos() {
+		// Look right
+		if(myrddin.getScaleX() >= 0)
+			return new Vector2(myrddin.getCenterX(), myrddin.getCenterY()).add(20, 43);
+		else
+			return new Vector2(myrddin.getCenterX(), myrddin.getCenterY()).add(-40, 43);
+	}
 
 }

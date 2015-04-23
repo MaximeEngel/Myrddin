@@ -149,8 +149,7 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 
 	@Override
 	public MagicState getMagicState() {
-		// TODO Auto-generated method stub
-		return null;
+		return magicState;
 	}	
 
 }

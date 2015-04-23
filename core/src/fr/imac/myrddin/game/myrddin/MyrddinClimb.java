@@ -38,5 +38,10 @@ public class MyrddinClimb extends MyrddinState {
 	public StateType getStateType() {
 		return StateType.Climb;
 	}
+	
+	@Override
+	public Vector2 getFirePos() {
+		return null;
+	}
 
 }
