@@ -4,99 +4,99 @@ filter: Linear,Linear
 repeat: none
 landfire
   rotate: false
-  xy: 2, 42
+  xy: 2, 136
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 1
 landfire
   rotate: false
-  xy: 20, 42
+  xy: 20, 136
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 2
 landfire
   rotate: false
-  xy: 38, 42
+  xy: 38, 136
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 3
 landice
   rotate: false
-  xy: 112, 2
+  xy: 2, 154
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 1
 landice
   rotate: false
-  xy: 130, 2
+  xy: 2, 172
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 2
 landice
   rotate: false
-  xy: 112, 20
+  xy: 2, 190
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 3
 loadfire
-  rotate: true
-  xy: 56, 42
-  size: 11, 9
+  rotate: false
+  xy: 20, 154
+  size: 16, 16
   orig: 16, 16
-  offset: 3, 0
+  offset: 0, 0
   index: 1
 loadfire
-  rotate: true
-  xy: 130, 38
-  size: 11, 13
+  rotate: false
+  xy: 38, 154
+  size: 16, 16
   orig: 16, 16
-  offset: 3, 0
+  offset: 0, 0
   index: 2
 loadfire
   rotate: false
-  xy: 130, 20
+  xy: 20, 172
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 3
 loadice
   rotate: false
-  xy: 67, 52
-  size: 11, 9
+  xy: 20, 190
+  size: 16, 16
   orig: 16, 16
-  offset: 3, 0
+  offset: 0, 0
   index: 1
 loadice
-  rotate: true
-  xy: 130, 51
-  size: 11, 13
+  rotate: false
+  xy: 38, 172
+  size: 16, 16
   orig: 16, 16
-  offset: 3, 0
+  offset: 0, 0
   index: 2
 loadice
   rotate: false
-  xy: 112, 38
+  xy: 38, 190
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 3
 powerupfire
-  rotate: true
+  rotate: false
   xy: 2, 2
-  size: 38, 63
+  size: 45, 65
   orig: 45, 65
-  offset: 2, 2
+  offset: 0, 0
   index: -1
 powerupice
   rotate: false
-  xy: 67, 2
-  size: 43, 48
+  xy: 2, 69
+  size: 45, 65
   orig: 45, 65
-  offset: 1, 0
+  offset: 0, 0
   index: -1
