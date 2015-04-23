@@ -37,7 +37,7 @@ public class MyrddinRun extends MyrddinState {
 			myrddin.setMyrddinState(new MyrddinIddle(myrddin));
 		}
 		
-		if(lastY > myrddin.getY() + 2)
+		if(lastY > myrddin.getY() + 4)
 			myrddin.setMyrddinState(new MyrddinFall(myrddin));
 		else
 			lastY = myrddin.getY();

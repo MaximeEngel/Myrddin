@@ -61,8 +61,7 @@ public class Shield extends PhysicActor {
 				moveShield();
 			}
 			else
-				modifyEnergy(delta * 10);
-		
+				modifyEnergy(delta * 10);		
 	}
 	
 	public void linkShieldToMyrddin() {

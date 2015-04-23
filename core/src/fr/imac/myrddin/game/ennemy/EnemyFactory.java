@@ -30,7 +30,7 @@ public class EnemyFactory {
 	}
 
 	private PhysicActor createTowerEnnemy(RectangleMapObject mapObject) {
-		MagicState magicState = MagicState.valueOf(mapObject.getProperties().get("magicState", String.valueOf(MagicState.POWER_1), String.class));
+		MagicState magicState = MagicState.valueOf(mapObject.getProperties().get("magicState", String.valueOf(MagicState.FIRE), String.class));
 		return new TowerEnemy(PhysicUtil.positionFromRectMapObject(mapObject), magicState, gameScreen);
 	}
 

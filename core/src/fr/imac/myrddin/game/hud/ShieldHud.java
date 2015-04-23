@@ -1,7 +1,5 @@
 package fr.imac.myrddin.game.hud;
 
-import javax.media.j3d.Texture;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;

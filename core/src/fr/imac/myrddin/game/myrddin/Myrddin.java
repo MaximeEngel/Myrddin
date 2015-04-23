@@ -61,7 +61,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 				PhysicUtil.createFixtureDef(100f, 0f, 0.03f, false), true, 3);
 		
 		myrddinState = new MyrddinIddle(this);
-		magicState = MagicState.POWER_1;
+		magicState = MagicState.FIRE;
 		magicWeapon = new MagicWeapon<Myrddin>(INITIAL_TIME_WITHOUT_FIRE, this);
 		
 		shield = new Shield(this);
@@ -169,8 +169,11 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	}
 
 	public void climb(Body climbOnThisBody) {		
-		if(climbs.add(climbOnThisBody) && climbs.size() == 1)
-			this.setMyrddinState(new MyrddinClimb(this));
+		if (myrddinState.getStateTime() > 0.15f) {
+			if(climbs.add(climbOnThisBody) && climbs.size() == 1)
+				this.setMyrddinState(new MyrddinClimb(this));
+			
+		}
 	}
 
 	public void unclimb(Body unclimbOfThisBody) {		

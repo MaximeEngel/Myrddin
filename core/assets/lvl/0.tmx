@@ -48,12 +48,12 @@
   <object id="29" type="StaticEnnemy" x="2880" y="640" width="32" height="32"/>
   <object id="31" type="TowerEnnemy" x="896" y="160" width="64" height="64">
    <properties>
-    <property name="magicState" value="POWER_1"/>
+    <property name="magicState" value="FIRE"/>
    </properties>
   </object>
   <object id="32" type="TowerEnnemy" x="3104" y="608" width="64" height="64">
    <properties>
-    <property name="magicState" value="POWER_1"/>
+    <property name="magicState" value="ICE"/>
    </properties>
   </object>
  </objectgroup>

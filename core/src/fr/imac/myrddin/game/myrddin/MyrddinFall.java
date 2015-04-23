@@ -26,8 +26,11 @@ public class MyrddinFall extends MyrddinState {
 		moveInTheAir();
 		
 		Vector2 velocity = myrddin.getLinearVelocity();		
-		if (velocity.y == 0)
+		if (velocity.y == 0) {
 			myrddin.setMyrddinState(new MyrddinIddle(myrddin));
+			if (myrddin.getScaleX() < 1)
+				myrddin.setNewRectBox(new Rectangle(myrddin.getX() + 25, myrddin.getY(), 32, 96), new Rectangle(5, 5, 22, 90));
+		}
 	}
 
 	@Override
