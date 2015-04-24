@@ -64,6 +64,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	
 	private Myrddin myrddin;
 	private Hud hud;
+	private Background background;
 	
 	/**
 	 * 
@@ -71,6 +72,8 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	 */
 	public GameScreen(int level) {
 		super(new FitViewport(1280, 720));
+		
+		background = new Background(getCamera());
 		
 		// Generate graphics of the map
 		TmxMapLoader mapLoader = new TmxMapLoader();
@@ -144,6 +147,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	
 	@Override
 	public void draw() {
+		getBatch().begin();
+		background.draw(getBatch(), 1);
+		getBatch().end();
 		mapRenderer.render();
 		super.draw();
 		
