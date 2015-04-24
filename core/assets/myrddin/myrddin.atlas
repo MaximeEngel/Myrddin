@@ -23,107 +23,135 @@ climb
   orig: 30, 96
   offset: 0, 0
   index: 3
-duck
+death
   rotate: false
   xy: 100, 2
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: 1
+death
+  rotate: false
+  xy: 198, 2
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: 2
+death
+  rotate: false
+  xy: 296, 2
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: 3
+death
+  rotate: false
+  xy: 394, 2
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: 4
+duck
+  rotate: false
+  xy: 492, 2
   size: 60, 96
   orig: 60, 96
   offset: 0, 0
   index: 1
 duck
   rotate: false
-  xy: 162, 2
+  xy: 554, 2
   size: 60, 96
   orig: 60, 96
   offset: 0, 0
   index: 2
 fall
   rotate: false
-  xy: 224, 2
+  xy: 616, 2
   size: 70, 105
   orig: 70, 105
   offset: 0, 0
   index: 1
 fall
   rotate: false
-  xy: 296, 2
+  xy: 688, 2
   size: 70, 105
   orig: 70, 105
   offset: 0, 0
   index: 2
 iddle
   rotate: false
-  xy: 368, 2
+  xy: 760, 2
   size: 32, 96
   orig: 32, 96
   offset: 0, 0
   index: -1
 jump
   rotate: false
-  xy: 402, 2
+  xy: 794, 2
   size: 47, 105
   orig: 47, 105
   offset: 0, 0
   index: 1
 jump
   rotate: false
-  xy: 451, 2
+  xy: 843, 2
   size: 47, 105
   orig: 47, 105
   offset: 0, 0
   index: 2
 run
   rotate: false
-  xy: 500, 2
+  xy: 892, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 1
 run
   rotate: false
-  xy: 553, 2
+  xy: 945, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 2
 run
   rotate: false
-  xy: 606, 2
+  xy: 998, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 3
 run
   rotate: false
-  xy: 659, 2
+  xy: 1051, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 4
 run
   rotate: false
-  xy: 712, 2
+  xy: 1104, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 5
 run
   rotate: false
-  xy: 765, 2
+  xy: 1157, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 6
 run
   rotate: false
-  xy: 818, 2
+  xy: 1210, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
   index: 7
 run
   rotate: false
-  xy: 871, 2
+  xy: 1263, 2
   size: 51, 96
   orig: 51, 96
   offset: 0, 0
