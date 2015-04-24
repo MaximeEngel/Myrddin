@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.GameScreen;
 import fr.imac.myrddin.game.MyrddinUtil;
+import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicUtil;
@@ -86,7 +87,9 @@ public class Shield extends PhysicActor {
 	}
 	
 	public boolean canEnableShield() {
-		return Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && energy > 0;
+		return 	Gdx.input.isButtonPressed(Input.Buttons.RIGHT) 
+				&& energy > 0 
+				& myrddin.getMyrddinState().getStateType() != StateType.Dead;
 	}
 	
 	public void enableShield(boolean enable) {

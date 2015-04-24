@@ -28,8 +28,6 @@ public abstract class MyrddinState {
 		this.animation = animation;
 		this.stateTime = 0;
 		this.goRight = true;
-		
-		setNewRectBox();
 	}
 	
 	/**

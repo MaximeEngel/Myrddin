@@ -41,10 +41,18 @@ public abstract class Character extends PhysicActor {
 		if (life < 0)
 			life = 0;
 		
+		if (life == 0)
+			kill();
 	}
 	
 	public boolean isKilled() {
 		return life == 0;
+	}
+	
+
+
+	public void kill() {
+		
 	}
 
 	public int getLife() {

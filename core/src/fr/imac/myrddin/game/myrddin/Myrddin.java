@@ -33,6 +33,7 @@ import fr.imac.myrddin.game.MagicWeapon;
 import fr.imac.myrddin.game.MagicWeaponOwner;
 import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.magic.MagicState;
+import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.PhysicUtil;
 
@@ -57,10 +58,12 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	// CONSTRUCTOR
 
 	public Myrddin(Vector2 pos) {
-		super(new Rectangle(pos.x, pos.y, 48, 96),	new Rectangle(5, 5, 38, 86), BodyType.DynamicBody, 
+		super(new Rectangle(pos.x + 1000, pos.y, 48, 96),	new Rectangle(5, 5, 38, 86), BodyType.DynamicBody, 
 				PhysicUtil.createFixtureDef(100f, 0f, 0.03f, false), true, 3);
 		
 		myrddinState = new MyrddinIddle(this);
+		myrddinState.setNewRectBox();
+		
 		magicState = MagicState.FIRE;
 		magicWeapon = new MagicWeapon<Myrddin>(INITIAL_TIME_WITHOUT_FIRE, this);
 		
@@ -97,11 +100,9 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	
 	// CHARACTER
 
-	
+	@Override
 	public void kill() {
-		
-		GameScreen gameScreen = (GameScreen) getStage();
-		gameScreen.instantLoad();
+		setMyrddinState(new MyrddinDead(this));
 	}
 	
 	
@@ -119,9 +120,8 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 			fire(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 		
 		shield.act(delta);
-		// KILL
-		if(isKilled())
-			kill();
+		
+		System.out.println(myrddinState.getStateType());
 	}
 
 	@Override
@@ -186,8 +186,14 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		if (myrddinState == null)
 			throw new IllegalArgumentException("myrddinState must not be null");
 		
-		if(this.myrddinState.getStateType() != myrddinState.getStateType())
+		StateType stateType = this.myrddinState.getStateType();
+		if(stateType == StateType.Dead)
+			return;
+		
+		if(stateType != myrddinState.getStateType()) {
 			this.myrddinState = myrddinState;
+			this.myrddinState.setNewRectBox();
+		}
 	}
 	
 	public Shield getShield() {
