@@ -80,7 +80,9 @@ public class MagicBullet extends PhysicActor {
 		if(!born) {
 			if(owner.getCollidableType() == CollidableType.Myrddin) {
 				Myrddin myrddin = (Myrddin) owner;
-				this.body.setTransform(myrddin.getWeaponPos().scl(MyrddinGame.GAME_TO_PHYSIC), this.body.getAngle());
+				Vector2 weaponPos = myrddin.getWeaponPos();
+				if (weaponPos != null)
+					this.body.setTransform(weaponPos .scl(MyrddinGame.GAME_TO_PHYSIC), this.body.getAngle());
 			}
 			
 			if(loadAnimation.isAnimationFinished(timeSinceBirth)) {
