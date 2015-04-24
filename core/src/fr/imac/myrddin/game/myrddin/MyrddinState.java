@@ -14,7 +14,7 @@ public abstract class MyrddinState {
 	
 	public static final float MAX_VEL = 3;
 	public enum StateType {
-		Iddle, Bump, Climb, Run, Duck, Fall, Jump;
+		Iddle, Bump, Climb, Run, Duck, Fall, Jump, Dead;
 	}
 	
 	protected Myrddin myrddin;
