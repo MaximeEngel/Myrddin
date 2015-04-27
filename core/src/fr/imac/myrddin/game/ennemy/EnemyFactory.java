@@ -18,9 +18,9 @@ public class EnemyFactory {
 	public PhysicActor create(RectangleMapObject mapObject, String type){
 		
 		switch (type) {
-		case "StaticEnnemy":
+		case "StaticEnemy":
 			return createStaticEnnemy(mapObject);
-		case "TowerEnnemy":
+		case "TowerEnemy":
 			return createTowerEnnemy(mapObject);
 		default:
 			break;

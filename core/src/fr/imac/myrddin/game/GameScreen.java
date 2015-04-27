@@ -126,7 +126,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		if (tiledMap != null)
 		{
 			EnemyFactory ennemyFactory = new EnemyFactory(this);
-			MapObjects objects = tiledMap.getLayers().get("Ennemies").getObjects();
+			MapObjects objects = tiledMap.getLayers().get("Enemies").getObjects();
 			
 			for (MapObject mapObject : objects) {
 				PhysicActor ennemy = ennemyFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "none", String.class));
