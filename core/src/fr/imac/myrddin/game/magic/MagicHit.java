@@ -24,7 +24,7 @@ public class MagicHit extends Actor {
 			break;
 		// Default is ice
 		default:
-			animation = new Animation(0.05f, atlas.findRegions("impactFire"), PlayMode.NORMAL);
+			animation = new Animation(0.05f, atlas.findRegions("impactIce"), PlayMode.NORMAL);
 			break;
 		
 		}
