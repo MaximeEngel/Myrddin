@@ -5,21 +5,28 @@ filter: Nearest,Nearest
 repeat: none
 menu
   rotate: false
-  xy: 1, 825
+  xy: 1, 1236
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
-menu2
+menu3
   rotate: false
-  xy: 1, 103
+  xy: 1, 514
   size: 1280, 720
   orig: 1280, 720
+  offset: 0, 0
+  index: -1
+t_jouer
+  rotate: false
+  xy: 1, 103
+  size: 1070, 409
+  orig: 1070, 409
   offset: 0, 0
   index: -1
 buttonChecked
   rotate: false
-  xy: 1283, 1445
+  xy: 1283, 1856
   size: 300, 100
   orig: 300, 100
   offset: 0, 0
@@ -33,8 +40,20 @@ buttonUp
   index: -1
 buttonDown
   rotate: false
-  xy: 1283, 1343
+  xy: 1283, 1754
   size: 300, 100
   orig: 300, 100
+  offset: 0, 0
+  index: -1
+
+ui2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+menu2
+  rotate: false
+  xy: 1, 1
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1

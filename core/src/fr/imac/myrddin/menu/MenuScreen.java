@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -97,6 +98,20 @@ public class MenuScreen extends Stage implements Screen {
 		
 		table.row();
 		
+		//add how to play button
+		TextButton textButtonHow = new TextButton("Comment jouer", this.mainTextButtonStyle);
+		textButtonHow.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				initHowToPlayMenu();
+				
+			}
+		});
+		table.add(textButtonHow);
+		
+		table.row();
+		
 		//add quit button
 		TextButton textButtonQuit = new TextButton("Quitter", this.mainTextButtonStyle);
 		textButtonQuit.addListener(new ChangeListener() {
@@ -161,6 +176,37 @@ public class MenuScreen extends Stage implements Screen {
 		});
 		table.add(textButtonReturn);
 	}
+	
+	//screen to choose a level
+		private void initHowToPlayMenu() {
+			//clear screen
+			table.reset();
+			
+			//do debug
+			//table.setDebug(true);
+			
+			//background image
+			AtlasRegion backgroundMenuLevel = atlasMenu.findRegion("menu3");
+			table.background(new TextureRegionDrawable(backgroundMenuLevel));
+			
+			//add how to play image
+			AtlasRegion howToPlayImage = atlasMenu.findRegion("t_jouer");
+			Image howToPlay = new Image(howToPlayImage);
+			table.add(howToPlay);
+			table.row();
+			
+			//add return button
+			TextButton textButtonReturn = new TextButton("Retour au menu", this.mainTextButtonStyle);
+			textButtonReturn.addListener(new ChangeListener() {
+								
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					initMainMenu();
+								
+				}
+			});
+			table.add(textButtonReturn);
+		}
 	
 	//count number of files in a repertory
 	public int getHandles() {
