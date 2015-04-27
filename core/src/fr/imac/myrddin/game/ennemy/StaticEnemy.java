@@ -29,7 +29,7 @@ public class StaticEnemy extends PhysicActor implements Enemy {
 	
 	public void init() {
 		TextureAtlas atlas = (TextureAtlas) MyrddinGame.assetManager.get("enemy/enemy.atlas", TextureAtlas.class);
-		atlasRegion = atlas.findRegion("ennemi");
+		atlasRegion = atlas.findRegion("pics");
 	}
 
 	@Override
