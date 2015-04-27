@@ -176,7 +176,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.S) )
 			instantSave();
 		
-		updateCamera();
+		updateCamera(false);
 		
 		//move HUD to stay fixed
 		hud.setPosition(getCamera().position.x - 0.5f * MyrddinGame.WIDTH, 0);
@@ -184,14 +184,14 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 
 
 
-	private void updateCamera() {
+	private void updateCamera(boolean forceUpdate) {
 		OrthographicCamera camera = (OrthographicCamera) getCamera();
 		Vector3 position = camera.position;
 		
 		float ecartX = position.x - myrddin.getX();
 		
 		// Smooth
-		if(Integer.signum((int)myrddin.getLinearVelocity().x) == Integer.signum((int)-ecartX)) {
+		if(forceUpdate || Integer.signum((int)myrddin.getLinearVelocity().x) == Integer.signum((int)-ecartX)) {
 			position.x = myrddin.getX();
 		}		
 		
@@ -376,6 +376,8 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			e.printStackTrace();
 		}
 		hud.update(myrddin);
+		
+		updateCamera(true);
 	    
 	}
 	

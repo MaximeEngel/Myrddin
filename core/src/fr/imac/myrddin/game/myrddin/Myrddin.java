@@ -44,8 +44,6 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	 */
 	public static final float INITIAL_TIME_WITHOUT_FIRE = 0.3f;
 	
-	private Texture texture = new Texture(Gdx.files.internal("set/tmw_desert_spacing.png"));
-	
 	private MyrddinState myrddinState ;
 	private MagicState magicState;
 	private MagicWeapon<Myrddin> magicWeapon;
