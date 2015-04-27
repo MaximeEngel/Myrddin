@@ -7,6 +7,12 @@ import java.io.ObjectOutput;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -16,6 +22,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.badlogic.gdx.utils.Array;
 
 import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.GameScreen;
@@ -32,18 +39,22 @@ public class Shield extends PhysicActor implements Externalizable {
 	
 	private Myrddin myrddin;
 	private RevoluteJoint revoluteJoint;
+	private Animation animation;
 	
 	/**
 	 * [0 - 100]
 	 */
 	private float energy;
+	private Array<AtlasRegion> regions;
 	
 	public Shield() {
 		super();
+		
+		init();
 	}
 
 	public Shield(Myrddin myrddin) {
-		super(	new Rectangle(myrddin.getX(), myrddin.getY(), 20f, 96f), 
+		super(	new Rectangle(myrddin.getX(), myrddin.getY(), 25f, 96f), 
 				new Rectangle(0, 5, 20f, 86f), 
 				BodyType.DynamicBody, 
 				PhysicUtil.createFixtureDef(2f, 0f, 0f, false), 
@@ -55,12 +66,21 @@ public class Shield extends PhysicActor implements Externalizable {
 		
 		this.linkShieldToMyrddin();
 		this.enableShield(false);
+		
+		init();
+	}
+	
+	public void init() {
+		TextureAtlas atlas = MyrddinGame.assetManager.get("shield/shield.atlas", TextureAtlas.class);
+		animation = new Animation(0.05f, atlas.findRegions("shield"), PlayMode.NORMAL);
+		regions = atlas.findRegions("shield");
 	}
 	
 	// ACTOR
 	
 	@Override
 	public void act(float delta) {
+			super.act(delta);
 			enableShield(canEnableShield());
 			if(isEnable()) {
 				modifyEnergy(-delta * 10);
@@ -70,6 +90,16 @@ public class Shield extends PhysicActor implements Externalizable {
 				modifyEnergy(delta * 10);		
 	}
 	
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		if(isEnable())
+		{
+			TextureRegion region = regions.get(MathUtils.random(0, regions.size - 1));
+			batch.draw(region, getX(), getY(), 0.5f * getWidth(), 0.5f * getHeight(), getWidth(), getHeight(), 1, 1, getRotation());
+			
+		}
+	}
+
 	/** create a revolute joint between the two bodies.
 	 * 
 	 */

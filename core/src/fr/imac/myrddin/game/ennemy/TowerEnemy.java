@@ -1,7 +1,9 @@
 package fr.imac.myrddin.game.ennemy;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -24,7 +26,8 @@ import fr.imac.myrddin.physic.PhysicUtil;
 
 public class TowerEnemy extends EnnemyShooter {
 	
-	AtlasRegion atlasRegion;
+	private Animation animation;
+	private float time;
 	
 	/**
 	 * Only use it for externalization.
@@ -35,13 +38,15 @@ public class TowerEnemy extends EnnemyShooter {
 	}
 	
 	public TowerEnemy(Vector2 pos, MagicState magicState, GameScreen gameScreen) {
-		super(new Rectangle(pos.x, pos.y, 64, 47), new Rectangle(5, 5, 54, 37), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true, 3, magicState, gameScreen);
+		super(new Rectangle(pos.x, pos.y, 64, 38), new Rectangle(5, 5, 54, 28), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true, 3, magicState, gameScreen);
 		init();
 	}
 	
 	public void init() {
 		TextureAtlas atlas = (TextureAtlas) MyrddinGame.assetManager.get("enemy/enemy.atlas", TextureAtlas.class);
-		atlasRegion = atlas.findRegion("ennemi");
+		animation = new Animation(0.1f, atlas.findRegions("turret"), PlayMode.LOOP);
+		
+		this.time = 0;
 	}
 	
 	
@@ -50,13 +55,15 @@ public class TowerEnemy extends EnnemyShooter {
 	public void act(float delta) {
 		// TODO Auto-generated method stub
 		super.act(delta);
+		
+		time += delta;
 	}
 	
 	
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(atlasRegion, getX(), getY());
+		batch.draw(animation.getKeyFrame(time), getX(), getY());
 	}
 
 	@Override

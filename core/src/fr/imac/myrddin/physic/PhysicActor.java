@@ -7,6 +7,7 @@ import java.io.ObjectOutput;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -85,7 +86,7 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 	public void act(float delta) {
 		Vector2 position = body.getPosition();
 		this.setPosition(position.x * MyrddinGame.PHYSIC_TO_GAME  - collisionBounds.getWidth() / 2f - collisionBounds.x, position.y * MyrddinGame.PHYSIC_TO_GAME - collisionBounds.getHeight() / 2f - collisionBounds.y);
-		this.setRotation(body.getAngle());
+		this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
 		
 		switchFixture();
 		

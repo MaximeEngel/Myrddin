@@ -5,6 +5,9 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -32,7 +35,7 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	private MagicWeapon<EnnemyShooter> magicWeapon;
 	
 	private float lastTimeSeen;
-
+	
 	/**
 	 * In stage pixel unit
 	 */
@@ -147,7 +150,7 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	
 	@Override
 	public Vector2 getWeaponPos() {
-		return new Vector2(25 + getX(), 55 + getY());
+		return new Vector2(20 + getX(), 20 + getY());
 	}
 
 	@Override
