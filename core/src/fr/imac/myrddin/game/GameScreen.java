@@ -101,6 +101,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		
 		
 		Gdx.input.setInputProcessor(this);
+		instantSave();
 	}
 	
 	
@@ -179,9 +180,6 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		
 		//move HUD to stay fixed
 		hud.setPosition(getCamera().position.x - 0.5f * MyrddinGame.WIDTH, 0);
-		
-		if(Gdx.input.isKeyJustPressed(Keys.P))
-			instantSave();
 	}
 
 

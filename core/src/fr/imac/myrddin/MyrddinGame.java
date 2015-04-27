@@ -43,13 +43,11 @@ public class MyrddinGame extends Game {
 
 		// Myrddin
 		assetManager.load("myrddin/myrddin.atlas", TextureAtlas.class);
-		assetManager.load("shield/shield.atlas", TextureAtlas.class);
 		
 		assetManager.load("enemy/enemy.atlas", TextureAtlas.class);
 		
 		// Power
 		assetManager.load("power/power.atlas", TextureAtlas.class);
-		assetManager.load("power/hit.atlas", TextureAtlas.class);
 
 		// Background
 		assetManager.load("background/background.atlas", TextureAtlas.class);

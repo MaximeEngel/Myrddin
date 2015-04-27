@@ -20,11 +20,11 @@ public class MagicHit extends Actor {
 		
 		switch(magicState) {
 		case FIRE:
-			animation = new Animation(0.05f, atlas.findRegions("impactFire"), PlayMode.NORMAL);
+			animation = new Animation(0.1f, atlas.findRegions("impactFire"), PlayMode.NORMAL);
 			break;
 		// Default is ice
 		default:
-			animation = new Animation(0.05f, atlas.findRegions("impactIce"), PlayMode.NORMAL);
+			animation = new Animation(0.1f, atlas.findRegions("impactIce"), PlayMode.NORMAL);
 			break;
 		
 		}

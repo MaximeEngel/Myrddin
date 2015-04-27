@@ -13,7 +13,7 @@ import fr.imac.myrddin.MyrddinGame;
 public class MyrddinDuck extends MyrddinState {
 
 	public MyrddinDuck(Myrddin myrddin) {
-		super(myrddin, new Animation(0.2f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("duck"), PlayMode.NORMAL));
+		super(myrddin, new Animation(0.15f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("duck"), PlayMode.NORMAL));
 		myrddin.setLinearVelocity(new Vector2(0f, 0f));
 	}
 	

@@ -71,7 +71,7 @@ public class Shield extends PhysicActor implements Externalizable {
 	}
 	
 	public void init() {
-		TextureAtlas atlas = MyrddinGame.assetManager.get("shield/shield.atlas", TextureAtlas.class);
+		TextureAtlas atlas = MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class);
 		animation = new Animation(0.05f, atlas.findRegions("shield"), PlayMode.NORMAL);
 		regions = atlas.findRegions("shield");
 	}
