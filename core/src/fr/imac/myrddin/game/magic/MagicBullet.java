@@ -114,7 +114,7 @@ public class MagicBullet extends PhysicActor {
 				this.getHeight(), 
 				this.getScaleX(), 
 				this.getScaleY(), 
-				this.getRotation() * MathUtils.radiansToDegrees
+				this.getRotation()
 			);
 	}
 	
