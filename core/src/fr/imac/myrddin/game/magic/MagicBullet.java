@@ -91,8 +91,12 @@ public class MagicBullet extends PhysicActor {
 			}
 		}
 		
-		if(timeSinceBirth > LIFE || hasContacted)
+		if(timeSinceBirth > LIFE || hasContacted) {
+			if (hasContacted)
+				this.getStage().addActor(new MagicHit(new Vector2(this.getCenterX(), this.getCenterY()), this.magicState));
+			
 			dispose();
+		}
 	}
 	
 	
@@ -113,14 +117,7 @@ public class MagicBullet extends PhysicActor {
 				this.getRotation() * MathUtils.radiansToDegrees
 			);
 	}
-
-
-
-	public void dispose() {
-		this.remove();
-		this.body.getWorld().destroyBody(this.body);
-	}
-
+	
 	// COLLISION
 
 	@Override

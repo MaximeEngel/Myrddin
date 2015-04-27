@@ -48,6 +48,7 @@ public class MyrddinGame extends Game {
 		
 		// Power
 		assetManager.load("power/power.atlas", TextureAtlas.class);
+		assetManager.load("power/hit.atlas", TextureAtlas.class);
 
 		// Background
 		assetManager.load("background/background.atlas", TextureAtlas.class);
