@@ -10,11 +10,10 @@ import fr.imac.myrddin.game.GameScreen;
 
 public class MyrddinDead extends MyrddinState {
 	
-	public static final float TIME_TO_BE_DEAD = 3f;
+	public static final float TIME_TO_BE_DEAD = 2f;
 
 	public MyrddinDead(Myrddin myrddin) {
 		super(myrddin, new Animation(0.2f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("death"), PlayMode.NORMAL));
-		System.out.println("BECOME DEAD");
 	}
 
 	@Override
@@ -24,11 +23,6 @@ public class MyrddinDead extends MyrddinState {
 		if (this.animation.isAnimationFinished(stateTime)) {
 			// No slide to many time
 			myrddin.getBody().setLinearVelocity(0, myrddin.getLinearVelocity().y);
-		
-			if (stateTime > TIME_TO_BE_DEAD) {
-				GameScreen gameScreen = (GameScreen) myrddin.getStage();
-				gameScreen.instantLoad();
-			}
 		}
 	}
 

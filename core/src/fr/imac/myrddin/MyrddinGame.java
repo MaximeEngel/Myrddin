@@ -14,6 +14,7 @@ public class MyrddinGame extends Game {
 	public static final int HEIGHT = 720;
 	public static final float GAME_TO_PHYSIC = 0.02f;
 	public static final float PHYSIC_TO_GAME = 50f;
+	public static MyrddinGame MYRDDIN_GAME;
 	
 	
 	public static AssetManager assetManager;
@@ -25,6 +26,7 @@ public class MyrddinGame extends Game {
 		
 		
 		this.setScreen(new MenuScreen(this));
+		MYRDDIN_GAME = this;
 	}
 
 	private void initialLoadAsset() {

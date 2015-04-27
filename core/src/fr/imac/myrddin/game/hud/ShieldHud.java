@@ -49,4 +49,9 @@ public class ShieldHud extends Actor {
 				20f
 		);
 	}
+
+	public void setShield(Shield shield) {
+		this.shield = shield;
+		
+	}
 }

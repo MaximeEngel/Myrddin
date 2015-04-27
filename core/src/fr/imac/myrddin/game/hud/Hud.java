@@ -10,6 +10,10 @@ import fr.imac.myrddin.game.myrddin.Myrddin;
 public class Hud extends Group {
 	
 	private Myrddin myrddin;
+	private LifeHud lifeHud;
+	private ScoreHud scoreHud;
+	private MagicStateHud magicStateHud;
+	private ShieldHud shieldHud;
 	
 	public Hud(Myrddin myrddin) {
 		if(myrddin == null)
@@ -19,11 +23,17 @@ public class Hud extends Group {
 		
 		this.setBounds(0, 0, MyrddinGame.WIDTH, MyrddinGame.HEIGHT);
 		
-		// add life HUD
-		addActor(new LifeHud(myrddin));
-		addActor(new ScoreHud(myrddin));
-		addActor(new MagicStateHud(myrddin));
-		addActor(new ShieldHud(myrddin.getShield()));
+		lifeHud = new LifeHud(myrddin);
+		addActor(lifeHud);
+		
+		scoreHud = new ScoreHud(myrddin);
+		addActor(scoreHud);
+		
+		magicStateHud = new MagicStateHud(myrddin);
+		addActor(magicStateHud);
+		
+		shieldHud = new ShieldHud(myrddin.getShield());
+		addActor(shieldHud);
 	}
 
 	@Override
@@ -35,6 +45,14 @@ public class Hud extends Group {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+	}
+
+	public void update(Myrddin myrddin) {
+		lifeHud.setMyrddin(myrddin);
+		scoreHud.setMyrddin(myrddin);
+		magicStateHud.setMyrddin(myrddin);
+		shieldHud.setShield(myrddin.getShield());
+		
 	}
 	
 	

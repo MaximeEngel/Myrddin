@@ -29,5 +29,9 @@ public class LifeHud extends Actor {
 			);
 		}
 	}
+
+	public void setMyrddin(Myrddin myrddin) {
+		this.myrddin = myrddin;		
+	}
 	
 }

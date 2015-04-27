@@ -13,6 +13,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
@@ -45,6 +46,7 @@ import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.ennemy.EnemyFactory;
 import fr.imac.myrddin.game.hud.Hud;
 import fr.imac.myrddin.game.magic.MagicBullet;
+import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.Collidable.CollidableType;
@@ -87,7 +89,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		physicWorld.setContactListener(this);
 		createPhysicWorld(tiledMap);
 		
-		myrddin = new Myrddin(new Vector2(510f, 850f));
+		myrddin = new Myrddin(new Vector2(510f, 850f), MagicState.FIRE);
 		this.addActor(myrddin);
 		this.addActor(myrddin.getShield());
 		
@@ -99,7 +101,6 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		
 		
 		Gdx.input.setInputProcessor(this);
-		instantSave();
 	}
 	
 	
@@ -168,7 +169,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		// TODO Auto-generated method stub
 		physicWorld.step(Gdx.graphics.getDeltaTime(), 6, 2);
 		super.act(delta);
-		if(myrddin.isOutOfTheBox())
+		if(myrddin.respawn())
 			instantLoad();
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.S) )
@@ -178,6 +179,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		
 		//move HUD to stay fixed
 		hud.setPosition(getCamera().position.x - 0.5f * MyrddinGame.WIDTH, 0);
+		
+		if(Gdx.input.isKeyJustPressed(Keys.P))
+			instantSave();
 	}
 
 
@@ -337,22 +341,26 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		    ObjectInputStream ois = new ObjectInputStream(fis);
 		    
 		    int nbActorsToLoad = ois.readInt();
+		    Array<Actor> actors = getActors();
 		    
 		    // Clean actors
-		    Array<Actor> actors = getActors();
+		    LinkedList<PhysicActor> actorsToDestroy = new LinkedList<PhysicActor>();
 		    for (int i = 0; i < actors.size; i++) {
 		    	Actor actor =  actors.get(i);
 		    	if(actor instanceof PhysicActor) {
 					PhysicActor physicActor = (PhysicActor) actor;
 					if (physicActor.isSavable())
-						physicActor.dispose();	    		
+						actorsToDestroy.add(physicActor);    		
 		    	}		
 			}
+		    for (PhysicActor physicActor : actorsToDestroy) {
+				physicActor.dispose();
+			}
 		    
-		    
+		    // LOAD
 		    for(int i = 0; i < nbActorsToLoad ; ++i)
 		    {
-		    	 try {
+		    	try {
 					PhysicActor physicActor = (PhysicActor)ois.readObject();
 					if (physicActor.getCollidableType() == CollidableType.Myrddin)
 						myrddin = (Myrddin) physicActor;
@@ -361,13 +369,15 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+		    	addActor(myrddin.getShield());
 		    }
 		   
 		    ois.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}  
+		}
+		hud.update(myrddin);
 	    
 	}
 	

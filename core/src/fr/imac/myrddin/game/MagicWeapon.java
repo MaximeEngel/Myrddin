@@ -1,11 +1,17 @@
 package fr.imac.myrddin.game;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 import com.badlogic.gdx.math.Vector2;
+
 import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.physic.PhysicActor;
 
-public class MagicWeapon<T extends PhysicActor & MagicWeaponOwner> {
+public class MagicWeapon<T extends PhysicActor & MagicWeaponOwner> implements Externalizable {
 	
 	private float timeWithoutFire ;
 	private float lastFire ;
@@ -17,6 +23,10 @@ public class MagicWeapon<T extends PhysicActor & MagicWeaponOwner> {
 		this.timeWithoutFire = timeWithoutFire;
 		this.lastFire = 0;
 		this.owner = owner;
+	}
+	
+	public MagicWeapon() {
+		
 	}
 
 	public void act(float delta) {
@@ -52,6 +62,25 @@ public class MagicWeapon<T extends PhysicActor & MagicWeaponOwner> {
 
 	public void setTimeWithoutFire(float timeWithoutFire) {
 		this.timeWithoutFire = timeWithoutFire;
+	}
+	
+	// EXTERNALIZATION
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeFloat(timeWithoutFire);
+		out.writeFloat(lastFire);
+		out.writeObject(owner);
+		
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		this.timeWithoutFire = in.readFloat();
+		this.lastFire = in.readFloat();
+		this.owner = (T) in.readObject();
+		
 	}
 	
 	

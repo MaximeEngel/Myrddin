@@ -1,5 +1,10 @@
 package fr.imac.myrddin.game.myrddin;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
@@ -20,7 +25,7 @@ import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicUtil;
 
-public class Shield extends PhysicActor {
+public class Shield extends PhysicActor implements Externalizable {
 
 	public static final float MOTOR_SPEED = 300f;
 	public static final float MAX_ENERGY = 100f;
@@ -65,6 +70,9 @@ public class Shield extends PhysicActor {
 				modifyEnergy(delta * 10);		
 	}
 	
+	/** create a revolute joint between the two bodies.
+	 * 
+	 */
 	public void linkShieldToMyrddin() {
 		RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
 		revoluteJointDef.bodyA = myrddin.getBody();
@@ -80,8 +88,15 @@ public class Shield extends PhysicActor {
 		this.revoluteJoint = (RevoluteJoint) GameScreen.physicWorld.createJoint(revoluteJointDef);	
 	}
 	
-	// SHIELD
+	@Override
+	public boolean isSavable() {
+		return true;
+	}
 	
+	
+	
+	// SHIELD
+
 	public boolean isEnable() {
 		return this.body.isActive();
 	}
@@ -186,6 +201,29 @@ public class Shield extends PhysicActor {
 		return 	type == CollidableType.Myrddin
 				|| type == CollidableType.MagicBullet
 				|| type == CollidableType.Climb;
+	}
+	
+	// EXTERNALIZATION
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		super.writeExternal(out);
+		
+		out.writeObject(myrddin);
+		out.writeFloat(energy);
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		super.readExternal(in);
+		
+		myrddin = (Myrddin) in.readObject();
+		energy = in.readFloat();		
+
+		this.body.setGravityScale(0);
+		this.linkShieldToMyrddin();
+		this.enableShield(false);
 	}
 	
 	

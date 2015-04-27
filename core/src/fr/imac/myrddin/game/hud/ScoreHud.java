@@ -30,4 +30,9 @@ public class ScoreHud extends Actor {
 				getParent().getHeight() - 30
 		);
 	}
+
+	public void setMyrddin(Myrddin myrddin) {
+		this.myrddin = myrddin;	
+		
+	}
 }

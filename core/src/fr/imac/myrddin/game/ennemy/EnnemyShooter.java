@@ -1,5 +1,10 @@
 package fr.imac.myrddin.game.ennemy;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -24,7 +29,6 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	private MagicState magicState;
 	private GameScreen gameScreen;
 	
-	// offset in function of the bottom left of the fire's origin.
 	private MagicWeapon<EnnemyShooter> magicWeapon;
 	
 	private float lastTimeSeen;
@@ -46,7 +50,6 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	}
 	
 	public EnnemyShooter() {
-		defaultInit();
 	}
 	
 	private void defaultInit() {
@@ -150,6 +153,44 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	@Override
 	public MagicState getMagicState() {
 		return magicState;
+	}
+
+	@Override
+	public int getMeleeDamage() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean obstructBulletOf(PhysicActor owner) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	// EXTERNALIZATION
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		// TODO Auto-generated method stub
+		super.writeExternal(out);
+		
+		out.writeObject(magicState);
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		// TODO Auto-generated method stub
+		super.readExternal(in);
+		
+		magicState = (MagicState) in.readObject();
+		
+		gameScreen = (GameScreen) MyrddinGame.MYRDDIN_GAME.getScreen();
+		
+		this.magicWeapon = new MagicWeapon<EnnemyShooter>(0.3f, this);
+		this.lastTimeSeen = MAX_LAST_TIME_SEEN;
 	}	
+	
+	
 
 }

@@ -53,4 +53,9 @@ public class MagicStateHud extends Actor {
 		//		getParent().getHeight() - 55
 		//);
 	}
+
+	public void setMyrddin(Myrddin myrddin) {
+		this.myrddin = myrddin;	
+		
+	}
 }

@@ -57,14 +57,14 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	
 	// CONSTRUCTOR
 
-	public Myrddin(Vector2 pos) {
-		super(new Rectangle(pos.x + 1000, pos.y, 48, 96),	new Rectangle(5, 5, 38, 86), BodyType.DynamicBody, 
+	public Myrddin(Vector2 pos, MagicState magicState) {
+		super(new Rectangle(pos.x, pos.y, 48, 96),	new Rectangle(5, 5, 38, 86), BodyType.DynamicBody, 
 				PhysicUtil.createFixtureDef(100f, 0f, 0.03f, false), true, 3);
 		
 		myrddinState = new MyrddinIddle(this);
 		myrddinState.setNewRectBox();
 		
-		magicState = MagicState.FIRE;
+		this.magicState = magicState;
 		magicWeapon = new MagicWeapon<Myrddin>(INITIAL_TIME_WITHOUT_FIRE, this);
 		
 		shield = new Shield(this);
@@ -74,7 +74,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	}
 	
 	public Myrddin() {
-		
+		climbs = new HashSet<Body>();
 	}
 	
 	public void bump(Vector2 impulse) {
@@ -120,13 +120,10 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 			fire(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 		
 		shield.act(delta);
-		
-		System.out.println(myrddinState.getStateType());
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-//		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
 		myrddinState.draw(batch, parentAlpha);
 	}
 
@@ -141,8 +138,15 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	}
 
 	
+	
 	// FIRE
 	
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		super.dispose();
+	}
+
 	/**
 	 * 
 	 * @param targetPos mouse position in pixel
@@ -238,6 +242,8 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		super.writeExternal(out);
 		
 		out.writeObject(magicState.toString());
+		out.writeObject(magicWeapon);
+		out.writeObject(shield);
 	}
 
 	@Override
@@ -247,6 +253,13 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		
 		magicState = MagicState.valueOf(String.valueOf(in.readObject()));
 		myrddinState = new MyrddinIddle(this);
+		
+		magicWeapon = (MagicWeapon<Myrddin>) in.readObject();
+		shield = (Shield) in.readObject();
+	}
+
+	public boolean respawn() {
+		return isOutOfTheBox() || myrddinState.getStateType() == StateType.Dead && myrddinState.getStateTime() > MyrddinDead.TIME_TO_BE_DEAD;
 	}
 
 }
