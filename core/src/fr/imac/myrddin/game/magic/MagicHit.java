@@ -16,15 +16,15 @@ public class MagicHit extends Actor {
 	private Vector2 posCenter;
 	
 	public MagicHit(Vector2 posCenter, MagicState magicState) {
-		TextureAtlas atlas = MyrddinGame.assetManager.get("power/hit.atlas", TextureAtlas.class);
+		TextureAtlas atlas = MyrddinGame.assetManager.get("power/power.atlas", TextureAtlas.class);
 		
 		switch(magicState) {
 		case FIRE:
-			animation = new Animation(0.05f, atlas.findRegions("hitFire"), PlayMode.NORMAL);
+			animation = new Animation(0.05f, atlas.findRegions("impactFire"), PlayMode.NORMAL);
 			break;
 		// Default is ice
 		default:
-			animation = new Animation(0.05f, atlas.findRegions("hitFire"), PlayMode.NORMAL);
+			animation = new Animation(0.05f, atlas.findRegions("impactFire"), PlayMode.NORMAL);
 			break;
 		
 		}
