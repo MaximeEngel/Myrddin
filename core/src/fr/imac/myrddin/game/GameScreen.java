@@ -91,7 +91,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		physicWorld.setContactListener(this);
 		createPhysicWorld(tiledMap);
 		
-		myrddin = new Myrddin(new Vector2(510f, 850f), MagicState.FIRE);
+		myrddin = new Myrddin(new Vector2(510f, 850f), MagicState.ICE);
 		this.addActor(myrddin);
 		this.addActor(myrddin.getShield());
 		
@@ -106,6 +106,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		myrddin.setZIndex(5000);
 		
 		Gdx.input.setInputProcessor(this);
+		
+		if(!new File("save/instantSave.ms").exists())
+			instantSave();
 	}
 	
 	

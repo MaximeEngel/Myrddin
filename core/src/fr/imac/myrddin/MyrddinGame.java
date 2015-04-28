@@ -81,7 +81,7 @@ public class MyrddinGame extends Game {
 		eraseLastInstantSave = false;
 		startGame(lvl);
 		GameScreen gameScreen = (GameScreen) this.getScreen();
-			gameScreen.instantLoad();
+		gameScreen.instantLoad();
 		eraseLastInstantSave = true;
 	}
 }

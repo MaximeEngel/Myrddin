@@ -56,7 +56,7 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	}
 	
 	private void defaultInit() {
-		this.magicWeapon = new MagicWeapon<EnnemyShooter>(0.3f, this);
+		this.magicWeapon = new MagicWeapon<EnnemyShooter>(0.8f, this);
 		this.lastTimeSeen = MAX_LAST_TIME_SEEN;
 	}
 	
@@ -190,8 +190,7 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 		
 		gameScreen = (GameScreen) MyrddinGame.MYRDDIN_GAME.getScreen();
 		
-		this.magicWeapon = new MagicWeapon<EnnemyShooter>(0.3f, this);
-		this.lastTimeSeen = MAX_LAST_TIME_SEEN;
+		defaultInit();
 	}	
 	
 	

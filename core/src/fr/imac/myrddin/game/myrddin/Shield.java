@@ -83,7 +83,7 @@ public class Shield extends PhysicActor implements Externalizable {
 			super.act(delta);
 			enableShield(canEnableShield());
 			if(isEnable()) {
-				modifyEnergy(-delta * 10);
+				modifyEnergy(-delta * 5);
 				moveShield();
 			}
 			else
@@ -255,8 +255,5 @@ public class Shield extends PhysicActor implements Externalizable {
 		this.linkShieldToMyrddin();
 		this.enableShield(false);
 	}
-	
-	
-	
 
 }

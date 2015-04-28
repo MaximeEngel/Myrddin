@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
 
 import fr.imac.myrddin.MyrddinGame;
+import fr.imac.myrddin.game.Character;
 import fr.imac.myrddin.game.ennemy.Enemy;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
@@ -33,6 +34,8 @@ public class MagicBullet extends PhysicActor {
 
 	private Animation loadAnimation;
 	private Animation landAnimation;
+
+	private Character targetHitted;
 	
 	
 	/**
@@ -93,9 +96,11 @@ public class MagicBullet extends PhysicActor {
 		}
 		
 		if(timeSinceBirth > LIFE || hasContacted) {
-			if (hasContacted)
+			if (hasContacted) {
 				this.getStage().addActor(new MagicHit(new Vector2(this.getCenterX(), this.getCenterY()), this.magicState));
-			
+				if (targetHitted != null)
+					targetHitted.hurtedBy(1);
+			}
 			dispose();
 		}
 	}
@@ -142,20 +147,24 @@ public class MagicBullet extends PhysicActor {
 
 	@Override
 	public void postSolve(Contact contact, Collidable other) {		
-		hasContacted = true;		
+		hasContacted = true;	
+		
+		if(other instanceof Character) {
+			Character character = (Character) other;
+			targetHitted = character;
+		}
 	}
 
 
 	@Override
 	public void preSolve(Contact contact, Collidable other) {
-		if (this.owner.equals(other) || !born) {
+		if (this.owner.equals(other) 
+			|| !born
+			|| (other.getCollidableType() == CollidableType.Ennemy && !((Enemy) other).obstructBulletOf(this.owner))
+			|| (other.getCollidableType() == CollidableType.MagicBullet && ((MagicBullet) other).magicState == this.magicState)) {
+			
 			contact.setEnabled(false);
-		}	
-		else if (other.getCollidableType() == CollidableType.Ennemy) {
-			Enemy enemy = (Enemy) other;
-			if (!enemy.obstructBulletOf(this.owner)) {
-				contact.setEnabled(false);
-			}
+			return;
 		}
 	}
 }
