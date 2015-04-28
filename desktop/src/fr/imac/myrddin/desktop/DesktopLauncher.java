@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = MyrddinGame.WIDTH;
 		config.height = MyrddinGame.HEIGHT;
-		config.resizable = false ;
+		config.resizable = true ;
 		new LwjglApplication(new MyrddinGame(), config);
 	}
 }

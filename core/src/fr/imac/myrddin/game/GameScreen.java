@@ -48,11 +48,13 @@ import fr.imac.myrddin.game.hud.Hud;
 import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.Myrddin;
+import fr.imac.myrddin.game.myrddin.Shield;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.Collidable.CollidableType;
 import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicTileFactory;
 import fr.imac.myrddin.physic.PhysicUtil;
+import fr.imac.myrddin.physic.WoodenLog;
 
 /*
  * Handle the mechanism of a level.
@@ -95,13 +97,15 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		
 		createEnnemy(tiledMap);
 		
+		createWoodenLogs(tiledMap);
+		
 		// Connect HUD to gameScreen
 		hud =  new Hud(myrddin);
-		addActor(hud);
-		
+		addActor(hud);		
+
+		myrddin.setZIndex(5000);
 		
 		Gdx.input.setInputProcessor(this);
-		instantSave();
 	}
 	
 	
@@ -135,6 +139,18 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		}
 	}
 	
+	private void createWoodenLogs(TiledMap tiledMap) {
+		if (tiledMap != null)
+		{
+			MapObjects objects = tiledMap.getLayers().get("WoodenLogs").getObjects();
+			
+			for (MapObject mapObject : objects) {
+				WoodenLog woodenLog = new WoodenLog(PhysicUtil.positionFromRectMapObject((RectangleMapObject) mapObject));
+				addActor(woodenLog);
+			}			
+		}
+	}
+	
 	private float mapWidth() {
 		MapProperties mapProperties = tiledMap.getProperties();		
 		int nbHorizontalTiles = mapProperties.get("width", 0, Integer.class);
@@ -159,7 +175,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 //		Box2DDebugRenderer debug = new Box2DDebugRenderer();
 //		Matrix4 matrixDebug = new Matrix4(getCamera().combined);
 //		matrixDebug.scale(MyrddinGame.PHYSIC_TO_GAME, MyrddinGame.PHYSIC_TO_GAME, 1);
-//		debug.render(physicWorld, matrixDebug);
+//		debug.render(physicWorld, matrixDebug);		
 //		getBatch().end();
 	}
 
@@ -170,8 +186,10 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		// TODO Auto-generated method stub
 		physicWorld.step(Gdx.graphics.getDeltaTime(), 6, 2);
 		super.act(delta);
-		if(myrddin.respawn())
-			instantLoad();
+		if(myrddin.respawn()) {
+			// Hack to fix physicworld bug after to many respawn, normaly we just want to call instantLoad()
+			MyrddinGame.MYRDDIN_GAME.startLastSave();
+		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.S) )
 			instantSave();
@@ -180,6 +198,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		
 		//move HUD to stay fixed
 		hud.setPosition(getCamera().position.x - 0.5f * MyrddinGame.WIDTH, 0);
+		
+		if(Gdx.input.isKeyJustPressed(Keys.P))
+			instantSave();
 	}
 
 
