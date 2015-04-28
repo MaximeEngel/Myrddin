@@ -5,42 +5,49 @@ filter: Nearest,Nearest
 repeat: none
 menu
   rotate: false
-  xy: 1, 1248
+  xy: 1, 1268
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 menu3
   rotate: false
-  xy: 1, 526
+  xy: 1, 546
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 t_jouer
   rotate: false
-  xy: 1, 115
+  xy: 1, 135
   size: 1070, 409
   orig: 1070, 409
   offset: 0, 0
   index: -1
+powers_exp
+  rotate: false
+  xy: 1, 1
+  size: 1044, 132
+  orig: 1044, 132
+  offset: 0, 0
+  index: -1
 buttonChecked
   rotate: false
-  xy: 1283, 1856
+  xy: 1283, 1876
   size: 300, 112
   orig: 300, 112
   offset: 0, 0
   index: -1
 buttonUp
   rotate: false
-  xy: 1, 1
+  xy: 1283, 1762
   size: 300, 112
   orig: 300, 112
   offset: 0, 0
   index: -1
 buttonDown
   rotate: false
-  xy: 1283, 1742
+  xy: 1585, 1876
   size: 300, 112
   orig: 300, 112
   offset: 0, 0

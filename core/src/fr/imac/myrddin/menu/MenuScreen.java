@@ -189,12 +189,6 @@ public class MenuScreen extends Stage implements Screen {
 			AtlasRegion backgroundMenuLevel = atlasMenu.findRegion("menu3");
 			table.background(new TextureRegionDrawable(backgroundMenuLevel));
 			
-			//add how to play image
-			AtlasRegion howToPlayImage = atlasMenu.findRegion("t_jouer");
-			Image howToPlay = new Image(howToPlayImage);
-			table.add(howToPlay);
-			table.row();
-			
 			//add return button
 			TextButton textButtonReturn = new TextButton("Retour au menu", this.mainTextButtonStyle);
 			textButtonReturn.addListener(new ChangeListener() {
@@ -205,7 +199,18 @@ public class MenuScreen extends Stage implements Screen {
 								
 				}
 			});
-			table.add(textButtonReturn).padTop(-15);
+			table.add(textButtonReturn).padTop(-20);
+			table.row();
+			
+			//add how to play image
+			AtlasRegion howToPlayImage = atlasMenu.findRegion("t_jouer");
+			Image howToPlay = new Image(howToPlayImage);
+			table.add(howToPlay).padTop(20);
+			table.row();
+			
+			AtlasRegion powersImage = atlasMenu.findRegion("powers_exp");
+			Image powers = new Image(powersImage);
+			table.add(powers).padTop(20);
 		}
 	
 	//count number of files in a repertory
