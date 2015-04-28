@@ -38,7 +38,7 @@ public class TowerEnemy extends EnnemyShooter {
 	}
 	
 	public TowerEnemy(Vector2 pos, MagicState magicState, GameScreen gameScreen) {
-		super(new Rectangle(pos.x, pos.y, 64, 38), new Rectangle(5, 5, 54, 28), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true, 3, magicState, gameScreen);
+		super(new Rectangle(pos.x, pos.y, 64, 38), new Rectangle(5, 5, 54, 28), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true, 1, magicState, gameScreen);
 		init();
 	}
 	
@@ -57,6 +57,9 @@ public class TowerEnemy extends EnnemyShooter {
 		super.act(delta);
 		
 		time += delta;
+		
+		if(isKilled())
+			dispose();
 	}
 	
 	

@@ -190,8 +190,6 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		physicWorld.step(Gdx.graphics.getDeltaTime(), 6, 2);
 		super.act(delta);
 		if(myrddin.respawn()) {
-			// Hack to fix physicworld bug after to many respawn, normaly we just want to call instantLoad()
-//			MyrddinGame.MYRDDIN_GAME.startLastSave();
 			instantLoad();
 		}
 		
@@ -202,9 +200,6 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		
 		//move HUD to stay fixed
 		hud.setPosition(getCamera().position.x - 0.5f * MyrddinGame.WIDTH, 0);
-		
-		if(Gdx.input.isKeyJustPressed(Keys.P))
-			instantSave();
 	}
 
 
