@@ -48,6 +48,7 @@ public class MagicBullet extends PhysicActor {
 		this.timeSinceBirth = 0;
 		this.born = false;
 		this.body.setGravityScale(0f);
+		this.body.setBullet(true);
 		this.owner = owner;
 		this.hasContacted = false;
 		

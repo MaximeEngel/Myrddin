@@ -188,7 +188,8 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		super.act(delta);
 		if(myrddin.respawn()) {
 			// Hack to fix physicworld bug after to many respawn, normaly we just want to call instantLoad()
-			MyrddinGame.MYRDDIN_GAME.startLastSave();
+//			MyrddinGame.MYRDDIN_GAME.startLastSave();
+			instantLoad();
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.S) )
@@ -388,12 +389,10 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		    	addActor(myrddin.getShield());
 		    }
 		   
 		    ois.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		hud.update(myrddin);

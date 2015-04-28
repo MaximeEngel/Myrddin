@@ -151,7 +151,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	 */
 	public void fire(Vector2 targetPos) {
 		
-		if(targetPos == null)
+		if(targetPos == null || shield.isEnable())
 			return;
 		
 		Stage stage = this.getStage();

@@ -55,7 +55,7 @@ public class Shield extends PhysicActor implements Externalizable {
 
 	public Shield(Myrddin myrddin) {
 		super(	new Rectangle(myrddin.getX(), myrddin.getY(), 25f, 96f), 
-				new Rectangle(0, 5, 20f, 86f), 
+				new Rectangle(2, 5, 16f, 86f), 
 				BodyType.DynamicBody, 
 				PhysicUtil.createFixtureDef(2f, 0f, 0f, false), 
 				false
@@ -134,7 +134,7 @@ public class Shield extends PhysicActor implements Externalizable {
 	public boolean canEnableShield() {
 		return 	Gdx.input.isButtonPressed(Input.Buttons.RIGHT) 
 				&& energy > 0 
-				& myrddin.getMyrddinState().getStateType() != StateType.Dead;
+				&& myrddin.getMyrddinState().getStateType() != StateType.Dead;
 	}
 	
 	public void enableShield(boolean enable) {
