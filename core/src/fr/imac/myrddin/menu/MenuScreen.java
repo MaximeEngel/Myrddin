@@ -68,7 +68,7 @@ public class MenuScreen extends Stage implements Screen {
 		table.background(new TextureRegionDrawable(backgroundMenu));
 		
 		// padding top
-		table.padTop(220);
+		table.padTop(230);
 				
 		//add resume button
 		TextButton textButtonResume = new TextButton("Reprendre la partie", this.mainTextButtonStyle);
@@ -80,7 +80,7 @@ public class MenuScreen extends Stage implements Screen {
 				
 			}
 		});
-		table.add(textButtonResume).fillY().align(100);
+		table.add(textButtonResume);
 		
 		table.row();
 		
@@ -94,7 +94,7 @@ public class MenuScreen extends Stage implements Screen {
 				
 			}
 		});
-		table.add(textButtonNew);
+		table.add(textButtonNew).padTop(-15);
 		
 		table.row();
 		
@@ -108,7 +108,7 @@ public class MenuScreen extends Stage implements Screen {
 				
 			}
 		});
-		table.add(textButtonHow);
+		table.add(textButtonHow).padTop(-15);
 		
 		table.row();
 		
@@ -121,7 +121,7 @@ public class MenuScreen extends Stage implements Screen {
 				Gdx.app.exit();	
 			}
 		});
-		table.add(textButtonQuit);
+		table.add(textButtonQuit).padTop(-15);
 	}
 	
 	//screen to choose a level
@@ -141,7 +141,7 @@ public class MenuScreen extends Stage implements Screen {
 		int temp = -1;
 		
 		//create text buttons depending on the number of levels
-		for(int nbLevel = 0; nbLevel < count; nbLevel++) {
+		for(int nbLevel = 1; nbLevel <= count; nbLevel++) {
 			String stringNbLevel = Integer.toString(nbLevel);
 			TextButton textButton = new TextButton(stringNbLevel, this.mainTextButtonStyle);
 			
@@ -160,7 +160,7 @@ public class MenuScreen extends Stage implements Screen {
 						
 				}
 			});
-			table.add(textButton);
+			table.add(textButton).padTop(-15);
 			table.row();
 		}
 		
@@ -174,7 +174,7 @@ public class MenuScreen extends Stage implements Screen {
 							
 			}
 		});
-		table.add(textButtonReturn);
+		table.add(textButtonReturn).padTop(-15);
 	}
 	
 	//screen to choose a level
@@ -189,12 +189,6 @@ public class MenuScreen extends Stage implements Screen {
 			AtlasRegion backgroundMenuLevel = atlasMenu.findRegion("menu3");
 			table.background(new TextureRegionDrawable(backgroundMenuLevel));
 			
-			//add how to play image
-			AtlasRegion howToPlayImage = atlasMenu.findRegion("t_jouer");
-			Image howToPlay = new Image(howToPlayImage);
-			table.add(howToPlay);
-			table.row();
-			
 			//add return button
 			TextButton textButtonReturn = new TextButton("Retour au menu", this.mainTextButtonStyle);
 			textButtonReturn.addListener(new ChangeListener() {
@@ -205,7 +199,18 @@ public class MenuScreen extends Stage implements Screen {
 								
 				}
 			});
-			table.add(textButtonReturn);
+			table.add(textButtonReturn).padTop(-20);
+			table.row();
+			
+			//add how to play image
+			AtlasRegion howToPlayImage = atlasMenu.findRegion("t_jouer");
+			Image howToPlay = new Image(howToPlayImage);
+			table.add(howToPlay).padTop(20);
+			table.row();
+			
+			AtlasRegion powersImage = atlasMenu.findRegion("powers_exp");
+			Image powers = new Image(powersImage);
+			table.add(powers).padTop(20);
 		}
 	
 	//count number of files in a repertory
