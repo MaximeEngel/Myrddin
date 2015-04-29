@@ -52,6 +52,12 @@ public class WoodenLog extends PhysicActor {
 			ClassNotFoundException {
 		// TODO Auto-generated method stub
 		super.readExternal(in);
+	}
+
+	@Override
+	public CollidableType getCollidableType() {
+		return CollidableType.Solid;
 	}	
+	
 	
 }
