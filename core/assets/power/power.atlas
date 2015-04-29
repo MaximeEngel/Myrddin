@@ -74,84 +74,105 @@ landfire
   index: 2
 landfire
   rotate: false
-  xy: 38, 114
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: 3
-landice
-  rotate: false
   xy: 2, 132
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 1
+  index: 3
 landice
   rotate: false
   xy: 20, 132
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 2
+  index: 1
 landice
-  rotate: false
-  xy: 38, 132
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: 3
-loadfire
   rotate: false
   xy: 2, 150
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 1
-loadfire
+  index: 2
+landice
   rotate: false
   xy: 20, 150
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
+  index: 3
+life
+  rotate: false
+  xy: 2, 168
+  size: 45, 65
+  orig: 45, 65
+  offset: 0, 0
+  index: -1
+loadfire
+  rotate: false
+  xy: 2, 235
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+loadfire
+  rotate: false
+  xy: 20, 235
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
   index: 2
 loadfire
   rotate: false
-  xy: 38, 150
+  xy: 2, 253
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 3
 loadice
   rotate: false
-  xy: 2, 168
+  xy: 20, 253
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 1
 loadice
   rotate: false
-  xy: 20, 168
+  xy: 2, 271
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 2
 loadice
   rotate: false
-  xy: 38, 168
+  xy: 20, 271
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 3
+orb
+  rotate: false
+  xy: 2, 289
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 powerupfire
   rotate: false
-  xy: 2, 186
+  xy: 2, 307
   size: 45, 65
   orig: 45, 65
   offset: 0, 0
   index: -1
 powerupice
   rotate: false
-  xy: 2, 253
+  xy: 2, 374
+  size: 45, 65
+  orig: 45, 65
+  offset: 0, 0
+  index: -1
+save
+  rotate: false
+  xy: 2, 441
   size: 45, 65
   orig: 45, 65
   offset: 0, 0
