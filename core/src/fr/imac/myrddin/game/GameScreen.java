@@ -168,11 +168,22 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	
 	@Override
 	public void draw() {
+		// draw background
 		getBatch().begin();
 		background.draw(getBatch(), 1);
+		
+		// Draw collidable tiles
+		mapRenderer.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("Tiles"));
+
 		getBatch().end();
-		mapRenderer.render();
+		
+		// Draw all the actors
 		super.draw();
+		
+		getBatch().begin();
+		// Draw fire, water element block
+		mapRenderer.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("TilesElement"));
+		getBatch().end();
 		
 //		getBatch().begin();
 //		Box2DDebugRenderer debug = new Box2DDebugRenderer();

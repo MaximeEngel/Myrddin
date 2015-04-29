@@ -167,4 +167,10 @@ public class MagicBullet extends PhysicActor {
 			return;
 		}
 	}
+
+
+
+	public MagicState getMagicState() {
+		return magicState;
+	}
 }

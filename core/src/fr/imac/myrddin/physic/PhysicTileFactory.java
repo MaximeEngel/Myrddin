@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
 import fr.imac.myrddin.MyrddinGame;
+import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.physic.Collidable.CollidableType;
 
 public class PhysicTileFactory {
@@ -45,6 +46,10 @@ public class PhysicTileFactory {
 			break;
 		case "Climb":
 			createClimb(shape);
+			break;
+		case "Element":
+			createElement(shape, MagicState.valueOf(mapObject.getProperties().get("magicState", String.valueOf(MagicState.ICE), String.class)));
+			break;
 		default:
 			break;
 		}
@@ -67,6 +72,15 @@ public class PhysicTileFactory {
 		Body body = PhysicUtil.createBody(shape, BodyType.StaticBody, false, PhysicUtil.createFixtureDef(100.f, 0, 0.1f, false), this.world);
 	    body.setUserData(new PhysicTile(CollidableType.Solid, body));
 	}		
+	
+	/**
+	 * 
+	 * @param shape width dimension in metter
+	 */
+	public void createElement(Shape shape, MagicState magicState) {
+		Body body = PhysicUtil.createBody(shape, BodyType.StaticBody, false, PhysicUtil.createFixtureDef(100.f, 0, 0.1f, false), this.world);
+	    body.setUserData(new ElementTile(body, magicState));
+	}
 	
 	// GETTERS - SETTERS
 

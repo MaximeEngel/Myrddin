@@ -108,6 +108,12 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	// ACTOR
 	
 	@Override
+	public void hurtedBy(int point) {
+		if(myrddinState.getStateType() != StateType.Bump)
+			super.hurtedBy(point);
+	}
+
+	@Override
 	public void act(float delta) {
 		super.act(delta);
 		myrddinState.act(delta);

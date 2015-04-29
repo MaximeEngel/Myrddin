@@ -48,9 +48,9 @@ public class StaticEnemy extends PhysicActor implements Enemy {
 			Myrddin myrddin = (Myrddin) other;
 			
 			Vector2 bumpImpulse = new Vector2(Integer.signum((int) (myrddin.getX() + myrddin.getWidth() / 2f - (getX() + getWidth() /2f))) * 5f, 3f).scl(myrddin.getMass());
+			myrddin.hurtedBy(getMeleeDamage());
 			myrddin.bump(bumpImpulse);
 			
-			myrddin.hurtedBy(getMeleeDamage());
 		}
 
 	}
