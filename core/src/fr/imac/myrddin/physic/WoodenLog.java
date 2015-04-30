@@ -6,6 +6,8 @@ import java.io.ObjectOutput;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -15,7 +17,7 @@ import fr.imac.myrddin.MyrddinGame;
 
 public class WoodenLog extends PhysicActor {
 	
-	Texture texture;
+	AtlasRegion texture;
 	
 	public WoodenLog(Vector2 pos) {
 		super(	new Rectangle(pos.x, pos.y, 99f, 99f), 
@@ -24,11 +26,11 @@ public class WoodenLog extends PhysicActor {
 				PhysicUtil.createFixtureDef(1500f, 0f, 1f, false), true
 			);
 		
-		texture= MyrddinGame.assetManager.get("set/wooden-log.png", Texture.class);
+		texture = MyrddinGame.assetManager.get("set/various.atlas", TextureAtlas.class).findRegion("wooden-log");
 	}
 	
 	public WoodenLog() {
-		texture= MyrddinGame.assetManager.get("set/wooden-log.png", Texture.class);
+		texture = MyrddinGame.assetManager.get("set/various.atlas", TextureAtlas.class).findRegion("wooden-log");
 	}
 
 	@Override

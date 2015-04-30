@@ -70,6 +70,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	private Myrddin myrddin;
 	private Hud hud;
 	private Background background;
+	private FinishPoint finishPoint;
 	
 	/**
 	 * 
@@ -103,6 +104,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		// Connect HUD to gameScreen
 		hud =  new Hud(myrddin);
 		addActor(hud);		
+		
+		finishPoint = new FinishPoint(PhysicUtil.positionFromRectMapObject((RectangleMapObject) tiledMap.getLayers().get("SpawnFinish").getObjects().get("Finish")));
+		addActor(finishPoint);
 
 		myrddin.setZIndex(5000);
 		
@@ -201,19 +205,25 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		mapRenderer.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("TilesElement"));
 		getBatch().end();
 		
-		getBatch().begin();
-		Box2DDebugRenderer debug = new Box2DDebugRenderer();
-		Matrix4 matrixDebug = new Matrix4(getCamera().combined);
-		matrixDebug.scale(MyrddinGame.PHYSIC_TO_GAME, MyrddinGame.PHYSIC_TO_GAME, 1);
-		debug.render(physicWorld, matrixDebug);		
-		getBatch().end();
+//		getBatch().begin();
+//		Box2DDebugRenderer debug = new Box2DDebugRenderer();
+//		Matrix4 matrixDebug = new Matrix4(getCamera().combined);
+//		matrixDebug.scale(MyrddinGame.PHYSIC_TO_GAME, MyrddinGame.PHYSIC_TO_GAME, 1);
+//		debug.render(physicWorld, matrixDebug);		
+//		getBatch().end();
 	}
 
 
 
 	@Override
 	public void act(float delta) {
-		// TODO Auto-generated method stub
+		if(finishPoint.isFinish()) {
+			if(finishPoint.isTimeFinishPast(2))
+				return;
+			return;
+			
+		}
+		
 		physicWorld.step(Gdx.graphics.getDeltaTime(), 8, 6);
 		super.act(delta);
 		if(myrddin.respawn()) {

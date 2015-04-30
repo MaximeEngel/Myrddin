@@ -58,7 +58,7 @@ public class MyrddinGame extends Game {
 
 		// Background
 		assetManager.load("background/background.atlas", TextureAtlas.class);
-		assetManager.load("set/wooden-log.png", Texture.class);
+		assetManager.load("set/various.atlas", TextureAtlas.class);
 		
 		assetManager.finishLoading(); //block until all assets loaded
 	}
