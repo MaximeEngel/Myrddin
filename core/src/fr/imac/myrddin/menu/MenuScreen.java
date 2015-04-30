@@ -5,6 +5,7 @@ import java.io.File;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
@@ -140,10 +141,14 @@ public class MenuScreen extends Stage implements Screen {
 		int count = getHandles();
 		int temp = -1;
 		
+		Preferences prefs = Gdx.app.getPreferences("My Preferences");
+		int lvl = prefs.getInteger("lastLevelUnlocked", 1);
+		
+		TextButton.TextButtonStyle levelTextButtonStyle = initLevelButton();
 		//create text buttons depending on the number of levels
-		for(int nbLevel = 1; nbLevel <= count; nbLevel++) {
+		for(int nbLevel = 1; nbLevel <= lvl; nbLevel++) {
 			String stringNbLevel = Integer.toString(nbLevel);
-			TextButton textButton = new TextButton(stringNbLevel, this.mainTextButtonStyle);
+			TextButton textButton = new TextButton(stringNbLevel, levelTextButtonStyle);
 			
 			// in case there is a file missing
 			do {
@@ -160,9 +165,23 @@ public class MenuScreen extends Stage implements Screen {
 						
 				}
 			});
-			table.add(textButton).padTop(-15);
-			table.row();
+			table.add(textButton).padTop(-15).padRight(10);
+			if(nbLevel % 6 == 0)
+				table.row();
 		}
+		
+		//add aleatory button
+		TextButton textButtonAleatory = new TextButton("Niveau aléatoire", this.mainTextButtonStyle);
+		textButtonAleatory.addListener(new ChangeListener() {
+									
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				myrddinGame.startAleatoryLevel();
+								
+			}
+		});
+		table.add(textButtonAleatory).padTop(-15).colspan(2);
+		table.row();
 		
 		//add return button
 		TextButton textButtonReturn = new TextButton("Retour au menu", this.mainTextButtonStyle);
@@ -174,7 +193,7 @@ public class MenuScreen extends Stage implements Screen {
 							
 			}
 		});
-		table.add(textButtonReturn).padTop(-15);
+		table.add(textButtonReturn).padTop(20).colspan(6);
 	}
 	
 	//screen to choose a level
@@ -238,6 +257,18 @@ public class MenuScreen extends Stage implements Screen {
 		BitmapFont bitmapFont = (BitmapFont) MyrddinGame.assetManager.get("ui/theonlyexception_25.fnt", BitmapFont.class);
 		
 		return new TextButton.TextButtonStyle(new TextureRegionDrawable(upRegion), new TextureRegionDrawable(downRegion),new TextureRegionDrawable(checkedRegion), bitmapFont);
+	}
+	
+	private TextButton.TextButtonStyle initLevelButton() {
+		//get TextureAtlas
+		AtlasRegion upLvlRegion = atlasMenu.findRegion("buttonLvlUp");
+		AtlasRegion downLvlRegion = atlasMenu.findRegion("buttonLvlDown");
+		AtlasRegion checkedLvlRegion = atlasMenu.findRegion("buttonLvlChecked");
+		
+		//get Font
+		BitmapFont bitmapFont = (BitmapFont) MyrddinGame.assetManager.get("ui/theonlyexception_25.fnt", BitmapFont.class);
+		
+		return new TextButton.TextButtonStyle(new TextureRegionDrawable(upLvlRegion), new TextureRegionDrawable(downLvlRegion),new TextureRegionDrawable(checkedLvlRegion), bitmapFont);
 	}
 	
 	

@@ -45,4 +45,8 @@ public class MyrddinGame extends Game {
 	public void startLastSave() {
 		
 	}
+	
+	public void startAleatoryLevel() {
+		
+	}
 }
