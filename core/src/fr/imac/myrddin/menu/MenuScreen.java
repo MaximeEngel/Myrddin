@@ -141,12 +141,13 @@ public class MenuScreen extends Stage implements Screen {
 		int count = getHandles();
 		int temp = -1;
 		
+		//get last level unblocked
 		Preferences prefs = Gdx.app.getPreferences("My Preferences");
 		int lvl = prefs.getInteger("lastLevelUnlocked", 1);
 		
 		TextButton.TextButtonStyle levelTextButtonStyle = initLevelButton();
 		//create text buttons depending on the number of levels
-		for(int nbLevel = 1; nbLevel <= lvl; nbLevel++) {
+		for(int nbLevel = 1; nbLevel <= count; nbLevel++) {
 			String stringNbLevel = Integer.toString(nbLevel);
 			TextButton textButton = new TextButton(stringNbLevel, levelTextButtonStyle);
 			
@@ -156,16 +157,23 @@ public class MenuScreen extends Stage implements Screen {
 			}
 			while(!((Gdx.files.internal("lvl/"+temp+".tmx")).exists()));
 			
-			final int nbLevelTmp = temp;	
-			textButton.addListener(new ChangeListener() {
-				
-				@Override
-				public void changed(ChangeEvent event, Actor actor) {
-					myrddinGame.startGame(nbLevelTmp);
-						
-				}
-			});
-			table.add(textButton).padTop(-15).padRight(10);
+			final int nbLevelTmp = temp;
+			if(nbLevelTmp <= lvl) {	
+				textButton.addListener(new ChangeListener() {
+					
+					@Override
+					public void changed(ChangeEvent event, Actor actor) {
+						myrddinGame.startGame(nbLevelTmp);
+							
+					}
+				});
+				table.add(textButton).padTop(-15).padRight(10);
+			}
+			else {
+				AtlasRegion lvlLockedRegion = atlasMenu.findRegion("buttonLocked");
+				Image lvlLocked = new Image(lvlLockedRegion);
+				table.add(lvlLocked).padTop(-15).padRight(10);
+			}
 			if(nbLevel % 6 == 0)
 				table.row();
 		}

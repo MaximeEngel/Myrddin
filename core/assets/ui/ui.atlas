@@ -66,9 +66,16 @@ buttonLvlDown
   orig: 140, 112
   offset: 0, 0
   index: -1
-buttonLvlUp
+buttonLocked
   rotate: false
   xy: 1585, 1762
+  size: 140, 112
+  orig: 140, 112
+  offset: 0, 0
+  index: -1
+buttonLvlUp
+  rotate: false
+  xy: 1887, 1876
   size: 140, 112
   orig: 140, 112
   offset: 0, 0
