@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -30,12 +31,13 @@ public class MagicHit extends Actor {
 		}
 		this.stateTime = 0;
 		this.posCenter = posCenter;
+		setRotation(MathUtils.random(0, 360f));
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		TextureRegion textureRegion = animation.getKeyFrame(stateTime);
-		batch.draw(textureRegion, posCenter.x - textureRegion.getRegionWidth() * 0.5f, posCenter.y - textureRegion.getRegionHeight() * 0.5f);
+		batch.draw(textureRegion, posCenter.x - textureRegion.getRegionWidth() * 0.5f, posCenter.y - textureRegion.getRegionHeight() * 0.5f, textureRegion.getRegionWidth() * 0.5f, textureRegion.getRegionHeight() * 0.5f,textureRegion.getRegionWidth(), textureRegion.getRegionHeight(), 1f, 1f, getRotation());
 	}
 
 	@Override

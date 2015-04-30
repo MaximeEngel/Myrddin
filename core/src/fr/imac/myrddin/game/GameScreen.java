@@ -49,6 +49,7 @@ import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.game.myrddin.Shield;
+import fr.imac.myrddin.game.powerup.PowerFactory;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.Collidable.CollidableType;
 import fr.imac.myrddin.physic.PhysicActor;
@@ -95,9 +96,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		this.addActor(myrddin);
 		this.addActor(myrddin.getShield());
 		
-		createEnnemy(tiledMap);
-		
-		createWoodenLogs(tiledMap);
+		createEnnemy(tiledMap);		
+		createWoodenLogs(tiledMap);		
+		createPowerup(tiledMap);
 		
 		// Connect HUD to gameScreen
 		hud =  new Hud(myrddin);
@@ -138,6 +139,21 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			for (MapObject mapObject : objects) {
 				PhysicActor ennemy = ennemyFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "none", String.class));
 				addActor(ennemy);
+			}			
+		}
+	}
+	
+	private void createPowerup(TiledMap tiledMap) {
+		if (tiledMap != null)
+		{
+			PowerFactory powerFactory = new PowerFactory();
+			MapObjects objects = tiledMap.getLayers().get("Powerups").getObjects();
+			
+			for (MapObject mapObject : objects) {
+				PhysicActor powerups[] = powerFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "PowerScore", String.class));
+				for (PhysicActor powerup : powerups) {
+					addActor(powerup);					
+				}
 			}			
 		}
 	}
@@ -185,12 +201,12 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		mapRenderer.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("TilesElement"));
 		getBatch().end();
 		
-//		getBatch().begin();
-//		Box2DDebugRenderer debug = new Box2DDebugRenderer();
-//		Matrix4 matrixDebug = new Matrix4(getCamera().combined);
-//		matrixDebug.scale(MyrddinGame.PHYSIC_TO_GAME, MyrddinGame.PHYSIC_TO_GAME, 1);
-//		debug.render(physicWorld, matrixDebug);		
-//		getBatch().end();
+		getBatch().begin();
+		Box2DDebugRenderer debug = new Box2DDebugRenderer();
+		Matrix4 matrixDebug = new Matrix4(getCamera().combined);
+		matrixDebug.scale(MyrddinGame.PHYSIC_TO_GAME, MyrddinGame.PHYSIC_TO_GAME, 1);
+		debug.render(physicWorld, matrixDebug);		
+		getBatch().end();
 	}
 
 
@@ -198,10 +214,11 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	@Override
 	public void act(float delta) {
 		// TODO Auto-generated method stub
-		physicWorld.step(Gdx.graphics.getDeltaTime(), 6, 2);
+		physicWorld.step(Gdx.graphics.getDeltaTime(), 8, 6);
 		super.act(delta);
 		if(myrddin.respawn()) {
 			instantLoad();
+			myrddin.addScore(-30);
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.S) )

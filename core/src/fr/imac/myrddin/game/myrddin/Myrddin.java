@@ -51,7 +51,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	private Shield shield;
 	
 	private Set<Body> climbs;
-	
+	private int score;
 	
 	// CONSTRUCTOR
 
@@ -68,6 +68,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		shield = new Shield(this);
 		
 		climbs = new HashSet<Body>();
+		score = 0;
 		
 	}
 	
@@ -78,11 +79,15 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	public void bump(Vector2 impulse) {
 		this.setMyrddinState(new MyrddinBump(this, impulse));
 	}
-	
-	// SCORE
-	public int getScore() {
-		return MathUtils.random(5000);
+
+	/**
+	 * 
+	 * @return if myrddin need to respawn. (dead or fall out of box)
+	 */
+	public boolean respawn() {
+		return isOutOfTheBox() || myrddinState.getStateType() == StateType.Dead && myrddinState.getStateTime() > MyrddinDead.TIME_TO_BE_DEAD;
 	}
+
 	
 	// WEAPON OWNER
 
@@ -109,8 +114,10 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	
 	@Override
 	public void hurtedBy(int point) {
-		if(myrddinState.getStateType() != StateType.Bump)
+		if(myrddinState.getStateType() != StateType.Bump) {
+			addScore(- point * 5);
 			super.hurtedBy(point);
+		}
 	}
 
 	@Override
@@ -207,6 +214,22 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	public Shield getShield() {
 		return this.shield;
 	}
+
+	public void setMagicState(MagicState magicState) {
+		this.magicState = magicState;		
+	}
+	
+
+	public int getScore() {
+		return score;
+	}
+	
+	public void addScore(int val) {
+		score += val;
+		
+		if(score < 0)
+			score = 0;
+	}
 	
 	// COLLISION
 
@@ -245,6 +268,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	public void writeExternal(ObjectOutput out) throws IOException {
 		super.writeExternal(out);
 		
+		out.writeInt(score);
 		out.writeObject(magicState.toString());
 		out.writeObject(magicWeapon);
 		out.writeObject(shield);
@@ -255,15 +279,11 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 			ClassNotFoundException {
 		super.readExternal(in);
 		
+		score = in.readInt();
 		magicState = MagicState.valueOf(String.valueOf(in.readObject()));
 		myrddinState = new MyrddinIddle(this);
 		
 		magicWeapon = (MagicWeapon<Myrddin>) in.readObject();
 		shield = (Shield) in.readObject();
 	}
-
-	public boolean respawn() {
-		return isOutOfTheBox() || myrddinState.getStateType() == StateType.Dead && myrddinState.getStateTime() > MyrddinDead.TIME_TO_BE_DEAD;
-	}
-
 }
