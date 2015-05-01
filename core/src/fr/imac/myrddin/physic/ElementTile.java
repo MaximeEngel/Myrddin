@@ -36,6 +36,8 @@ public class ElementTile extends PhysicTile {
 		case MagicBullet:
 			magicStateOther = ((MagicBullet) other).getMagicState();
 			break;
+		case Shield:
+			return;
 		default:
 			break;
 		}

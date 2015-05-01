@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 public interface Collidable {
 	
 	public enum CollidableType {
-		Solid, Climb, Myrddin, MagicBullet, Ennemy, Element;
+		Solid, Climb, Myrddin, Shield, MagicBullet, Ennemy, Element;
 	}
 	
 	public CollidableType getCollidableType();

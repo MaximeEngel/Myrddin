@@ -28,18 +28,19 @@ import fr.imac.myrddin.physic.PhysicActor;
 
 public abstract class EnnemyShooter extends Character implements Enemy, MagicWeaponOwner {
 	
-	private static final float MAX_LAST_TIME_SEEN = 2f;
-	private MagicState magicState;
-	private GameScreen gameScreen;
+	protected static final float MAX_LAST_TIME_SEEN = 2f;
+	protected MagicState magicState;
+	protected GameScreen gameScreen;
 	
-	private MagicWeapon<EnnemyShooter> magicWeapon;
+	protected MagicWeapon<EnnemyShooter> magicWeapon;
 	
-	private float lastTimeSeen;
+	protected float lastTimeSeen;
 	
 	/**
 	 * In stage pixel unit
 	 */
-	private float maximumScope = MyrddinGame.WIDTH * 0.5f;
+	private float maximumScope = MyrddinGame.WIDTH * 0.6f;
+	protected boolean myrddinDetected;
 
 	public EnnemyShooter(Rectangle bounds, Rectangle collisionBox,
 			BodyType bodyType, FixtureDef fixtureDef, boolean preventRotation,
@@ -121,6 +122,7 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 			}
 			
 		}, physicFirePos, myrddinPos);
+		setMyrddinDetected(noObstruction[0]);
 		return noObstruction[0];
 	}
 	
@@ -132,15 +134,18 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	
 	/**
 	 * 
-	 * @return if the tower is visible on the screen or has been visible few time ago
+	 * @return if the tower is visible on the screen or has been visible few time ago and if getWeaponPos() is different of null
 	 */
 	public boolean canShoot() {
-		if (lastTimeSeen < MAX_LAST_TIME_SEEN)
-			return true;
-		
-		if (isVisible()) {
-			lastTimeSeen = 0;
-			return true;
+		if(getWeaponPos() != null)
+		{
+			if (lastTimeSeen < MAX_LAST_TIME_SEEN)
+				return true;
+			
+			if (isVisible()) {
+				lastTimeSeen = 0;
+				return true;
+			}			
 		}
 		
 		return false;		
@@ -191,6 +196,14 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 		gameScreen = (GameScreen) MyrddinGame.MYRDDIN_GAME.getScreen();
 		
 		defaultInit();
+	}
+
+	public boolean isMyrddinDetected() {
+		return myrddinDetected;
+	}
+
+	public void setMyrddinDetected(boolean myrddinDetected) {
+		this.myrddinDetected = myrddinDetected;
 	}	
 	
 	

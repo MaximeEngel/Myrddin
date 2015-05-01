@@ -18,20 +18,24 @@ public class EnemyFactory {
 	public PhysicActor create(RectangleMapObject mapObject, String type){
 		
 		switch (type) {
-		case "StaticEnemy":
-			return createStaticEnnemy(mapObject);
-		case "TowerEnemy":
-			return createTowerEnnemy(mapObject);
-		default:
-			break;
+			case "DynamicEnemy":
+				return createDynamicEnnemy(mapObject);
+			case "TowerEnemy":
+				return createTowerEnnemy(mapObject);
+			case "StaticEnemy":
+			default:
+				return createStaticEnnemy(mapObject);
 		}
-		
-		return null;
 	}
 
 	private PhysicActor createTowerEnnemy(RectangleMapObject mapObject) {
 		MagicState magicState = MagicState.valueOf(mapObject.getProperties().get("magicState", String.valueOf(MagicState.FIRE), String.class));
 		return new TowerEnemy(PhysicUtil.positionFromRectMapObject(mapObject), magicState, gameScreen);
+	}
+	
+	private PhysicActor createDynamicEnnemy(RectangleMapObject mapObject) {
+		MagicState magicState = MagicState.valueOf(mapObject.getProperties().get("magicState", String.valueOf(MagicState.FIRE), String.class));
+		return new DynamicEnemy(mapObject.getRectangle(), magicState, gameScreen);
 	}
 
 	public PhysicActor createStaticEnnemy(RectangleMapObject mapObject) {

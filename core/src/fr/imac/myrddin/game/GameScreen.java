@@ -245,12 +245,12 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	private void updateCamera(boolean forceUpdate) {
 		OrthographicCamera camera = (OrthographicCamera) getCamera();
 		Vector3 position = camera.position;
-		
-		float ecartX = position.x - myrddin.getX();
+		float newX = myrddin.getX() + MyrddinGame.WIDTH * 0.25f;
+		float ecartX = position.x - newX;
 		
 		// Smooth
 		if(forceUpdate || Integer.signum((int)myrddin.getLinearVelocity().x) == Integer.signum((int)-ecartX)) {
-			position.x = myrddin.getX();
+			position.x = newX;
 		}		
 		
 		float minX = MyrddinGame.WIDTH / 2;

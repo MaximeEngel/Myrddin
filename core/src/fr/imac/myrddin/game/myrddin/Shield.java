@@ -29,6 +29,7 @@ import fr.imac.myrddin.game.GameScreen;
 import fr.imac.myrddin.game.MyrddinUtil;
 import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
 import fr.imac.myrddin.physic.Collidable;
+import fr.imac.myrddin.physic.Collidable.CollidableType;
 import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicUtil;
 
@@ -218,6 +219,8 @@ public class Shield extends PhysicActor implements Externalizable {
 	}
 	
 	// COLLISION
+	
+	
 
 	@Override
 	public void preSolve(Contact contact, Collidable other) {
@@ -226,6 +229,11 @@ public class Shield extends PhysicActor implements Externalizable {
 		
 	}
 	
+	@Override
+	public CollidableType getCollidableType() {
+		return CollidableType.Shield;
+	}
+
 	public boolean ignore(Collidable other) {
 		CollidableType type = other.getCollidableType();
 		return 	type == CollidableType.Myrddin
