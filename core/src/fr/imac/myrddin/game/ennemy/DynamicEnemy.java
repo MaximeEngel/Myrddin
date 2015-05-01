@@ -1,5 +1,9 @@
 package fr.imac.myrddin.game.ennemy;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -23,7 +27,6 @@ public class DynamicEnemy extends EnnemyShooter {
 	 */
 	public DynamicEnemy() {
 		super();
-		enemyState = new EnemyIddle(this);
 	}
 	
 	/**
@@ -88,5 +91,24 @@ public class DynamicEnemy extends EnnemyShooter {
 	
 	public Rectangle getRunZone() {
 		return runZone;
+	}
+	
+	// EXTERNALIZATION
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		super.writeExternal(out);
+		out.writeObject(runZone);
+		
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		super.readExternal(in);
+		runZone = (Rectangle) in.readObject();
+		enemyState = new EnemyIddle(this);
 	}	
+	
+	
 }

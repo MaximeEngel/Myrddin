@@ -11,13 +11,13 @@ public abstract class EnemyState {
 	protected Animation animation;
 	protected float stateTime;
 	protected boolean goRight;
-	protected EnnemyShooter enemy;
+	protected DynamicEnemy enemy;
 	
 	public enum EnemyStateType {
 		Iddle, Run, Dead;
 	}
 	
-	public EnemyState(EnnemyShooter enemy, Animation animation) {
+	public EnemyState(DynamicEnemy enemy, Animation animation) {
 		super();
 		this.enemy = enemy;
 		this.animation = animation;
@@ -61,9 +61,9 @@ public abstract class EnemyState {
 		enemy.setNewRectBox(new Rectangle(enemy.getX(), enemy.getY(), 32, 96), new Rectangle(5, 5, 22, 91));		
 	}
 	
-	// Called each frame to flip the texture to orient the look of myrddin in the good direction
+	// Called each frame to flip the texture to orient the look of the enemy in the good direction
 	public void orientTexture() {
-		int sens = Integer.signum((int)enemy.getLinearVelocity().x);
+		int sens = -Integer.signum((int)enemy.getLinearVelocity().x);
 		
 		if (sens == 0)
 			return;

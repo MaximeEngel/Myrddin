@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
@@ -25,6 +26,7 @@ import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.PhysicActor;
+import fr.imac.myrddin.physic.Collidable.CollidableType;
 
 public abstract class EnnemyShooter extends Character implements Enemy, MagicWeaponOwner {
 	
@@ -129,7 +131,7 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	public boolean collidableObstruct(Collidable collidable) {
 		CollidableType type = collidable.getCollidableType();
 		return 	type == CollidableType.Solid
-				|| (type == CollidableType.Ennemy && ((Enemy) collidable).obstructBulletOf(this));
+				|| (type == CollidableType.Enemy && ((Enemy) collidable).obstructBulletOf(this));
 	}
 	
 	/**
@@ -175,7 +177,22 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 		return false;
 	}
 	
+	@Override
+	public CollidableType getCollidableType() {
+		return CollidableType.Enemy;
+	}
+	
+	
 	// EXTERNALIZATION
+
+	@Override
+	public void preSolve(Contact contact, Collidable other) {
+		super.preSolve(contact, other);
+		
+		if(other.getCollidableType() == CollidableType.Enemy) {
+			contact.setEnabled(false);
+		}
+	}
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
@@ -205,7 +222,5 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	public void setMyrddinDetected(boolean myrddinDetected) {
 		this.myrddinDetected = myrddinDetected;
 	}	
-	
-	
 
 }

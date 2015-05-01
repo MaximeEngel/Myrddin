@@ -173,7 +173,8 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		targetPos.x = tmp.x;
 		targetPos.y = tmp.y;
 		
-		magicWeapon.fire(targetPos);
+		if(getShield().getEnergy() > 20 && magicWeapon.fire(targetPos))
+			getShield().modifyEnergy(-15);
 	}
 		
 

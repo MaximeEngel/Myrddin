@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="23" tilewidth="32" tileheight="32" nextobjectid="59">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="23" tilewidth="32" tileheight="32" nextobjectid="63">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" spacing="1">
   <image source="../set/tileset.png" width="264" height="198"/>
  </tileset>
@@ -71,7 +71,19 @@
     <property name="magicState" value="FIRE"/>
    </properties>
   </object>
-  <object id="58" type="DynamicEnemy" x="1568" y="480" width="192" height="96"/>
+  <object id="58" type="DynamicEnemy" x="1568" y="480" width="288" height="96"/>
+  <object id="59" type="DynamicEnemy" x="1568" y="480" width="288" height="96"/>
+  <object id="60" type="TowerEnemy" x="3616" y="608" width="64" height="64">
+   <properties>
+    <property name="magicState" value="FIRE"/>
+   </properties>
+  </object>
+  <object id="61" type="TowerEnemy" x="1696" y="512" width="64" height="64">
+   <properties>
+    <property name="magicState" value="FIRE"/>
+   </properties>
+  </object>
+  <object id="62" name="             " type="StaticEnemy" x="1632" y="512" width="64" height="64"/>
  </objectgroup>
  <objectgroup color="#7d5e2b" name="WoodenLogs">
   <object id="31" x="224" y="448" width="96" height="96"/>

@@ -68,11 +68,7 @@ public class TowerEnemy extends EnnemyShooter {
 	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(animation.getKeyFrame(time), getX(), getY());
 	}
-
-	@Override
-	public CollidableType getCollidableType() {
-		return CollidableType.Ennemy;
-	}
+	
 	
 	// ENNEMY
 
@@ -84,7 +80,7 @@ public class TowerEnemy extends EnnemyShooter {
 
 	@Override
 	public boolean obstructBulletOf(PhysicActor owner) {
-		return true;
+		return owner.getCollidableType() != CollidableType.Enemy;
 	}	
 	
 }

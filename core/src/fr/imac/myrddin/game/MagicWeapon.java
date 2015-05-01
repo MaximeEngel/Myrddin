@@ -33,13 +33,18 @@ public class MagicWeapon<T extends PhysicActor & MagicWeaponOwner> implements Ex
 		this.lastFire += delta;
 	}
 	
-	public void fire(Vector2 targetPos) {
+	/**
+	 * 
+	 * @param targetPos
+	 * @return if succeed in fire
+	 */
+	public boolean fire(Vector2 targetPos) {
 		if(!canFire() || targetPos == null)
-			return;		
+			return false;		
 		
 		Vector2 originFire = owner.getWeaponPos();
 		if (originFire == null)
-			return;
+			return false;
 		
 		Vector2 directionFire = targetPos.sub(originFire);
 		MagicState magicState = owner.getMagicState();
@@ -48,6 +53,7 @@ public class MagicWeapon<T extends PhysicActor & MagicWeaponOwner> implements Ex
 		owner.getStage().addActor(magicBullet);
 		
 		this.lastFire = 0f;
+		return true;
 	}
 	
 	public boolean canFire() {

@@ -158,14 +158,17 @@ public class MagicBullet extends PhysicActor {
 
 	@Override
 	public void preSolve(Contact contact, Collidable other) {
-		if (this.owner.equals(other) 
+		if (this.owner.getCollidableType() == other.getCollidableType() 
 			|| !born
-			|| (other.getCollidableType() == CollidableType.Ennemy && !((Enemy) other).obstructBulletOf(this.owner))
-			|| (other.getCollidableType() == CollidableType.MagicBullet && ((MagicBullet) other).magicState == this.magicState)) {
+			|| (other.getCollidableType() == CollidableType.MagicBullet && obstructBullet((MagicBullet) other))) {
 			
 			contact.setEnabled(false);
 			return;
 		}
+	}
+
+	private boolean obstructBullet(MagicBullet other) {
+		return other.magicState == this.magicState;
 	}
 
 

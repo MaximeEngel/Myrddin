@@ -34,7 +34,7 @@ public class StaticEnemy extends PhysicActor implements Enemy {
 
 	@Override
 	public CollidableType getCollidableType() {
-		return CollidableType.Ennemy;
+		return CollidableType.Enemy;
 	}
 
 	@Override
@@ -44,15 +44,20 @@ public class StaticEnemy extends PhysicActor implements Enemy {
 
 	@Override
 	public void beginContact(Contact contact, Collidable other) {
-		if(other.getCollidableType() == CollidableType.Myrddin) {
-			Myrddin myrddin = (Myrddin) other;
-			
-			Vector2 bumpImpulse = new Vector2(Integer.signum((int) (myrddin.getX() + myrddin.getWidth() / 2f - (getX() + getWidth() /2f))) * 5f, 3f).scl(myrddin.getMass());
-			myrddin.hurtedBy(getMeleeDamage());
-			myrddin.bump(bumpImpulse);
-			
+		switch(other.getCollidableType()) {
+			case Myrddin :
+				Myrddin myrddin = (Myrddin) other;
+				
+				Vector2 bumpImpulse = new Vector2(Integer.signum((int) (myrddin.getX() + myrddin.getWidth() / 2f - (getX() + getWidth() /2f))) * 5f, 3f).scl(myrddin.getMass());
+				myrddin.hurtedBy(getMeleeDamage());
+				myrddin.bump(bumpImpulse);
+				break;
+			case Enemy :
+				contact.setEnabled(false);
+				break;
+			default:
+				break;
 		}
-
 	}
 	
 	@Override
@@ -80,7 +85,7 @@ public class StaticEnemy extends PhysicActor implements Enemy {
 
 	@Override
 	public boolean obstructBulletOf(PhysicActor owner) {
-		return owner.getCollidableType() != CollidableType.Ennemy;
+		return owner.getCollidableType() != CollidableType.Enemy;
 	}
 	
 //	// EXTERNALISATION

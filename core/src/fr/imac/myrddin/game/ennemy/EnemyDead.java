@@ -10,7 +10,7 @@ import fr.imac.myrddin.MyrddinGame;
 
 public class EnemyDead extends EnemyState {
 
-	public EnemyDead(EnnemyShooter enemy) {
+	public EnemyDead(DynamicEnemy enemy) {
 		super(enemy, new Animation(0.05f, MyrddinGame.assetManager.get("enemy/enemy.atlas", TextureAtlas.class).findRegions("death"), PlayMode.NORMAL));
 	}
 	
