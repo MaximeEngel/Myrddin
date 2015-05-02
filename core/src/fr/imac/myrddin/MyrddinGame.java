@@ -88,4 +88,16 @@ public class MyrddinGame extends Game {
 	public void startAleatoryLevel() {
 		
 	}
+	
+	public void startMenu() {
+		MenuScreen menuScreen = new MenuScreen(this);
+		this.setScreen(menuScreen);
+	}
+	
+	public void startLevelSelection() {
+		MenuScreen menuScreen = new MenuScreen(this);
+		menuScreen.initNewGameMenu();
+		System.out.println("test");
+		this.setScreen(menuScreen);
+	}
 }

@@ -126,7 +126,7 @@ public class MenuScreen extends Stage implements Screen {
 	}
 	
 	//screen to choose a level
-	private void initNewGameMenu() {
+	public void initNewGameMenu() {
 		//clear screen
 		table.reset();
 		

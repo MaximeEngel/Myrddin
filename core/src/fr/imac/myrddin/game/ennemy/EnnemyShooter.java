@@ -44,9 +44,7 @@ public abstract class EnnemyShooter extends Character implements Enemy, MagicWea
 	private float maximumScope = MyrddinGame.WIDTH * 0.6f;
 	protected boolean myrddinDetected;
 
-	public EnnemyShooter(Rectangle bounds, Rectangle collisionBox,
-			BodyType bodyType, FixtureDef fixtureDef, boolean preventRotation,
-			int initialLife, MagicState magicState, GameScreen gameScreen) {
+	public EnnemyShooter(Rectangle bounds, Rectangle collisionBox, BodyType bodyType, FixtureDef fixtureDef, boolean preventRotation, int initialLife, MagicState magicState, GameScreen gameScreen) {
 		super(bounds, collisionBox, bodyType, fixtureDef, preventRotation,
 				initialLife);
 		this.magicState = magicState;

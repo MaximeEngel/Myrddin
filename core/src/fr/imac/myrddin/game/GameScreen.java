@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
@@ -71,6 +72,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	private Hud hud;
 	private Background background;
 	private FinishPoint finishPoint;
+	private int level;
 	
 	/**
 	 * 
@@ -78,6 +80,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	 */
 	public GameScreen(int level) {
 		super(new FitViewport(1280, 720));
+		this.level = level;
 		
 		background = new Background(getCamera());
 		
@@ -218,8 +221,11 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	@Override
 	public void act(float delta) {
 		if(finishPoint.isFinish()) {
-			if(finishPoint.isTimeFinishPast(2))
-				return;
+			finishPoint.act(delta);
+			if(finishPoint.isTimeFinishPast(2)) {
+				unlockNextLvl();
+				MyrddinGame.MYRDDIN_GAME.startLevelSelection();
+			}
 			return;
 			
 		}
@@ -231,8 +237,8 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			myrddin.addScore(-30);
 		}
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.S) )
-			instantSave();
+		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
+			MyrddinGame.MYRDDIN_GAME.startMenu();
 		
 		updateCamera(false);
 		
@@ -435,6 +441,18 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		
 		updateCamera(true);
 	    
+	}
+	
+	public void unlockNextLvl() {
+		int nextLevel = level + 1;
+		
+		Preferences prefs = Gdx.app.getPreferences("My Preferences");
+		int lastUnlockedLevel = prefs.getInteger("lastLevelUnlocked", 1);
+		
+		if (nextLevel > lastUnlockedLevel) {
+			prefs.putInteger("lastLevelUnlocked", nextLevel);
+			prefs.flush();
+		}
 	}
 	
 	// GETTERS - SETTERS	
