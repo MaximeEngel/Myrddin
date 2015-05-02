@@ -179,7 +179,7 @@ public class MenuScreen extends Stage implements Screen {
 		}
 		
 		//add aleatory button
-		TextButton textButtonAleatory = new TextButton("Niveau aléatoire", this.mainTextButtonStyle);
+		TextButton textButtonAleatory = new TextButton("Niveau procédural", this.mainTextButtonStyle);
 		textButtonAleatory.addListener(new ChangeListener() {
 									
 			@Override
