@@ -84,4 +84,8 @@ public class MyrddinGame extends Game {
 		gameScreen.instantLoad();
 		eraseLastInstantSave = true;
 	}
+	
+	public void startAleatoryLevel() {
+		
+	}
 }
