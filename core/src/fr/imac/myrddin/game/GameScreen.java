@@ -64,14 +64,14 @@ import fr.imac.myrddin.physic.WoodenLog;
 public class GameScreen extends Stage implements Screen, ContactListener {
 	
 	public static World physicWorld;
-	private TiledMap tiledMap;
-	private OrthogonalTiledMapRenderer mapRenderer;
-	private float mapWidth;
+	protected TiledMap tiledMap;
+	protected OrthogonalTiledMapRenderer mapRenderer;
+	protected float mapWidth;
 	
-	private Myrddin myrddin;
+	protected Myrddin myrddin;
 	private Hud hud;
 	private Background background;
-	private FinishPoint finishPoint;
+	protected FinishPoint finishPoint;
 	private int level;
 	
 	/**
@@ -117,6 +117,24 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		
 		if(!new File("save/instantSave.ms").exists())
 			instantSave();
+	}
+	
+	public GameScreen() {
+		super(new FitViewport(MyrddinGame.WIDTH, MyrddinGame.HEIGHT));
+		background = new Background(getCamera());
+		
+		physicWorld = new World(new Vector2(0, -9.1f),  true);
+		physicWorld.setContactListener(this);
+		
+		myrddin = new Myrddin(new Vector2(10, 350), MagicState.ICE);
+		this.addActor(myrddin);
+		this.addActor(myrddin.getShield());
+		
+		// Connect HUD to gameScreen
+		hud =  new Hud(myrddin);
+		addActor(hud);	
+		
+		myrddin.setZIndex(5000);
 	}
 	
 	
@@ -177,7 +195,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		}
 	}
 	
-	private float mapWidth() {
+	protected float mapWidth() {
 		MapProperties mapProperties = tiledMap.getProperties();		
 		int nbHorizontalTiles = mapProperties.get("width", 0, Integer.class);
 		int tileWidth = mapProperties.get("tilewidth", 0, Integer.class);
@@ -203,9 +221,11 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		// Draw all the actors
 		super.draw();
 		
-		getBatch().begin();
 		// Draw fire, water element block
-		mapRenderer.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("TilesElement"));
+		getBatch().begin();
+		TiledMapTileLayer tilesElement = (TiledMapTileLayer) tiledMap.getLayers().get("TilesElement");
+		if(tilesElement != null)
+			mapRenderer.renderTileLayer(tilesElement);
 		getBatch().end();
 		
 //		getBatch().begin();
@@ -220,14 +240,13 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 
 	@Override
 	public void act(float delta) {
-		if(finishPoint.isFinish()) {
-			finishPoint.act(delta);
-			if(finishPoint.isTimeFinishPast(2)) {
-				unlockNextLvl();
-				MyrddinGame.MYRDDIN_GAME.startLevelSelection();
-			}
-			return;
-			
+		if(finishPoint != null && finishPoint.isFinish()) {
+				finishPoint.act(delta);
+				if(finishPoint.isTimeFinishPast(2)) {
+					unlockNextLvl();
+					MyrddinGame.MYRDDIN_GAME.startLevelSelection();
+				}
+				return;		
 		}
 		
 		physicWorld.step(Gdx.graphics.getDeltaTime(), 8, 6);
@@ -248,7 +267,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 
 
 
-	private void updateCamera(boolean forceUpdate) {
+	protected void updateCamera(boolean forceUpdate) {
 		OrthographicCamera camera = (OrthographicCamera) getCamera();
 		Vector3 position = camera.position;
 		float newX = myrddin.getX() + MyrddinGame.WIDTH * 0.25f;

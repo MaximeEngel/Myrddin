@@ -165,6 +165,7 @@ public class MenuScreen extends Stage implements Screen {
 					@Override
 					public void changed(ChangeEvent event, Actor actor) {
 						myrddinGame.startGame(nbLevelTmp);
+						dispose();
 							
 					}
 				});
@@ -186,6 +187,7 @@ public class MenuScreen extends Stage implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				myrddinGame.startAleatoryLevel();
+				dispose();
 								
 			}
 		});

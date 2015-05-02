@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import fr.imac.myrddin.game.GameScreen;
+import fr.imac.myrddin.game.RandomGameScreen;
 import fr.imac.myrddin.menu.MenuScreen;
 
 public class MyrddinGame extends Game {
@@ -60,6 +61,9 @@ public class MyrddinGame extends Game {
 		assetManager.load("background/background.atlas", TextureAtlas.class);
 		assetManager.load("set/various.atlas", TextureAtlas.class);
 		
+		// set for random level
+		MyrddinGame.assetManager.load("set/tilesetRandom.atlas", TextureAtlas.class);
+		
 		assetManager.finishLoading(); //block until all assets loaded
 	}
 	
@@ -86,7 +90,7 @@ public class MyrddinGame extends Game {
 	}
 	
 	public void startAleatoryLevel() {
-		
+		this.setScreen(new RandomGameScreen());
 	}
 	
 	public void startMenu() {
@@ -97,7 +101,6 @@ public class MyrddinGame extends Game {
 	public void startLevelSelection() {
 		MenuScreen menuScreen = new MenuScreen(this);
 		menuScreen.initNewGameMenu();
-		System.out.println("test");
 		this.setScreen(menuScreen);
 	}
 
