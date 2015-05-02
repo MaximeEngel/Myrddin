@@ -126,7 +126,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			PhysicTileFactory physicTileFactory = new PhysicTileFactory(this.physicWorld);
 			MapObjects objects = tiledMap.getLayers().get("CollisionTile").getObjects();
 			for (MapObject mapObject : objects) {
-				physicTileFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "none", String.class));
+				physicTileFactory.create((RectangleMapObject) mapObject, mapObject.getName());
 			}
 			
 			// Create limit world
@@ -144,7 +144,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			MapObjects objects = tiledMap.getLayers().get("Enemies").getObjects();
 			
 			for (MapObject mapObject : objects) {
-				PhysicActor ennemy = ennemyFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "none", String.class));
+				PhysicActor ennemy = ennemyFactory.create((RectangleMapObject) mapObject, mapObject.getName());
 				addActor(ennemy);
 			}			
 		}
@@ -157,7 +157,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			MapObjects objects = tiledMap.getLayers().get("Powerups").getObjects();
 			
 			for (MapObject mapObject : objects) {
-				PhysicActor powerups[] = powerFactory.create((RectangleMapObject) mapObject, mapObject.getProperties().get("type", "PowerScore", String.class));
+				PhysicActor powerups[] = powerFactory.create((RectangleMapObject) mapObject, mapObject.getName());
 				for (PhysicActor powerup : powerups) {
 					addActor(powerup);					
 				}
