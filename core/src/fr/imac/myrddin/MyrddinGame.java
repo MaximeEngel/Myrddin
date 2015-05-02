@@ -100,4 +100,11 @@ public class MyrddinGame extends Game {
 		System.out.println("test");
 		this.setScreen(menuScreen);
 	}
+
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+	}
+	
+	
 }

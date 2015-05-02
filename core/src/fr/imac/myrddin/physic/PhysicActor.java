@@ -167,21 +167,6 @@ public abstract class PhysicActor extends Actor implements Collidable, Externali
 		body.setLinearVelocity(v);
 	}
 	
-	// UTILS METHODES ON ACTOR
-	
-	public boolean isVisible() {
-		Camera camera = getStage().getCamera();
-		float halfScreenWidth = MyrddinGame.WIDTH * 0.5f;
-		float halfWidth = 0.5f * getWidth();
-		
-		if ( getX() - halfWidth >= camera.position.x - halfScreenWidth && getX() + halfWidth <= camera.position.x + halfScreenWidth )
-			return true;
-		
-		return false;
-	}
-	
-	
-	
 	// EXTERNALIZABLE
 
 	@Override

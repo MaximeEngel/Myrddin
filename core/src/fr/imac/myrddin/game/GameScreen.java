@@ -79,7 +79,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	 * @param level numero of the level to instanciate and play
 	 */
 	public GameScreen(int level) {
-		super(new FitViewport(1280, 720));
+		super(new FitViewport(MyrddinGame.WIDTH, MyrddinGame.HEIGHT));
 		this.level = level;
 		
 		background = new Background(getCamera());
@@ -285,7 +285,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 
 	@Override
 	public void resize(int width, int height) {
-
+		getViewport().update(width, height);
 	}
 
 	@Override

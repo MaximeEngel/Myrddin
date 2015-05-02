@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import fr.imac.myrddin.MyrddinGame;
 
@@ -36,7 +37,7 @@ public class MenuScreen extends Stage implements Screen {
 	
 	//CONSTRUCTOR
 	public MenuScreen(MyrddinGame myrddinGame) {
-		super();
+		super(new FitViewport(MyrddinGame.WIDTH, MyrddinGame.HEIGHT));
 		this.myrddinGame = myrddinGame;
 		atlasMenu = (TextureAtlas) MyrddinGame.assetManager.get("ui/ui.atlas", TextureAtlas.class);
 		mainTextButtonStyle = initMainTextButton();
@@ -316,7 +317,7 @@ public class MenuScreen extends Stage implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		getViewport().update(width, height);
 
 	}
 
