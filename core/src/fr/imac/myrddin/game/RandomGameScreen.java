@@ -24,6 +24,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import fr.imac.myrddin.MyrddinGame;
+import fr.imac.myrddin.game.ennemy.EnemyFactory;
+import fr.imac.myrddin.game.ennemy.StaticEnemy;
+import fr.imac.myrddin.game.ennemy.TowerEnemy;
+import fr.imac.myrddin.game.magic.MagicState;
+import fr.imac.myrddin.game.powerup.PowerFactory;
+import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicTileFactory;
 
 public class RandomGameScreen extends GameScreen {
@@ -50,6 +56,10 @@ public class RandomGameScreen extends GameScreen {
 	protected PhysicTileFactory physicTileFactory;
 	private Vector2 lastChunkGoodPos;
 	private int nbChunks;
+	
+	private int oldDistanceScore = 0;
+	private PowerFactory powerFactory;
+	private EnemyFactory ennemyFactory;
 
 	public RandomGameScreen() {
 		super();
@@ -71,6 +81,8 @@ public class RandomGameScreen extends GameScreen {
 		
 		// factories
 		physicTileFactory = new PhysicTileFactory(this.physicWorld);
+		powerFactory = new PowerFactory();
+		ennemyFactory = new EnemyFactory(this);
 		
 		lastChunkGoodPos = new Vector2();
 		nbChunks = 0;
@@ -100,6 +112,7 @@ public class RandomGameScreen extends GameScreen {
 			
 			nbTileHeight += MathUtils.random(0, Math.min(CHUNK_HEIGHT - 4 - originY, (int)lastChunkGoodPos.y + 6 - originY));
 			createBlock(originX, originY, nbTileWidth, nbTileHeight);
+			addFunToBlock(originX, originY, nbTileWidth, nbTileHeight);
 			
 			// Update for next block
 			actualChunkX = originX + nbTileWidth;
@@ -168,12 +181,83 @@ public class RandomGameScreen extends GameScreen {
 	 * @param nbTileHeight
 	 */
 	public void addFunToBlock(int originX, int originY, int nbTileWidth, int nbTileHeight) {
-		int nbElementsToTry = MathUtils.random(nbTileWidth - 2);
+		int nbElementsToTry = nbTileWidth - 2;
+		if (nbElementsToTry <= 0)
+			return;
+		
+		nbElementsToTry = MathUtils.random(nbElementsToTry);
 		for(int i = 0; i < nbElementsToTry ; i++) {
 			int random = MathUtils.random(100);
+			if (random == 100)
+				createLife(originX, originY, nbTileWidth, nbTileHeight);
+			else if (random > 95)
+				createPower(originX, originY, nbTileWidth, nbTileHeight);
+			else if (random > 75)
+				createEnemy(originX, originY, nbTileWidth, nbTileHeight);
+			else if (random > 40)
+				createScore(originX, originY, nbTileWidth, nbTileHeight);
 		}
 	}
 	
+	private void createScore(int originX, int originY, int nbTileWidth,
+			int nbTileHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void createEnemy(int originX, int originY, int nbTileWidth,
+			int nbTileHeight) {
+		if (originX <= 40)
+			return ;
+		PhysicActor actor = null;
+		RectangleMapObject rectangleMapObject;
+		switch(MathUtils.random(2)) {
+		case 0:
+			rectangleMapObject = new RectangleMapObject(MathUtils.random(originX * TILE_SIZE, (originX + nbTileWidth) * TILE_SIZE - StaticEnemy.WIDTH), (originY + nbTileHeight) * TILE_SIZE, 10, 10);
+			actor = ennemyFactory.create(rectangleMapObject, "StaticEnemy");
+			break;
+		case 1:
+			rectangleMapObject = new RectangleMapObject(MathUtils.random(originX * TILE_SIZE, (originX + nbTileWidth) * TILE_SIZE - TowerEnemy.WIDTH), (originY + nbTileHeight) * TILE_SIZE, 10, 10);
+			rectangleMapObject.getProperties().put("magicState", String.valueOf(MathUtils.randomBoolean() ? MagicState.FIRE : MagicState.ICE));
+			actor = ennemyFactory.create(rectangleMapObject, "TowerEnemy");
+			break;
+		default:
+			float factor = 0.1f;
+			if (nbTileWidth > 7)
+				factor = 0.4f;
+			float runZoneX = MathUtils.random(originX * TILE_SIZE,(int) ((originX + nbTileWidth * factor) * TILE_SIZE) );			
+			
+			float runZoneWidth = (originX + nbTileWidth) * TILE_SIZE - runZoneX; 
+			if (nbTileWidth > 7)
+				runZoneWidth *= MathUtils.random(0.5f, 1);
+			
+			rectangleMapObject = new RectangleMapObject(runZoneX, (originY + nbTileHeight) * TILE_SIZE, runZoneWidth, 10);
+			rectangleMapObject.getProperties().put("magicState", String.valueOf(MathUtils.randomBoolean() ? MagicState.FIRE : MagicState.ICE));
+			actor = ennemyFactory.create(rectangleMapObject, "DynamicEnemy");
+			break;
+		}
+		
+		if(actor != null)
+			addActor(actor);
+		
+	}
+
+	private void createPower(int originX, int originY, int nbTileWidth,
+			int nbTileHeight) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void createLife(int originX, int originY, int nbTileWidth,
+			int nbTileHeight) {
+		RectangleMapObject rectangleMapObject = new RectangleMapObject(MathUtils.random(originX * TILE_SIZE, (originX + nbTileWidth) * TILE_SIZE), (originY + nbTileHeight + 2) * TILE_SIZE, 10, 10);
+		PhysicActor powerups[] = powerFactory.create(rectangleMapObject, "PowerHealth");
+		for (PhysicActor powerup : powerups) {
+			addActor(powerup);					
+		}
+		
+	}
+
 	public TiledMapTileSet initTileSet() {
 		TextureAtlas tilesetAtlas = MyrddinGame.assetManager.get("set/tilesetRandom.atlas", TextureAtlas.class);
 		Array<AtlasRegion> allRegions = tilesetAtlas.getRegions();
@@ -193,6 +277,12 @@ public class RandomGameScreen extends GameScreen {
 	public void act(float delta) {
 		super.act(delta);
 		
+		
+		int newDistanceScore = (int) myrddin.getX() / 10;
+		myrddin.addScore(newDistanceScore - oldDistanceScore);
+		oldDistanceScore = newDistanceScore;
+		
+		// Create chunk if we are near to the limit
 		if((myrddin.getX() + MyrddinGame.WIDTH) % CHUNK_WIDTH > nbChunks)
 			createChunk();
 	}

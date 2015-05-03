@@ -26,6 +26,9 @@ import fr.imac.myrddin.physic.PhysicUtil;
 
 public class TowerEnemy extends EnnemyShooter {
 	
+	public static final float WIDTH = 64f;
+	public static final float HEIGHT = 38f;
+	
 	private Animation animation;
 	private float time;
 	
@@ -38,7 +41,7 @@ public class TowerEnemy extends EnnemyShooter {
 	}
 	
 	public TowerEnemy(Vector2 pos, MagicState magicState, GameScreen gameScreen) {
-		super(new Rectangle(pos.x, pos.y, 64, 38), new Rectangle(5, 5, 54, 28), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true, 1, magicState, gameScreen);
+		super(new Rectangle(pos.x, pos.y, WIDTH, HEIGHT), new Rectangle(5, 5, WIDTH - 10, HEIGHT - 10), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true, 1, magicState, gameScreen);
 		init();
 	}
 	

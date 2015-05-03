@@ -19,11 +19,14 @@ import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicUtil;
 
 public class StaticEnemy extends PhysicActor implements Enemy {	
-
-	AtlasRegion atlasRegion;
+	
+	public static final float WIDTH = 64f;
+	public static final float HEIGHT = 47f;
+	
+	protected AtlasRegion atlasRegion;
 
 	public StaticEnemy(Vector2 pos) {
-		super(new Rectangle(pos.x, pos.y, 64, 47), new Rectangle(6, 0, 50, 32), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true);
+		super(new Rectangle(pos.x, pos.y, WIDTH, HEIGHT), new Rectangle(6, 0, WIDTH - 12, HEIGHT - 15), BodyType.StaticBody, PhysicUtil.createFixtureDef(10f, 0f, false), true);
 		init();
 	}
 	
