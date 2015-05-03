@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import fr.imac.myrddin.MyrddinGame;
-import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
 
 public class MyrddinJump extends MyrddinState {
 
@@ -17,7 +16,6 @@ public class MyrddinJump extends MyrddinState {
 		//super(myrddin, null);
 		super(myrddin, new Animation(0.1f, MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class).findRegions("jump"), PlayMode.NORMAL));
 		myrddin.applyImpulse(new Vector2(0f, 10 * myrddin.getMass()));
-		Vector2 velocity = myrddin.getLinearVelocity();
 	}
 
 	

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 
 import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.Character;
-import fr.imac.myrddin.game.ennemy.Enemy;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.PhysicActor;

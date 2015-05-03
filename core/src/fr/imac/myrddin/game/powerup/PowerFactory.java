@@ -1,7 +1,5 @@
 package fr.imac.myrddin.game.powerup;
 
-import java.util.Vector;
-
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;

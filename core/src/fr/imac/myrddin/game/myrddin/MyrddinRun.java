@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import fr.imac.myrddin.MyrddinGame;
-import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
 
 public class MyrddinRun extends MyrddinState {
 	

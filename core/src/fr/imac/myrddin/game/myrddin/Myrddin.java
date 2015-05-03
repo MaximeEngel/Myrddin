@@ -5,33 +5,23 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
-
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import fr.imac.myrddin.game.Character;
-import fr.imac.myrddin.game.GameScreen;
 import fr.imac.myrddin.game.MagicWeapon;
 import fr.imac.myrddin.game.MagicWeaponOwner;
-import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
 import fr.imac.myrddin.physic.Collidable;
@@ -85,7 +75,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	 * @return if myrddin need to respawn. (dead or fall out of box)
 	 */
 	public boolean respawn() {
-		return isOutOfTheBox() || myrddinState.getStateType() == StateType.Dead && myrddinState.getStateTime() > MyrddinDead.TIME_TO_BE_DEAD;
+		return myrddinState.getStateType() == StateType.Dead && myrddinState.getStateTime() > MyrddinDead.TIME_TO_BE_DEAD;
 	}
 
 	
@@ -131,6 +121,9 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 			fire(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 		
 		shield.act(delta);
+		
+		if(isOutOfTheBox())
+			setMyrddinState(new MyrddinDead(this));
 	}
 
 	@Override
@@ -275,6 +268,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		out.writeObject(shield);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {

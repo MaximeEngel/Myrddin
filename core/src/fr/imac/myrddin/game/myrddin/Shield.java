@@ -7,10 +7,8 @@ import java.io.ObjectOutput;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -19,7 +17,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
@@ -29,7 +26,6 @@ import fr.imac.myrddin.game.GameScreen;
 import fr.imac.myrddin.game.MyrddinUtil;
 import fr.imac.myrddin.game.myrddin.MyrddinState.StateType;
 import fr.imac.myrddin.physic.Collidable;
-import fr.imac.myrddin.physic.Collidable.CollidableType;
 import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicUtil;
 
@@ -40,8 +36,6 @@ public class Shield extends PhysicActor implements Externalizable {
 	
 	private Myrddin myrddin;
 	private RevoluteJoint revoluteJoint;
-	private Animation animation;
-	
 	/**
 	 * [0 - 100]
 	 */
@@ -73,7 +67,6 @@ public class Shield extends PhysicActor implements Externalizable {
 	
 	public void init() {
 		TextureAtlas atlas = MyrddinGame.assetManager.get("myrddin/myrddin.atlas", TextureAtlas.class);
-		animation = new Animation(0.05f, atlas.findRegions("shield"), PlayMode.NORMAL);
 		regions = atlas.findRegions("shield");
 	}
 	

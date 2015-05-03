@@ -2,15 +2,16 @@ package fr.imac.myrddin.game;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-
 import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.game.myrddin.MyrddinIddle;
@@ -24,6 +25,7 @@ public class FinishPoint extends PhysicActor {
 	private float timeFinish = 0;
 	private float time = 0;
 	private Animation animation;
+	private BitmapFontCache bitmapFontCache;
 	
 	/**
 	 * 
@@ -38,6 +40,8 @@ public class FinishPoint extends PhysicActor {
 			);
 		
 		animation = new Animation(0.2f, MyrddinGame.assetManager.get("set/various.atlas", TextureAtlas.class).findRegions("finishPoint"), PlayMode.LOOP_REVERSED);
+		BitmapFont bitmap = (BitmapFont) MyrddinGame.assetManager.get("ui/theonlyexception_25.fnt", BitmapFont.class);
+		bitmapFontCache = new BitmapFontCache(bitmap);		
 	}
 	
 	
@@ -65,6 +69,8 @@ public class FinishPoint extends PhysicActor {
 			finish = true;
 			Myrddin myrddin = (Myrddin) other;
 			myrddin.setMyrddinState(new MyrddinIddle(myrddin));
+			bitmapFontCache.addMultiLineText("Gagné \nScore : "+myrddin.getScore(), myrddin.getStage().getCamera().position.x - MyrddinGame.WIDTH / 2, MyrddinGame.HEIGHT * 0.5f,(float) MyrddinGame.WIDTH, HAlignment.CENTER);
+			
 		}
 	}
 
@@ -72,6 +78,9 @@ public class FinishPoint extends PhysicActor {
 	public void draw(Batch batch, float parentAlpha) {
 		TextureRegion region = animation.getKeyFrame(time);
 		batch.draw(region, getX(), getY());
+		
+		if(finish)
+			bitmapFontCache.draw(batch);
 	}	
 	
 	// GETTERS - SETTERS

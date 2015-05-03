@@ -80,6 +80,7 @@ public class MagicWeapon<T extends PhysicActor & MagicWeaponOwner> implements Ex
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {

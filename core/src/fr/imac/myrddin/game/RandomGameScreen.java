@@ -5,22 +5,16 @@ import java.util.HashMap;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTile.BlendMode;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import fr.imac.myrddin.MyrddinGame;
@@ -58,11 +52,13 @@ public class RandomGameScreen extends GameScreen {
 	private int nbChunks;
 	
 	private int oldDistanceScore = 0;
+	private MagicState lastMagicPower;
 	private PowerFactory powerFactory;
 	private EnemyFactory ennemyFactory;
 
 	public RandomGameScreen() {
 		super();
+		lastMagicPower = myrddin.getMagicState();
 		
 		tilesetIds = new HashMap<String, Integer>();
 		
@@ -80,7 +76,7 @@ public class RandomGameScreen extends GameScreen {
 		tiledMap.getLayers().add(tiles);
 		
 		// factories
-		physicTileFactory = new PhysicTileFactory(this.physicWorld);
+		physicTileFactory = new PhysicTileFactory(GameScreen.physicWorld);
 		powerFactory = new PowerFactory();
 		ennemyFactory = new EnemyFactory(this);
 		
@@ -181,6 +177,9 @@ public class RandomGameScreen extends GameScreen {
 	 * @param nbTileHeight
 	 */
 	public void addFunToBlock(int originX, int originY, int nbTileWidth, int nbTileHeight) {
+		if (originX <= 40)
+			return ;
+		
 		int nbElementsToTry = nbTileWidth - 2;
 		if (nbElementsToTry <= 0)
 			return;
@@ -190,25 +189,32 @@ public class RandomGameScreen extends GameScreen {
 			int random = MathUtils.random(100);
 			if (random == 100)
 				createLife(originX, originY, nbTileWidth, nbTileHeight);
-			else if (random > 95)
-				createPower(originX, originY, nbTileWidth, nbTileHeight);
-			else if (random > 75)
-				createEnemy(originX, originY, nbTileWidth, nbTileHeight);
-			else if (random > 40)
+			else if (random >= 91)
 				createScore(originX, originY, nbTileWidth, nbTileHeight);
+			else if (random >= 89)
+				createPower(originX, originY, nbTileWidth, nbTileHeight);
+			else if (random >= 69)
+				createEnemy(originX, originY, nbTileWidth, nbTileHeight);			
 		}
 	}
 	
-	private void createScore(int originX, int originY, int nbTileWidth,
-			int nbTileHeight) {
-		// TODO Auto-generated method stub
+	private void createScore(int originX, int originY, int nbTileWidth, int nbTileHeight) {		
+			
+		float startX = MathUtils.random(originX, originX + nbTileWidth - 2)  * TILE_SIZE;
+		float width = MathUtils.random(TILE_SIZE, (originX + nbTileWidth) * TILE_SIZE - startX);
+		float minY = (originY + nbTileHeight) * TILE_SIZE;
+		float maxY = minY + 6 * TILE_SIZE;
 		
+		RectangleMapObject rectangleMapObject = new RectangleMapObject(startX, MathUtils.random(minY, maxY), width, 10);
+		
+		PhysicActor powerups[] = powerFactory.create(rectangleMapObject, "PowerScore");
+		for (PhysicActor powerup : powerups) {
+				addActor(powerup);					
+		}			
 	}
 
 	private void createEnemy(int originX, int originY, int nbTileWidth,
-			int nbTileHeight) {
-		if (originX <= 40)
-			return ;
+			int nbTileHeight) {		
 		PhysicActor actor = null;
 		RectangleMapObject rectangleMapObject;
 		switch(MathUtils.random(2)) {
@@ -244,8 +250,12 @@ public class RandomGameScreen extends GameScreen {
 
 	private void createPower(int originX, int originY, int nbTileWidth,
 			int nbTileHeight) {
-		// TODO Auto-generated method stub
-		
+		RectangleMapObject rectangleMapObject = new RectangleMapObject(MathUtils.random(originX * TILE_SIZE, (originX + nbTileWidth) * TILE_SIZE), (originY + nbTileHeight + 2) * TILE_SIZE, 10, 10);
+		lastMagicPower = lastMagicPower == MagicState.FIRE ? MagicState.ICE : MagicState.FIRE;
+		PhysicActor powerups[] = powerFactory.create(rectangleMapObject, lastMagicPower == MagicState.FIRE ? "PowerFire" : "PowerIce");
+		for (PhysicActor powerup : powerups) {
+			addActor(powerup);					
+		}		
 	}
 
 	private void createLife(int originX, int originY, int nbTileWidth,
@@ -283,7 +293,7 @@ public class RandomGameScreen extends GameScreen {
 		oldDistanceScore = newDistanceScore;
 		
 		// Create chunk if we are near to the limit
-		if((myrddin.getX() + MyrddinGame.WIDTH) % CHUNK_WIDTH > nbChunks)
+		if((myrddin.getX() + MyrddinGame.WIDTH) / (CHUNK_WIDTH * TILE_SIZE) > nbChunks)
 			createChunk();
 	}
 
@@ -295,10 +305,12 @@ public class RandomGameScreen extends GameScreen {
 	}
 	
 	/**
-	 * cancel instantLoad
+	 * cancel the overrided instantLoad and restart a randomgame at the place
 	 */
 	@Override
 	public void instantLoad() {
+		dispose();
+		MyrddinGame.MYRDDIN_GAME.startAleatoryLevel();
 	}
 	
 	

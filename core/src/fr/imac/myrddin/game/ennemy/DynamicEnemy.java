@@ -5,7 +5,6 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -14,7 +13,6 @@ import fr.imac.myrddin.game.GameScreen;
 import fr.imac.myrddin.game.ennemy.EnemyState.EnemyStateType;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.Myrddin;
-import fr.imac.myrddin.game.myrddin.MyrddinDead;
 import fr.imac.myrddin.physic.PhysicUtil;
 
 public class DynamicEnemy extends EnnemyShooter {

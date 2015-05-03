@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -20,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.GameScreen;
-import fr.imac.myrddin.physic.Collidable.CollidableType;
 
 public abstract class PhysicActor extends Actor implements Collidable, Externalizable  {
 	

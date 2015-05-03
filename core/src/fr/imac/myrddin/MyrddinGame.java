@@ -6,7 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -30,6 +30,9 @@ public class MyrddinGame extends Game {
 	public void create () {
 		assetManager = new AssetManager();
 		initialLoadAsset();
+		Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/musics.mp3"));
+		music.setLooping(true);
+		music.play();
 		
 		
 		this.setScreen(new MenuScreen(this));

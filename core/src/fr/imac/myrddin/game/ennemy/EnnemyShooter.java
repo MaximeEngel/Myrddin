@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -26,7 +22,6 @@ import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.PhysicActor;
-import fr.imac.myrddin.physic.Collidable.CollidableType;
 
 public abstract class EnnemyShooter extends Character implements Enemy, MagicWeaponOwner {
 	

@@ -4,23 +4,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 import fr.imac.myrddin.MyrddinGame;
-import fr.imac.myrddin.game.Character;
 import fr.imac.myrddin.game.GameScreen;
-import fr.imac.myrddin.game.MagicWeapon;
-import fr.imac.myrddin.game.MagicWeaponOwner;
 import fr.imac.myrddin.game.magic.MagicState;
-import fr.imac.myrddin.game.myrddin.Myrddin;
-import fr.imac.myrddin.physic.Collidable;
-import fr.imac.myrddin.physic.Collidable.CollidableType;
 import fr.imac.myrddin.physic.PhysicActor;
 import fr.imac.myrddin.physic.PhysicUtil;
 

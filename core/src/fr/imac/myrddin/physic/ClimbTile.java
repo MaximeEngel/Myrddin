@@ -1,13 +1,9 @@
 package fr.imac.myrddin.physic;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 
 import fr.imac.myrddin.game.myrddin.Myrddin;
-import fr.imac.myrddin.game.myrddin.MyrddinClimb;
-import fr.imac.myrddin.game.myrddin.MyrddinFall;
-import fr.imac.myrddin.game.myrddin.MyrddinRun;
 
 public class ClimbTile extends PhysicTile {
 	

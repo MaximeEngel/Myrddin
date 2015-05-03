@@ -11,28 +11,21 @@ import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -46,10 +39,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.ennemy.EnemyFactory;
 import fr.imac.myrddin.game.hud.Hud;
-import fr.imac.myrddin.game.magic.MagicBullet;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.Myrddin;
-import fr.imac.myrddin.game.myrddin.Shield;
 import fr.imac.myrddin.game.powerup.PowerFactory;
 import fr.imac.myrddin.physic.Collidable;
 import fr.imac.myrddin.physic.Collidable.CollidableType;
@@ -126,7 +117,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		physicWorld = new World(new Vector2(0, -9.1f),  true);
 		physicWorld.setContactListener(this);
 		
-		myrddin = new Myrddin(new Vector2(10, 350), MagicState.ICE);
+		myrddin = new Myrddin(new Vector2(10, 350), MathUtils.randomBoolean() ? MagicState.FIRE : MagicState.ICE);
 		this.addActor(myrddin);
 		this.addActor(myrddin.getShield());
 		
@@ -141,7 +132,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	private void createPhysicWorld(TiledMap tiledMap) {		
 		if (tiledMap != null)
 		{
-			PhysicTileFactory physicTileFactory = new PhysicTileFactory(this.physicWorld);
+			PhysicTileFactory physicTileFactory = new PhysicTileFactory(GameScreen.physicWorld);
 			MapObjects objects = tiledMap.getLayers().get("CollisionTile").getObjects();
 			for (MapObject mapObject : objects) {
 				physicTileFactory.create((RectangleMapObject) mapObject, mapObject.getName());

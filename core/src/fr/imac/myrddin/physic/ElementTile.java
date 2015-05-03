@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.Myrddin;
-import fr.imac.myrddin.game.myrddin.MyrddinBump;
 import fr.imac.myrddin.game.magic.MagicBullet;
 
 public class ElementTile extends PhysicTile {
