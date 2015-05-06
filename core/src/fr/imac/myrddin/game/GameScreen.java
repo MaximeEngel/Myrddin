@@ -87,7 +87,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		physicWorld.setContactListener(this);
 		createPhysicWorld(tiledMap);
 		
-		myrddin = new Myrddin(PhysicUtil.positionFromRectMapObject((RectangleMapObject) tiledMap.getLayers().get("SpawnFinish").getObjects().get("Spawn")), MagicState.ICE);
+		RectangleMapObject spawn = (RectangleMapObject) tiledMap.getLayers().get("SpawnFinish").getObjects().get("Spawn");
+		MagicState myrddinMagicState = MagicState.valueOf(spawn.getProperties().get("magicState", String.valueOf(MagicState.FIRE), String.class));
+		myrddin = new Myrddin(PhysicUtil.positionFromRectMapObject(spawn), myrddinMagicState);
 		this.addActor(myrddin);
 		this.addActor(myrddin.getShield());
 		
