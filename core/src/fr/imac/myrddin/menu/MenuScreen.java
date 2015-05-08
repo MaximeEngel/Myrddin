@@ -69,7 +69,7 @@ public class MenuScreen extends Stage implements Screen {
 		table.background(new TextureRegionDrawable(backgroundMenu));
 		
 		// padding top
-		table.padTop(230);
+		table.padTop(190);
 				
 		//add resume button
 		TextButton textButtonResume = new TextButton("Reprendre la partie", this.mainTextButtonStyle);
@@ -95,7 +95,7 @@ public class MenuScreen extends Stage implements Screen {
 				
 			}
 		});
-		table.add(textButtonNew).padTop(-15);
+		table.add(textButtonNew).padTop(-18);
 		
 		table.row();
 		
@@ -109,7 +109,21 @@ public class MenuScreen extends Stage implements Screen {
 				
 			}
 		});
-		table.add(textButtonHow).padTop(-15);
+		table.add(textButtonHow).padTop(-18);
+		
+		table.row();
+		
+		//add credits button
+		TextButton textButtonCredits = new TextButton("Credits", this.mainTextButtonStyle);
+		textButtonCredits.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				initHowToPlayMenu();
+				
+			}
+		});
+		table.add(textButtonCredits).padTop(-18);
 		
 		table.row();
 		
@@ -122,7 +136,7 @@ public class MenuScreen extends Stage implements Screen {
 				Gdx.app.exit();	
 			}
 		});
-		table.add(textButtonQuit).padTop(-15);
+		table.add(textButtonQuit).padTop(-18);
 	}
 	
 	//screen to choose a level
