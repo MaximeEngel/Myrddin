@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -66,6 +67,17 @@ public class MyrddinGame extends Game {
 		
 		// set for random level
 		MyrddinGame.assetManager.load("set/tilesetRandom.atlas", TextureAtlas.class);
+		
+		// SOUNDS
+		assetManager.load("sounds/FIRE1.mp3", Sound.class);
+		assetManager.load("sounds/FIRE2.mp3", Sound.class);
+		assetManager.load("sounds/FIRE3.mp3", Sound.class);
+		assetManager.load("sounds/FIRE4.mp3", Sound.class);
+		assetManager.load("sounds/Bulle1.wav", Sound.class);
+		assetManager.load("sounds/Bulle2.wav", Sound.class);
+		assetManager.load("sounds/Bulle3.wav", Sound.class);
+		assetManager.load("sounds/Bulle4.wav", Sound.class);
+		assetManager.load("sounds/collected.mp3", Sound.class);
 		
 		assetManager.finishLoading(); //block until all assets loaded
 	}

@@ -1,4 +1,5 @@
 package fr.imac.myrddin.game.powerup;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -23,6 +24,8 @@ public class PowerSave extends Powerup {
 	public void pickedUp(Myrddin myrddin) {
 		GameScreen gameScreen = (GameScreen) MyrddinGame.MYRDDIN_GAME.getScreen();
 		gameScreen.instantSave();
+		Sound sound = MyrddinGame.assetManager.get("sounds/collected.mp3", Sound.class);
+		sound.play(0.3f);
 	}
 
 }

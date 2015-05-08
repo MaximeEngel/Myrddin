@@ -1,7 +1,9 @@
 package fr.imac.myrddin.game.powerup;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import fr.imac.myrddin.MyrddinGame;
 import fr.imac.myrddin.game.magic.MagicState;
 import fr.imac.myrddin.game.myrddin.Myrddin;
 
@@ -21,6 +23,8 @@ public class PowerFire extends Powerup {
 	@Override
 	public void pickedUp(Myrddin myrddin) {
 		myrddin.setMagicState(MagicState.FIRE);
+		Sound sound = MyrddinGame.assetManager.get("sounds/collected.mp3", Sound.class);
+		sound.play(0.3f);
 	}
 
 }

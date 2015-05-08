@@ -1,9 +1,11 @@
 package fr.imac.myrddin.game.magic;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -89,7 +91,16 @@ public class MagicBullet extends PhysicActor {
 			
 			if(loadAnimation.isAnimationFinished(timeSinceBirth)) {
 				born = true;
-				this.applyImpulse(forceToApply);	
+				this.applyImpulse(forceToApply);
+				
+				Sound sound;
+				if(magicState == MagicState.ICE) {
+					sound = MyrddinGame.assetManager.get("sounds/Bulle"+MathUtils.random(1, 4)+".wav", Sound.class);
+					sound.play(0.9f);
+				} else {
+					sound = MyrddinGame.assetManager.get("sounds/FIRE"+MathUtils.random(1, 4)+".mp3", Sound.class);
+					sound.play(0.5f);
+				}
 			}
 		}
 		
