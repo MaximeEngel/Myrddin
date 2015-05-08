@@ -31,23 +31,37 @@ powers_exp
   orig: 1044, 132
   offset: 0, 0
   index: -1
+musiques
+  rotate: false
+  xy: 1283, 1908
+  size: 480, 80
+  orig: 480, 80
+  offset: 0, 0
+  index: -1
+developpedby
+  rotate: false
+  xy: 1283, 1826
+  size: 480, 80
+  orig: 480, 80
+  offset: 0, 0
+  index: -1
 buttonChecked
   rotate: false
-  xy: 1283, 1876
+  xy: 1283, 1712
   size: 300, 112
   orig: 300, 112
   offset: 0, 0
   index: -1
 buttonUp
   rotate: false
-  xy: 1283, 1762
+  xy: 1283, 1598
   size: 300, 112
   orig: 300, 112
   offset: 0, 0
   index: -1
 buttonDown
   rotate: false
-  xy: 1585, 1876
+  xy: 1283, 1484
   size: 300, 112
   orig: 300, 112
   offset: 0, 0
@@ -61,23 +75,30 @@ buttonLvlChecked
   index: -1
 buttonLvlDown
   rotate: false
-  xy: 1283, 1648
+  xy: 1765, 1876
   size: 140, 112
   orig: 140, 112
   offset: 0, 0
   index: -1
 buttonLocked
   rotate: false
-  xy: 1585, 1762
+  xy: 1907, 1876
   size: 140, 112
   orig: 140, 112
   offset: 0, 0
   index: -1
 buttonLvlUp
   rotate: false
-  xy: 1887, 1876
+  xy: 1585, 1712
   size: 140, 112
   orig: 140, 112
+  offset: 0, 0
+  index: -1
+imac
+  rotate: false
+  xy: 1283, 1413
+  size: 50, 69
+  orig: 50, 69
   offset: 0, 0
   index: -1
 
