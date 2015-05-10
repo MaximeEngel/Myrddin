@@ -63,7 +63,7 @@ public class MenuScreen extends Stage implements Screen {
 		table.background(new TextureRegionDrawable(backgroundMenu));
 		
 		// padding top
-		table.padTop(230);
+		table.padTop(190);
 				
 		//add resume button
 		TextButton textButtonResume = new TextButton("Reprendre la partie", this.mainTextButtonStyle);
@@ -89,7 +89,7 @@ public class MenuScreen extends Stage implements Screen {
 				
 			}
 		});
-		table.add(textButtonNew).padTop(-15);
+		table.add(textButtonNew).padTop(-18);
 		
 		table.row();
 		
@@ -103,7 +103,21 @@ public class MenuScreen extends Stage implements Screen {
 				
 			}
 		});
-		table.add(textButtonHow).padTop(-15);
+		table.add(textButtonHow).padTop(-18);
+		
+		table.row();
+		
+		//add credits button
+		TextButton textButtonCredits = new TextButton("Credits", this.mainTextButtonStyle);
+		textButtonCredits.addListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				initCreditsMenu();
+				
+			}
+		});
+		table.add(textButtonCredits).padTop(-18);
 		
 		table.row();
 		
@@ -116,7 +130,7 @@ public class MenuScreen extends Stage implements Screen {
 				Gdx.app.exit();	
 			}
 		});
-		table.add(textButtonQuit).padTop(-15);
+		table.add(textButtonQuit).padTop(-18);
 	}
 	
 	//screen to choose a level
@@ -200,7 +214,7 @@ public class MenuScreen extends Stage implements Screen {
 		table.add(textButtonReturn).padTop(20).colspan(6);
 	}
 	
-	//screen to choose a level
+	//screen to know how to play
 		private void initHowToPlayMenu() {
 			//clear screen
 			table.reset();
@@ -234,6 +248,70 @@ public class MenuScreen extends Stage implements Screen {
 			AtlasRegion powersImage = atlasMenu.findRegion("powers_exp");
 			Image powers = new Image(powersImage);
 			table.add(powers).padTop(20);
+		}
+		
+		//screen for credits
+		private void initCreditsMenu() {
+			//clear screen
+			table.reset();
+			
+			//do debug
+			//table.setDebug(true);
+				
+			//background image
+			AtlasRegion backgroundMenuLevel = atlasMenu.findRegion("menu3");
+			table.background(new TextureRegionDrawable(backgroundMenuLevel));
+			
+			//add developped by button
+			AtlasRegion developpedByImage = atlasMenu.findRegion("developpedby");
+			Image developpedBy = new Image(developpedByImage);
+			table.add(developpedBy).padTop(20);
+			
+			//add musics button
+			AtlasRegion musicsImage = atlasMenu.findRegion("musiques");
+			Image musics = new Image(musicsImage);
+			table.add(musics).padTop(20);
+			table.row();
+			
+			TextButton textButtonMarie = new TextButton("Marie Benoist", this.mainTextButtonStyle);
+			table.add(textButtonMarie).padTop(-15);
+			TextButton textButtonNewSkies = new TextButton("New Skies", this.mainTextButtonStyle);
+			table.add(textButtonNewSkies).padTop(-15);
+			table.row();
+			
+			TextButton textButtonMaximeE = new TextButton("Maxime Engel", this.mainTextButtonStyle);
+			table.add(textButtonMaximeE).padTop(-15);
+			TextButton textButtonMoveForth = new TextButton("et Move Forth", this.mainTextButtonStyle);
+			table.add(textButtonMoveForth).padTop(-15);
+			table.row();
+			
+			TextButton textButtonLisa = new TextButton("Lisa Françoise", this.mainTextButtonStyle);
+			table.add(textButtonLisa).padTop(-15);
+			TextButton textButtonTheSecession = new TextButton("de The Secession", this.mainTextButtonStyle);
+			table.add(textButtonTheSecession).padTop(-15);
+			table.row();
+			
+			TextButton textButtonMaximeG = new TextButton("Maxime Gilbert", this.mainTextButtonStyle);
+			table.add(textButtonMaximeG).padTop(-15);
+			table.row();
+			
+			//add return button
+			TextButton textButtonReturn = new TextButton("Retour au menu", this.mainTextButtonStyle);
+			textButtonReturn.addListener(new ChangeListener() {
+								
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					initMainMenu();
+								
+				}
+			});
+			table.add(textButtonReturn).padTop(20).colspan(2);
+			table.row();
+			
+			//IMAC image
+			AtlasRegion imacImage = atlasMenu.findRegion("imac");
+			Image imac = new Image(imacImage);
+			table.add(imac).padTop(-50).padLeft(1000).colspan(2);
 		}
 	
 	//count number of files in a repertory
