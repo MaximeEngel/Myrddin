@@ -45,7 +45,7 @@ public class MyrddinDuck extends MyrddinState {
 	public Vector2 getFirePos() {
 		// Look right
 		if(myrddin.getScaleX() >= 0)
-			return new Vector2(myrddin.getCenterX(), myrddin.getCenterY()).add(12, -26);
+			return new Vector2(myrddin.getCenterX(), myrddin.getCenterY()).add(22, -20);
 		else
 			return new Vector2(myrddin.getCenterX(), myrddin.getCenterY()).add(-30, -26);
 	}

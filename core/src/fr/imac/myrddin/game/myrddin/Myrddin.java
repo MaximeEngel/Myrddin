@@ -192,17 +192,28 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 	}
 
 	public void setMyrddinState(MyrddinState myrddinState) {
-		if (myrddinState == null)
+		if (myrddinState == null) {
 			throw new IllegalArgumentException("myrddinState must not be null");
+		}
 		
-		StateType stateType = this.myrddinState.getStateType();
-		if(stateType == StateType.Dead)
-			return;
-		
-		if(stateType != myrddinState.getStateType()) {
+		if (canChangeToType(myrddinState)) {
 			this.myrddinState = myrddinState;
 			this.myrddinState.setNewRectBox();
 		}
+	}
+	
+	public boolean canChangeToType(MyrddinState myrddinState) {
+		if (this.myrddinState == null)
+			return true;
+		
+		StateType stateType = this.myrddinState.getStateType();
+		if(stateType == StateType.Dead)
+			return false;
+		
+		if(stateType != myrddinState.getStateType())
+			return true;
+		
+		return false;
 	}
 	
 	public Shield getShield() {
@@ -265,7 +276,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		out.writeInt(score);
 		out.writeObject(magicState.toString());
 		out.writeObject(magicWeapon);
-		out.writeObject(shield);
+		out.writeObject(shield);		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -276,7 +287,7 @@ public class Myrddin extends Character implements MagicWeaponOwner {
 		
 		score = in.readInt();
 		magicState = MagicState.valueOf(String.valueOf(in.readObject()));
-		myrddinState = new MyrddinIddle(this);
+		this.setMyrddinState(new MyrddinIddle(this));
 		
 		magicWeapon = (MagicWeapon<Myrddin>) in.readObject();
 		shield = (Shield) in.readObject();

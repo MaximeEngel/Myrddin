@@ -22,9 +22,11 @@ public class PowerFire extends Powerup {
 
 	@Override
 	public void pickedUp(Myrddin myrddin) {
-		myrddin.setMagicState(MagicState.FIRE);
-		Sound sound = MyrddinGame.assetManager.get("sounds/collected.mp3", Sound.class);
-		sound.play(0.3f);
+		if(myrddin.getMagicState() == MagicState.ICE) {
+			myrddin.setMagicState(MagicState.FIRE);
+			Sound sound = MyrddinGame.assetManager.get("sounds/collected.mp3", Sound.class);
+			sound.play(0.3f);
+		}
 	}
 
 }

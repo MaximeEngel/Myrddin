@@ -15,6 +15,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
@@ -127,10 +128,15 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 		hud =  new Hud(myrddin);
 		addActor(hud);	
 		
-		myrddin.setZIndex(5000);
+		putElementToForground();
 	}
 	
 	
+	private void putElementToForground() {
+		myrddin.setZIndex(5000);
+		hud.setZIndex(5001);
+	}
+
 	private void createPhysicWorld(TiledMap tiledMap) {		
 		if (tiledMap != null)
 		{
@@ -141,9 +147,9 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			}
 			
 			// Create limit world
-			RectangleMapObject leftBorder = new RectangleMapObject(-10, 0, 10, MyrddinGame.HEIGHT);
+			RectangleMapObject leftBorder = new RectangleMapObject(-50, -100, 50, MyrddinGame.HEIGHT * 2);
 			physicTileFactory.create(leftBorder, "Solid");
-			RectangleMapObject rightBorder = new RectangleMapObject(mapWidth, 0, 10, MyrddinGame.HEIGHT);
+			RectangleMapObject rightBorder = new RectangleMapObject(mapWidth, -10, 50, MyrddinGame.HEIGHT * 2);
 			physicTileFactory.create(rightBorder, "Solid");
 		}
 	}
@@ -203,23 +209,27 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 	@Override
 	public void draw() {
 		// draw background
-		getBatch().begin();
+		Batch batch = getBatch();
+		
+		batch.begin();
 		background.draw(getBatch(), 1);
 		
 		// Draw collidable tiles
 		mapRenderer.renderTileLayer((TiledMapTileLayer) tiledMap.getLayers().get("Tiles"));
 
-		getBatch().end();
+		batch.end();
 		
 		// Draw all the actors
 		super.draw();
 		
 		// Draw fire, water element block
-		getBatch().begin();
+		batch.begin();
 		TiledMapTileLayer tilesElement = (TiledMapTileLayer) tiledMap.getLayers().get("TilesElement");
 		if(tilesElement != null)
 			mapRenderer.renderTileLayer(tilesElement);
-		getBatch().end();
+		
+		hud.draw(batch, 1);
+		batch.end();
 		
 //		getBatch().begin();
 //		Box2DDebugRenderer debug = new Box2DDebugRenderer();
@@ -450,7 +460,7 @@ public class GameScreen extends Stage implements Screen, ContactListener {
 			e.printStackTrace();
 		}
 		hud.update(myrddin);
-		
+		putElementToForground();
 		updateCamera(true);
 	    
 	}

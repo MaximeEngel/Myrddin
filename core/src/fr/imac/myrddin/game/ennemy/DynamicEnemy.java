@@ -106,6 +106,7 @@ public class DynamicEnemy extends EnnemyShooter {
 		super.readExternal(in);
 		runZone = (Rectangle) in.readObject();
 		enemyState = new EnemyIddle(this);
+		enemyState.setNewRectBox();
 	}	
 	
 	
